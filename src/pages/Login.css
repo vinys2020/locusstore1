@@ -1,0 +1,202 @@
+/* Fondo degradado y centrado */
+.login-background {
+    background: linear-gradient(135deg, #e0f0ff 0%, #4a90e2 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+  }
+  
+  /* Card principal */
+  .login-card {
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.18);
+    padding: 2.5rem;
+    max-width: 460px;
+    width: 100%;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .login-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 26px rgba(0, 0, 0, 0.25);
+  }
+  
+  /* Logo */
+  .login-card img {
+    max-width: 280px;
+    width: 100%;
+    height: auto;
+    margin-bottom: 15px;
+  }
+  
+  /* Subtítulo */
+  .login-card h4 {
+    font-weight: 600;
+    color: #4a90e2;
+    margin-bottom: 8px;
+  }
+  
+  .login-card p.subtitle {
+    font-size: 0.95rem;
+    color: #666;
+    margin-bottom: 20px;
+  }
+  
+  /* Botón Google */
+  .google-btn {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    color: #555;
+    font-weight: 500;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex; 
+    align-items: center; 
+    justify-content: center;     
+    gap: 10px;
+    padding: 10px 14px;
+    transition: all 0.2s ease-in-out;
+    margin-bottom: 15px;
+  }
+  
+  .google-btn:hover {
+    background-color: #f1f1f1;
+    border-color: #ccc;
+  }
+  
+  .google-btn-logo img {
+    width: 22px;
+    height: 22px;
+    display: block;
+  }
+  
+  .google-btn-text {
+    font-size: 0.9rem;
+  }
+  
+  /* Inputs */
+  .login-card input.form-control {
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    padding: 12px 14px;
+    font-size: 0.95rem;
+    margin-bottom: 15px;
+    transition: all 0.2s ease-in-out;
+  }
+  
+  .login-card input.form-control:focus {
+    border-color: #4a90e2;
+    box-shadow: 0 0 6px rgba(74, 144, 226, 0.4);
+    outline: none;
+  }
+  
+  /* Botones */
+  .login-card button.btn {
+    border-radius: 8px;
+    font-weight: 600;
+    padding: 12px 0;
+    transition: all 0.2s ease-in-out;
+  }
+  
+  .login-card button.btn-primary {
+    background-color: #4a90e2;
+    border: none;
+  }
+  
+  .login-card button.btn-primary:hover {
+    background-color: #357abd;
+  }
+  
+  .login-card button.btn-warning:hover {
+    background-color: #ffca2c;
+    color: #000;
+  }
+  
+  /* Links debajo */
+  .login-footer {
+    margin-top: 15px;
+    font-size: 0.85rem;
+    color: #555;
+  }
+  
+  .login-footer a {
+    color: #4a90e2;
+    font-weight: 500;
+    text-decoration: none;
+  }
+  
+  .login-footer a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Alertas */
+  .login-card .alert {
+    border-radius: 8px;
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .login-card {
+      padding: 2rem 1.5rem;
+    }
+  
+    .login-card img {
+      max-width: 200px;
+      margin-bottom: 10px;
+    }
+  
+    .google-btn-text {
+      font-size: 0.85rem;
+    }
+  
+    .google-btn-logo img {
+      width: 18px;
+      height: 18px;
+    }
+  
+    .login-card input.form-control {
+      padding: 10px 12px;
+      font-size: 0.9rem;
+    }
+  
+    .login-card button.btn {
+      padding: 10px 0;
+      font-size: 0.95rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .login-card {
+      padding: 2rem 1rem;
+    }
+  
+    .login-card img {
+      max-width: 300px;
+    }
+  
+    .google-btn-text {
+      font-size: 1rem;
+    }
+  
+    .google-btn-logo img {
+      width: 20px;
+      height: 20px;
+    }
+  
+    .login-card input.form-control {
+      padding: 9px 10px;
+      font-size: 1rem;
+    }
+  
+    .login-card button.btn {
+      padding: 9px 0;
+      font-size: 0.9rem;
+    }
+  }
+  
