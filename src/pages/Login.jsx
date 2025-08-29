@@ -155,12 +155,9 @@ const handleSubmit = async (e) => {
       });
   
       const cuponesRef = collection(db, "usuarios", user.uid, "cuponesid");
-      await setDoc(doc(cuponesRef, "bienvenida"), {
-        nombre: "Cupón Bienvenida",
-        descuento: 10,
-        usado: false,
-        fechaCreacion: new Date(),
-      });
+
+      // Creamos un documento vacío solo para inicializar la subcolección
+      await setDoc(doc(cuponesRef, "init"), { createdAt: new Date() });
   
       setShowForm(false);
   
