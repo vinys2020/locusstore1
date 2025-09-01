@@ -1,7 +1,7 @@
 /* Fondo degradado y centrado */
 .login-background {
-    background: linear-gradient(135deg, #e0f0ff 0%, #4a90e2 100%);
-    min-height: 100vh;
+  background: linear-gradient(135deg, #3d835e 30%, #4B2E65 70%);
+  min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -10,7 +10,7 @@
   
   /* Card principal */
   .login-card {
-    background: #ffffff;
+    background: #261731;
     border-radius: 16px;
     box-shadow: 0 8px 22px rgba(0, 0, 0, 0.18);
     padding: 2.5rem;
@@ -27,7 +27,7 @@
   
   /* Logo */
   .login-card img {
-    max-width: 280px;
+    max-width: 350px;
     width: 100%;
     height: auto;
     margin-bottom: 15px;

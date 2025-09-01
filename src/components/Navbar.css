@@ -16,7 +16,7 @@
   
   .navbar {
     z-index: 1030;
-    background-color: #212529;
+    background-color: #261731;
     transition: top 0.3s ease-in-out;
     will-change: top;
     backface-visibility: hidden;

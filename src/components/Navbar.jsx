@@ -8,8 +8,8 @@ import { FaShoppingCart, FaSearch } from "react-icons/fa";
 import useProductos from "../hooks/useProductos";
 import FloatingCart from "./FloatingCart";
 import CategoriasDropdown from "./CategoriasDropdown";
-import logo from "../assets/sinfondologo.png";
-import logito from "../assets/loguis.png";
+import logo from "../assets/navbarlogo.png";
+import logito from "../assets/logoss.png";
 
 import "./navbar.css";
 
@@ -116,7 +116,7 @@ const Navbar = ({ busqueda, setBusqueda }) => {
 
   return (
     <nav
-      className={`navbar fixed-top navbar-expand-lg navbar-dark bg-dark shadow ${scrollingDown ? "navbar-hidden" : ""
+      className={`navbar fixed-top navbar-expand-lg navbar-dark  shadow ${scrollingDown ? "navbar-hidden" : ""
         } ${scrollingUp ? "navbar-visible" : ""}`}
       style={{ top: scrollingDown ? `-${navbarHeight}px` : "0px" }}
     >
@@ -133,7 +133,7 @@ const Navbar = ({ busqueda, setBusqueda }) => {
           to="/home"
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
         >
-          <img src={logito} alt="Trip Drugstore" width="60" height="65" />
+          <img src={logito} alt="Trip Drugstore" width="65" height="65" />
         </Link>
 
 {/* Buscador con lupa dentro */}

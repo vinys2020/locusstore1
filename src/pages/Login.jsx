@@ -5,8 +5,10 @@ import { signInWithPopup, signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { doc, getDoc, setDoc, collection, onSnapshot } from "firebase/firestore";
 import "bootstrap/dist/css/bootstrap.min.css";
-import logo from "../assets/sinfondologo.png";
+import logo from "../assets/navbarlogo.png";
 import googleLogo from "../assets/google-logo-NePEveMl.webp";
+import logis from "../assets/logolocus.png";
+
 
 import "./Login.css"; // Estilos personalizados
 
@@ -175,19 +177,36 @@ const handleSubmit = async (e) => {
 
     if (loading)
         return (
-            <div className="d-flex flex-column justify-content-center align-items-center vh-100">
-                <img src={logo} alt="Logo" style={{ width: "200px", marginBottom: "20px" }} />
-                <div className="spinner-border text-primary" role="status" style={{ width: "4rem", height: "4rem" }}>
-                    <span className="visually-hidden">Cargando...</span>
-                </div>
-                <p className="mt-3 text-muted">Cargando, por favor espere...</p>
-            </div>
+<div 
+  className="d-flex flex-column justify-content-center align-items-center vh-100"
+  style={{ 
+    background: "linear-gradient(135deg, #3d835e 30%, #4B2E65 70%, #cfb211 100%)",
+    minHeight: "100vh" 
+  }}
+>
+  <img 
+    src={logis} 
+    alt="Logo" 
+    style={{ width: "100px", marginBottom: "20px" }} 
+  />
+  <div 
+    className="spinner-border text-primary" 
+    role="status" 
+    style={{ width: "4rem", height: "4rem" }}
+  >
+    <span className="visually-hidden text-white">Cargando...</span>
+  </div>
+  <p className="mt-3 text-white">Cargando, por favor espere...</p>
+</div>
+
         );
 
     if (!loading && pendingApproval)
         return (
-            <div className="d-flex flex-column justify-content-center align-items-center vh-100 text-center bg-light p-3">
-                <img src={logo} alt="Logo" className="img-fluid mb-4" style={{ maxWidth: "180px" }} />
+            <div className="d-flex flex-column justify-content-center align-items-center vh-100 text-center bg-light p-3"   style={{ 
+                background: "linear-gradient(135deg, #3d835e 30%, #4B2E65 70%)",
+                                minHeight: "100vh" 
+              }}>
                 <div className="card shadow-sm p-4 text-center w-100" style={{ maxWidth: "400px", borderRadius: "20px" }}>
                     {usuario?.photoURL && (
                         <div className="d-flex justify-content-center mb-3">
@@ -225,8 +244,8 @@ const handleSubmit = async (e) => {
                 <img src={logo} alt="Logo" className="logo mb-1" />
                 {!showForm ? (
                     <>
-                        <h2 className="mb-2">Inicia Sesión</h2>
-                        <p className="mb-3" style={{ fontSize: "1rem", color: "#555", lineHeight: 1.4 }}>
+                        <h2 className="mb-2 mt-1 text-white">Inicia Sesión</h2>
+                        <p className="mb-3 text-white" style={{ fontSize: "1rem", color: "#555", lineHeight: 1.4 }}>
                             Registrate con Google es rápido, seguro y tus datos siempre estarán protegidos.
                         </p>
                         {error && <div className="alert alert-danger">{error}</div>}
@@ -240,15 +259,15 @@ const handleSubmit = async (e) => {
                             </div>
                             <span className="google-btn-text">{isLoggingIn ? "Ingresando..." : "Continuar con Google"}</span>
                         </button>
-                        <small className="text-muted">No compartiremos tu información con terceros.</small>
+                        <small className="text-white">No compartiremos tu información con terceros.</small>
                     </>
                 ) : (
                     <>
-                        <h4 className="mb-3">Completa tus datos</h4>
+                        <h4 className="mb-3 mt-2 text-warning">Completa tus datos</h4>
                         {error && <div className="alert alert-danger">{error}</div>}
                         <form onSubmit={handleSubmit}>
                             <div className="row">
-                                <div className="col-12 mb-2">
+                                <div className="col-12 mb-1">
                                     <input
                                         type="text"
                                         className="form-control"
@@ -262,7 +281,7 @@ const handleSubmit = async (e) => {
                             </div>
 
                             <div className="row">
-                                <div className="col-md-6 mb-2">
+                                <div className="col-md-6 mb-1">
                                     <input
                                         type="text"
                                         className="form-control"
@@ -273,7 +292,7 @@ const handleSubmit = async (e) => {
                                         required
                                     />
                                 </div>
-                                <div className="col-md-6 mb-2">
+                                <div className="col-md-6 mb-1">
                                     <input
                                         type="text"
                                         className="form-control"
@@ -288,7 +307,7 @@ const handleSubmit = async (e) => {
 
                             <input
                                 type="text"
-                                className="form-control mb-2"
+                                className="form-control mb-3"
                                 name="domposgeo"
                                 placeholder="Ciudad/Localidad"
                                 value={userData.domposgeo}
@@ -297,7 +316,7 @@ const handleSubmit = async (e) => {
                             />
                             <input
                                 type="text"
-                                className="form-control mb-2"
+                                className="form-control mb-3"
                                 name="posgeo"
                                 placeholder="Dirección"
                                 value={userData.posgeo}
@@ -319,13 +338,13 @@ const handleSubmit = async (e) => {
                             </div>
 
                             <select
-                                className="form-control mb-2"
+                                className="form-control mb-3"
                                 name="organismo"
                                 value={userData.organismo}
                                 onChange={handleInputChange}
                                 required
                             >
-                                <option value="">Seleccionar organismo</option>
+                                <option value="">Seleccionar Organismo</option>
                                 <option value="Ministerio de Agua, Energía y Medio Ambiente">Ministerio de Agua, Energía y Medio Ambiente</option>
                                 <option value="Ministerio de Desarrollo Social">Ministerio de Desarrollo Social</option>
                                 <option value="Ministerio de Educación, Ciencias y Tecnología">Ministerio de Educación, Ciencias y Tecnología</option>
@@ -334,13 +353,13 @@ const handleSubmit = async (e) => {
                             </select>
 
                             <select
-                                className="form-control mb-2"
+                                className="form-control mb-3"
                                 name="gremio"
                                 value={userData.gremio}
                                 onChange={handleInputChange}
                                 required
                             >
-                                <option value="">Seleccionar gremio</option>
+                                <option value="">Seleccionar Gremio</option>
                                 <option value="UPCN">UPCN</option>
                             </select>
 
