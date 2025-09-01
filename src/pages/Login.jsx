@@ -180,7 +180,7 @@ const handleSubmit = async (e) => {
 <div 
   className="d-flex flex-column justify-content-center align-items-center vh-100"
   style={{ 
-    background: "linear-gradient(135deg, #3d835e 30%, #4B2E65 70%, #cfb211 100%)",
+    background: "linear-gradient(135deg, #3d835e 30%, #4B2E65 70%)",
     minHeight: "100vh" 
   }}
 >
