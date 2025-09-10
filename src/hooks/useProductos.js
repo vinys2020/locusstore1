@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { collectionGroup, getDocs, query, where, orderBy } from "firebase/firestore";
+import { collectionGroup, getDocs, query, where } from "firebase/firestore";
 import { db } from "../config/firebase";
 
 const useProductos = () => {
@@ -8,24 +8,25 @@ const useProductos = () => {
 
   useEffect(() => {
     const fetchProductos = async () => {
-      const productosRef = collectionGroup(db, "Productosid");
-
-      const q = query(
-        productosRef,
-        where("activo", "==", true),
-        orderBy("activo", "asc")
-      );
-
       try {
+        // Trae todos los documentos de cualquier subcolección "Productosid"
+        const productosRef = collectionGroup(db, "Productosid");
+
+        // Solo productos activos
+        const q = query(productosRef, where("activo", "==", true));
+
         const snapshot = await getDocs(q);
+
         const productosData = snapshot.docs.map(doc => {
-          const categoria = doc.ref.path.split("/")[1];
+          // Obtener la categoría a partir de la ruta: /Categoriasid/{categoriaId}/Productosid/{productoId}
+          const categoria = doc.ref.path.split("/")[1]; 
           return {
             id: doc.id,
             categoria,
             ...doc.data(),
           };
         });
+
         setProductos(productosData);
       } catch (error) {
         console.error("Error fetching products: ", error);

@@ -5,6 +5,10 @@
   text-align: center;
 }
 
+body {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
 .logo {
   height: 6em;
   padding: 1.5em;
@@ -39,4 +43,15 @@
 
 .read-the-docs {
   color: #888;
+}
+
+/* App.css */
+.app-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main.flex-grow-1 {
+  flex-grow: 1;
 }

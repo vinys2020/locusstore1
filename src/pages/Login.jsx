@@ -265,7 +265,7 @@ const handleSubmit = async (e) => {
                     <>
                         <h4 className="mb-3 mt-2 text-warning">Completa tus datos</h4>
                         {error && <div className="alert alert-danger">{error}</div>}
-                        <form onSubmit={handleSubmit}>
+                        <form onSubmit={handleSubmit} className="p-2 bg-transparent">
                             <div className="row">
                                 <div className="col-12 mb-1">
                                     <input

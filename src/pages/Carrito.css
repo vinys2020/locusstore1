@@ -4,9 +4,10 @@
     max-width: 1500px;
     margin: auto;
     padding: 100px 20px;
-    color: #eee;
-    background: linear-gradient(135deg, #1c1c1c, #2a2a2a); /* Fondo con profundidad */
+    color: dark;
+    background: white; /* Fondo con profundidad */
     box-shadow: 0 0 25px rgba(0, 0, 0, 0.7);
+    margin-top: 130px;
   }
   
   .carrito-titulo {
@@ -344,5 +345,7 @@
   
     .carrito-pagina {
       padding: 50px 10px;
+      margin-top: 90px;
+
     }
   }

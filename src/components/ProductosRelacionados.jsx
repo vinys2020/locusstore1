@@ -1,57 +1,76 @@
-import React, { useState, useRef, useContext } from "react";
-import useProductos from "../hooks/useProductos"; // nuevo hook
-import { useNavigate } from "react-router-dom";
+import React, { useState, useRef, useContext, useEffect } from "react";
 import { CartContext } from "../context/CartContext";
+import { useNavigate } from "react-router-dom";
+import { db } from "../config/firebase";
+import { collection, getDocs, query, where } from "firebase/firestore";
 import "./HorizontalCarousel.css";
 
-const HorizontalCarousel = () => {
+const ProductosRelacionados = ({ categoriaId, productoActualId }) => {
+  const [productos, setProductos] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [isHovered, setIsHovered] = useState(false);
   const scrollRef = useRef(null);
+  const { agregarAlCarrito } = useContext(CartContext);
   const navigate = useNavigate();
 
-  const { productos, loading } = useProductos("ferreteriaid");
-  const { agregarAlCarrito } = useContext(CartContext);
+  useEffect(() => {
+    const fetchRelacionados = async () => {
+      try {
+        const productosRef = collection(db, "categorias", categoriaId, "Productosid");
+        const q = query(productosRef, where("activo", "==", true));
+        const snapshot = await getDocs(q);
+        const relacionados = snapshot.docs
+          .map((doc) => ({ id: doc.id, ...doc.data(), categoria: categoriaId }))
+          .filter((p) => p.id !== productoActualId);
+
+        setProductos(relacionados);
+      } catch (error) {
+        console.error("Error cargando productos relacionados:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (categoriaId) fetchRelacionados();
+  }, [categoriaId, productoActualId]);
 
   const scroll = (direction) => {
-    if (scrollRef.current) {
-      const { scrollLeft, clientWidth, scrollWidth } = scrollRef.current;
-      const maxScrollLeft = scrollWidth - clientWidth;
-      const scrollStep = clientWidth * 0.8; 
+    if (!scrollRef.current) return;
+    const { scrollLeft, clientWidth, scrollWidth } = scrollRef.current;
+    const maxScrollLeft = scrollWidth - clientWidth;
+    const scrollStep = clientWidth * 0.8;
 
-      let targetScroll =
-        direction === "next"
-          ? Math.min(scrollLeft + scrollStep, maxScrollLeft)
-          : Math.max(scrollLeft - scrollStep, 0);
+    let targetScroll =
+      direction === "next"
+        ? Math.min(scrollLeft + scrollStep, maxScrollLeft)
+        : Math.max(scrollLeft - scrollStep, 0);
 
-      scrollRef.current.scrollTo({ left: targetScroll, behavior: "smooth" });
-    }
+    scrollRef.current.scrollTo({ left: targetScroll, behavior: "smooth" });
   };
 
   const handleProductoClick = (producto) => {
-    // Usamos la categoría dinámica para la ruta
-    navigate(`/categorias/${producto.categoria}/producto/${producto.id}`, {
+    navigate(`/categorias/${categoriaId}/producto/${producto.id}`, {
       state: { producto },
     });
   };
 
   if (loading) {
     return (
-      <div
-        className="d-flex justify-content-center align-items-center"
-        style={{ height: "200px" }}
-      >
+      <div className="d-flex justify-content-center align-items-center my-4">
         <div className="custom-loader-spin"></div>
       </div>
     );
   }
 
+  if (!productos.length) return null;
+
   return (
     <div
-      className="position-relative"
+      className="position-relative mt-4"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-
+      <h3 className="text-start mb-3 fw-bold">Productos relacionados</h3>
 
       {isHovered && (
         <button
@@ -81,9 +100,9 @@ const HorizontalCarousel = () => {
           paddingBottom: "8px",
         }}
       >
-        {productos.map((producto, index) => (
+        {productos.map((producto) => (
           <div
-            key={index}
+            key={producto.id}
             className="scroll-producto-card flex-shrink-0"
             style={{ scrollSnapAlign: "start", cursor: "pointer" }}
             onClick={() => handleProductoClick(producto)}
@@ -103,7 +122,10 @@ const HorizontalCarousel = () => {
                   }}
                   className="mt-lg-3"
                 >
-                  ${producto.precio ? Math.round(producto.precio * 1.2).toLocaleString() : "-"}
+                  $
+                  {producto.precio
+                    ? Math.round(producto.precio * 1.2).toLocaleString()
+                    : "-"}
                 </span>
 
                 <p className="scroll-producto-precio mb-0">
@@ -155,4 +177,4 @@ const HorizontalCarousel = () => {
   );
 };
 
-export default HorizontalCarousel;
+export default ProductosRelacionados;

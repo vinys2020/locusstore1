@@ -5,8 +5,24 @@ import Home from "./pages/Home";
 import Perfil from "./pages/Perfil"; // ✅ Importamos Perfil
 import Navbar from "./components/Navbar";
 import AdminDashboard from "./pages/AdminDashboard";
+import Carrito from "./pages/Carrito";
+import Contacto from "./pages/Contacto";
 import { AuthProvider, useAuth } from "./context/AuthContext";
 import { CartProvider } from "./context/CartContext";
+import ScrollToTop from "./components/ScrollToTop"; // ✅ Importamos ScrollToTop
+import Footer from "./components/Footer"; // ✅ Importa tu Footer existente
+import ProyectosFuturos from "./pages/ProyectosFuturos";
+import SobreNosotros from "./pages/SobreNosotros";
+import CategoriasPage from "./pages/CategoriasPage";
+import ProductoDetalle from "./components/ProductoDetalle";
+import PreFooter from "./components/PreFooter"; // ✅ Importa tu PreFooter
+
+
+
+
+
+
+
 
 function ProtectedRoute({ children, rolPermitido }) {
   const { usuario, loading } = useAuth();
@@ -26,10 +42,15 @@ function ProtectedRoute({ children, rolPermitido }) {
   return children;
 }
 
+
+
+
 function AppWrapper() {
   return (
     <AuthProvider>
       <CartProvider>
+        <ScrollToTop /> {/* ✅ Agregado aquí */}
+
         <App />
       </CartProvider>
     </AuthProvider>
@@ -41,6 +62,11 @@ function App() {
   const location = useLocation();
   const { usuario } = useAuth();
 
+
+
+
+
+
   // Redireccionar admin al dashboard si entra al login
   useEffect(() => {
     if (usuario?.rol === "admin" && location.pathname === "/") {
@@ -49,49 +75,100 @@ function App() {
   }, [usuario, location.pathname]);
 
   return (
-    <>
-      {/* Mostrar Navbar solo si NO estamos en login */}
+    <div className="app-wrapper d-flex flex-column min-vh-100">
       {location.pathname !== "/" && (
         <Navbar busqueda={busqueda} setBusqueda={setBusqueda} />
       )}
-      <Routes>
-        <Route path="/" element={<Login />} />
-        
-        {/* Home disponible para todos los usuarios aprobados */}
-        <Route
-          path="/home"
-          element={
-            <ProtectedRoute>
-              <Home />
-            </ProtectedRoute>
-          }
-        />
 
-        {/* Perfil del usuario */}
-        <Route
-          path="/perfil"
-          element={
-            <ProtectedRoute>
-              <Perfil />
-            </ProtectedRoute>
-          }
-        />
+      <main className="flex-grow-1">
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route
+            path="/home"
+            element={
+              <ProtectedRoute>
+                <Home />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/perfil"
+            element={
+              <ProtectedRoute>
+                <Perfil />
+              </ProtectedRoute>
+            }
+          />
+                    <Route
+            path="/Carrito"
+            element={
+              <ProtectedRoute>
+                <Carrito />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/categorias/:categoriaId"
+            element={
+              <ProtectedRoute>
+                <CategoriasPage />
+              </ProtectedRoute>
+            }
+          />
 
-        {/* AdminDashboard solo para admins */}
-        <Route
-          path="/admin"
-          element={
-            <ProtectedRoute rolPermitido="admin">
-              <AdminDashboard />
-            </ProtectedRoute>
-          }
-        />
+          <Route
+            path="/categorias/:categoriaId/producto/:productoId"
+            element={
+              <ProtectedRoute>
+                <ProductoDetalle />
+              </ProtectedRoute>
+            }
+          />
 
-        {/* Ruta comodín */}
-        <Route path="*" element={<Navigate to="/" replace />} />
-      </Routes>
-    </>
+          <Route
+            path="/ProyectosFuturos"
+            element={
+              <ProtectedRoute>
+                <ProyectosFuturos />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/SobreNosotros"
+            element={
+              <ProtectedRoute>
+                <SobreNosotros />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/contacto"
+            element={
+              <ProtectedRoute>
+                <Contacto />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin"
+            element={
+              <ProtectedRoute rolPermitido="admin">
+                <AdminDashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </main>
+
+      {location.pathname !== "/" && (
+  <>
+    <PreFooter />  {/* ✅ Agregado aquí antes del Footer */}
+    <Footer />
+  </>
+)}    </div>
   );
+
 }
 
 export default AppWrapper;

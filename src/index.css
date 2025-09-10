@@ -24,11 +24,14 @@ a:hover {
 
 body {
   margin: 0;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+
   display: flex;
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
 }
+
 
 h1 {
   font-size: 3.2em;

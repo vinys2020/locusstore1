@@ -8,6 +8,14 @@ const Perfil = () => {
   const { usuario } = useContext(AuthContext);
   const [datosUsuario, setDatosUsuario] = useState(null);
 
+  const capitalizeWords = (str) => {
+    if (!str) return "";
+    return str
+      .split(" ")
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .join(" ");
+  };
+
   useEffect(() => {
     if (!usuario) return;
 
@@ -91,14 +99,29 @@ const Perfil = () => {
   return (
     <section className="perfil-container">
       <div className="perfil-card shadow-lg rounded-4 p-4">
-        <div className="perfil-header d-flex flex-column flex-md-row align-items-center gap-4 mb-4">
-          <img src={user.foto} alt="Foto de perfil" className="perfil-foto rounded-circle shadow" />
-          <div>
-            <h2 className="fw-bold">{user.nombre}</h2>
-            <p className="text-muted mb-1">{user.email}</p>
-            <span className="badge bg-success fs-6">⭐ {user.puntos} puntos acumulados</span>
-          </div>
-        </div>
+      <div className="perfil-header d-flex flex-column flex-md-row align-items-center gap-4 mb-4">
+  {/* Foto */}
+  <div className="d-flex justify-content-md-end justify-content-center mb-lg-3 ">
+    <img
+      src={user.foto}
+      alt={user.nombre}
+      className="perfil-foto rounded-circle border border-warning shadow-sm"
+      style={{ width: "120px", height: "120px", objectFit: "cover" }}
+    />
+  </div>
+
+  {/* Texto de bienvenida */}
+  <div className="text-center text-md-start">
+  <h2 className="fw-bold mb-1 mt-4 text-dark">
+  ¡Bienvenido, {capitalizeWords(user.nombre)}!
+</h2>
+    <p className="text-dark mb-2 fs-5 text-lg-start">
+      Nos alegra verte de nuevo. <br className="d-none d-md-inline" />
+    </p>
+    <span className="badge bg-success fs-6">⭐ {user.puntos} puntos acumulados</span>
+  </div>
+</div>
+
 
         <div className="perfil-section">
           <section className="puntos-beneficios border-top pt-4 mt-5">

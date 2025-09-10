@@ -1,0 +1,98 @@
+/* Contacto.css */
+
+/* Página completa */
+.contactos-page {
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 120px); /* altura total menos margen superior */
+  width: 100%;
+  padding-left: 15px;
+  padding-right: 15px;
+  background: white;
+  margin-top: 120px; /* espacio para el header fijo */
+}
+
+/* Contenido principal que crecerá para empujar el footer */
+.contactos-page .content-wrapper {
+  flex: 1; /* toma todo el espacio disponible */
+}
+  
+  /* Título principal */
+  .contactos-page h1 {
+    font-weight: 700;
+    color: #ffc107; /* amarillo Locus */
+  }
+  
+  .contactos-page p.fs-5 {
+    color: #343a40; /* gris oscuro */
+  }
+  
+  /* Imagen de contacto */
+  #fotoComenzar {
+    max-width: 90%;
+    border-radius: 0.5rem;
+    box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.2);
+  }
+  
+
+  
+  /* Formulario */
+  form {
+    background-color: #ffffff;
+    padding: 1.2rem;
+    border-radius: 1rem;
+    box-shadow: 0 0.5rem 1.5rem rgba(0,0,0,0.15);
+    transition: box-shadow 0.3s ease;
+  }
+  
+  form:hover {
+    box-shadow: 0 1rem 2rem rgba(0,0,0,0.2);
+  }
+  
+  /* Inputs, selects y textarea */
+  .form-floating .form-control,
+  .form-floating .form-select,
+  .form-floating textarea {
+    border-radius: 0.5rem;
+    border: 1px solid #ced4da;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .form-floating .form-control:focus,
+  .form-floating .form-select:focus,
+  .form-floating textarea:focus {
+    border-color: #ffc107;
+    box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.25);
+  }
+  
+  /* Botón de enviar */
+  button.btn-outline-dark {
+    border-width: 2px;
+    padding: 0.6rem 2rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+  }
+  
+  button.btn-outline-dark:hover {
+    background-color: #ffc107;
+    border-color: #ffc107;
+    color: #212529;
+  }
+  
+  /* Ajustes responsive */
+  @media (max-width: 992px) {
+    form {
+      padding: 1.5rem;
+    }
+  
+    #fotoComenzar {
+      margin-bottom: 2rem;
+    }
+  }
+  
+
+  @media (max-width: 768px) {
+    .contactos-page {
+      margin-top: 80px;
+    }
+  }

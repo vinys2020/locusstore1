@@ -13,7 +13,7 @@ body {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    border-radius: 10px;
+    border-radius: 0px;
   }
   
   .swiper-button-prev {
@@ -32,6 +32,7 @@ body {
     transform: translateY(-50%);
     z-index: 10;
     font-size: 18px;
+
   }
   
   .swiper-button-next {
@@ -121,6 +122,7 @@ body {
     overflow: hidden;
     margin: 0;
     padding: 0;
+
   }
   
   @media (max-width: 768px) {
@@ -140,7 +142,7 @@ body {
       align-items: center;
       width: 100%;
       overflow: hidden;
-      height: 325px;
+      height: 420px;
     }
   
   }

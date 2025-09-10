@@ -1,5 +1,5 @@
 import React, { useState, useRef, useContext } from "react";
-import useProductos from "../hooks/useProductos"; // nuevo hook
+import usegolosinasychocolates from "../hooks/useProductos";
 import { useNavigate } from "react-router-dom";
 import { CartContext } from "../context/CartContext";
 import "./HorizontalCarousel.css";
@@ -9,7 +9,8 @@ const HorizontalCarousel = () => {
   const scrollRef = useRef(null);
   const navigate = useNavigate();
 
-  const { productos, loading } = useProductos("ferreteriaid");
+
+  const { productos, loading } = usegolosinasychocolates();
   const { agregarAlCarrito } = useContext(CartContext);
 
   const scroll = (direction) => {
@@ -18,18 +19,16 @@ const HorizontalCarousel = () => {
       const maxScrollLeft = scrollWidth - clientWidth;
       const scrollStep = clientWidth * 0.8; 
 
-      let targetScroll =
-        direction === "next"
-          ? Math.min(scrollLeft + scrollStep, maxScrollLeft)
-          : Math.max(scrollLeft - scrollStep, 0);
+      let targetScroll = direction === "next"
+        ? Math.min(scrollLeft + scrollStep, maxScrollLeft)
+        : Math.max(scrollLeft - scrollStep, 0);
 
       scrollRef.current.scrollTo({ left: targetScroll, behavior: "smooth" });
     }
   };
 
   const handleProductoClick = (producto) => {
-    // Usamos la categoría dinámica para la ruta
-    navigate(`/categorias/${producto.categoria}/producto/${producto.id}`, {
+    navigate(`/categorias/ferreteriaid/producto/${producto.id}`, {
       state: { producto },
     });
   };
@@ -47,10 +46,22 @@ const HorizontalCarousel = () => {
 
   return (
     <div
-      className="position-relative"
+      className="position-relative "
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
+<div className="d-flex justify-content-between align-items-center mb-lg-1">
+  <h4 className="text-white mb-0">
+    Podria interesarte
+  </h4>
+  <a
+    className="splinter-link dynamic__carousel-link fw-bold text-decoration-none fs-6"
+    href="/categorias/golosinasychocolatesid"
+    style={{ color: "#3483fa" }}
+  >
+    Mostrar todos
+  </a>
+</div>
 
 
       {isHovered && (
@@ -78,7 +89,7 @@ const HorizontalCarousel = () => {
         style={{
           scrollSnapType: "x mandatory",
           gap: "12px",
-          paddingBottom: "8px",
+          paddingBottom: "9px",
         }}
       >
         {productos.map((producto, index) => (
@@ -94,24 +105,20 @@ const HorizontalCarousel = () => {
               className="scroll-producto-img"
             />
             <div className="scroll-producto-body">
-              <div className="scroll-producto-precio-wrapper d-flex flex-column align-items-start">
-                <span
-                  style={{
-                    textDecoration: "line-through",
-                    color: "#888",
-                    fontSize: "0.85rem",
-                  }}
-                  className="mt-lg-3"
-                >
-                  ${producto.precio ? Math.round(producto.precio * 1.2).toLocaleString() : "-"}
-                </span>
+              <div className="scroll-producto-precio-wrapper">
+                <div className="scroll-producto-precio-wrapper d-flex flex-column align-items-start">
 
-                <p className="scroll-producto-precio mb-0">
-                  ${producto.precio ? producto.precio.toLocaleString() : "N/A"}
-                </p>
+                  <span style={{ textDecoration: "line-through", color: "#888", fontSize: "0.85rem" }} className="mt-lg-3">
+                    ${producto.precio ? Math.round(producto.precio * 1.2).toLocaleString() : "-"}
+                  </span>
 
+                  <p className="scroll-producto-precio mb-0">
+                    ${producto.precio ? producto.precio.toLocaleString() : "N/A"}
+                  </p>
+
+                </div>
                 <div className="dynamic-carousel__shipping-container mt-1 d-flex align-items-center gap-1">
-                  <span>Locus Store</span>
+                  <span>Trip</span>
                   <i className="bi bi-lightning-fill text-warning"></i>
                 </div>
               </div>
@@ -123,12 +130,13 @@ const HorizontalCarousel = () => {
               onClick={(e) => {
                 e.stopPropagation();
                 if (producto.stock > 0) {
-                  agregarAlCarrito(producto, producto.categoria);
+                  agregarAlCarrito(producto, "golosinasychocolatesid");
                 }
               }}
             >
               {producto.stock === 0 ? "Agotado" : "Agregar al carrito"}
             </button>
+
           </div>
         ))}
       </div>

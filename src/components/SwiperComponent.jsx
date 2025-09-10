@@ -8,15 +8,15 @@ import "./SwiperComponent.css";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
 
 const promocionUrlsDesktop = [
-  "https://res.cloudinary.com/dcggcw8df/image/upload/v1751517729/awt4b3kruauwgra2nuij.webp",
-  "https://res.cloudinary.com/dcggcw8df/image/upload/v1751517745/ggrylhcqqd5yr8nsspkr.webp",
-  "https://res.cloudinary.com/dcggcw8df/image/upload/v1751517763/rm9uuf1wzc8hxwhxvlwk.webp",
+  "https://res.cloudinary.com/dqesszxgv/image/upload/v1757118413/locuspromo1swiper_xonncm.webp",
+  "https://res.cloudinary.com/dqesszxgv/image/upload/v1757119093/grifo2swiperlocus_rdofjq.webp",
+  "https://res.cloudinary.com/dqesszxgv/image/upload/v1757119135/promo3swiperlocus_moq8ot.webp",
 ];
 
 const promocionUrlsMobile = [
-  "https://res.cloudinary.com/dcggcw8df/image/upload/v1751517799/tjdbhu9ede103or7fejk.webp",
-  "https://res.cloudinary.com/dcggcw8df/image/upload/v1751517811/xmq8qvm8t6qazifrseys.webp",
-  "https://res.cloudinary.com/dcggcw8df/image/upload/v1751517835/fzyksm5gk2mggvlme2mz.webp",
+  "https://res.cloudinary.com/dqesszxgv/image/upload/v1757119277/promocel11locus_wensco.webp",
+  "https://res.cloudinary.com/dqesszxgv/image/upload/v1757119221/promo1celularlocus_zbsbqx.webp",
+  "https://res.cloudinary.com/dqesszxgv/image/upload/v1757119320/promo3celllocus_mwexbl.webp",
 ];
 
 const SwiperComponent = () => {
@@ -30,7 +30,6 @@ const SwiperComponent = () => {
         spaceBetween={10}
         slidesPerView={1}
         navigation={{ clickable: true }}
-        pagination={{ clickable: true }}
         loop={true}
         autoplay={{
           delay: 5000,

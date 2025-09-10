@@ -296,10 +296,11 @@ const FloatingCart = () => {
 
   return (
     <>
-      <div className="floating-cart-icon" onClick={() => setIsOpen(true)}>
-        <FaShoppingCart size={24} />
-        {totalItems > 0 && <span className="cart-count">{totalItems}</span>}
-      </div>
+<div className="floating-cart-icon" onClick={() => setIsOpen(true)}>
+  <FaShoppingCart size={24} />
+  <span className="cart-count mt-2 mx-2">{totalItems}</span>
+</div>
+
 
       {isOpen && (
         <div className="cart-modal">
@@ -320,7 +321,7 @@ const FloatingCart = () => {
                   style={{ width: "100px", height: "100px" }}
                 />
                 <h2 className="empty-cart-title">Tu carrito está vacío</h2>
-                <p className="empty-cart-text">Agregá productos para comenzar tu compra.</p>
+                <p className="empty-cart-text">Agregá productos para comenzar a generar tu presupuesto.</p>
                 <a href="/categorias/Ofertasid" className="empty-cart-button">
                   Ver productos
                 </a>
@@ -383,7 +384,7 @@ const FloatingCart = () => {
                     placeholder="Tu número de teléfono"
                     value={telefonoUsuario}
                     onChange={handleTelefonoChange}
-                    className="form-control form-control-lg"
+                    className="form-control form-control-lg mx-0"
                   />
                 </div>
                 <button

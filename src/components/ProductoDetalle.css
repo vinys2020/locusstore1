@@ -1,0 +1,247 @@
+.producto-detalle-page {
+    background-color: #fff;
+    min-height: 100vh;
+    padding-top: 60px;
+    padding-bottom: 40px;
+    margin-top: 60px;
+  }
+  
+  .producto-imagen-container {
+    overflow: hidden;
+    border-radius: 8px;
+    max-height: 500px;
+    max-width: 100%;
+    margin: 0 auto;
+  }
+  
+  .producto-imagen {
+    max-height: 500px;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.5s ease;
+    cursor: zoom-in;
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+    position: relative;
+    padding: 20px;
+  }
+  
+  .producto-imagen-container:hover .producto-imagen {
+    cursor: zoom-out;
+  }
+  
+  .producto-titulo {
+    font-size: 2.5rem;
+    line-height: 1.2;
+    letter-spacing: normal;
+    margin-bottom: 0.3em;
+  }
+  
+  
+  .producto-precio {
+    font-size: 2rem;
+  }
+  
+  .producto-descripcion {
+    font-size: 1rem;
+    color: #444;
+    line-height: 1.6;
+    margin-top: 1rem;
+  }
+  
+  .info-adicional p {
+    font-size: 1.1rem;
+  }
+  
+  .loading {
+    font-size: 1.5rem;
+    color: #666;
+    text-align: center;
+    margin-top: 4rem;
+  }
+  
+  .ui-pdp-icon--bookmark {
+    cursor: pointer;
+    transition: fill 0.3s ease, transform 0.2s ease;
+  }
+  
+  .btn-link:hover .ui-pdp-icon--bookmark {
+    transform: scale(1.2);
+  }
+  
+  .producto-zoom-container {
+    position: relative;
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    justify-content: center;
+  }
+  
+  
+  .producto-imagen-container {
+    overflow: hidden;
+    border-radius: 8px;
+    max-height: 500px;
+    max-width: 100%;
+    margin: 0 auto;
+    position: relative;
+  }
+  
+  .producto-imagen {
+    max-height: 500px;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+    user-select: none;
+    cursor: zoom-in;
+    position: relative;
+  }
+  
+  .zoom-lens {
+    position: absolute;
+    border: 2px solid #ffcc00;
+    width: 150px;
+    height: 150px;
+    border-radius: 4px;
+    background-color: rgba(255, 204, 0, 0.3);
+    cursor: none;
+    pointer-events: none;
+    z-index: 10;
+    transition: top 0.1s ease, left 0.1s ease;
+  
+  }
+  
+  .zoom-result {
+    position: absolute;
+    top: 0;
+    left: 100%;
+    margin-left: 0px;
+    width: 600px;
+    height: 550px;
+    background-color: white;
+    border: 2px solid #ffcc00;
+    border-radius: 8px;
+    background-repeat: no-repeat;
+    box-shadow: 0 0 20px rgba(255, 204, 0, 0.3);
+    user-select: none;
+    z-index: 1000;
+  }
+  
+  .producto-detalle-loader {
+    border: 6px solid #f3f3f3;
+    border-top: 6px solid #ffc107;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin-producto 1s linear infinite;
+  }
+  
+  @keyframes spin-producto {
+    0% {
+      transform: rotate(0deg);
+    }
+  
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  
+  
+  
+  @media (max-width: 767px) {
+    .producto-zoom-container {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .zoom-result {
+      width: 300px;
+      height: 300px;
+      margin-top: 15px;
+    }
+  }
+  
+  @media (max-width: 576px) {
+  
+    .zoom-lens,
+    .zoom-result {
+      display: none !important;
+    }
+  
+    .producto-imagen {
+      cursor: default !important;
+    }
+  
+    .producto-imagen-container:hover .producto-imagen {
+      cursor: default !important;
+      transform: none !important;
+    }
+  }
+  
+  
+  @media (max-width: 576px) {
+    .producto-titulo {
+      font-size: 1.8rem;
+    }
+  
+    .zoom-result {
+      margin-left: 10px;
+    }
+  
+    .producto-precio {
+      font-size: 1.5rem;
+    }
+  
+    .producto-imagen-container {
+      max-height: 350px;
+    }
+  
+    .producto-imagen {
+      max-height: 350px;
+    }
+  
+    .info-adicional p {
+      font-size: 1rem;
+    }
+  }
+  
+  @media (min-width: 577px) and (max-width: 991px) {
+    .producto-titulo {
+      font-size: 2.2rem;
+    }
+  
+    .producto-precio {
+      font-size: 1.8rem;
+    }
+  
+    .producto-imagen-container {
+      max-height: 450px;
+    }
+  
+    .producto-imagen {
+      max-height: 450px;
+    }
+  }
+  
+  @media (min-width: 992px) {
+    .producto-titulo {
+      font-size: 2.5rem;
+    }
+  
+    .producto-precio {
+      font-size: 2rem;
+    }
+  
+    .producto-imagen-container {
+      max-height: 500px;
+    }
+  
+    .producto-imagen {
+      max-height: 500px;
+    }
+  }

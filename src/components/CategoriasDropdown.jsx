@@ -1,26 +1,39 @@
 import { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
-import { collection, getDocs, query, orderBy } from "firebase/firestore";
+import { collection, getDocs } from "firebase/firestore";
 import { db } from "../config/firebase";
+import { useAuth } from "../context/AuthContext";
 
 export default function CategoriasDropdown({ onCloseNavbar }) {
+  const { usuario } = useAuth();
   const [categorias, setCategorias] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
 
   useEffect(() => {
     const fetchCategorias = async () => {
-      const q = query(collection(db, "Categoriasid"), orderBy("orden"));
-      const snapshot = await getDocs(q);
-      const data = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        nombre: doc.data().nombre || doc.id,
-      }));
-      setCategorias(data);
-    };
-    fetchCategorias();
-  }, []);
+      try {
+        const categoriasRef = collection(db, "categorias");
+        const snapshot = await getDocs(categoriasRef);
 
+        const data = snapshot.docs
+          .map((doc) => ({
+            id: doc.id,
+            nombre: doc.data().nombre || "Sin Nombre",
+            orden: doc.data().orden || 0,
+          }))
+          .sort((a, b) => a.orden - b.orden);
+
+        setCategorias(data);
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
+    };
+
+    fetchCategorias();
+  }, []); // ahora carga siempre, no depende de usuario ni loading
+
+  // Cerrar dropdown al hacer click fuera
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -36,15 +49,11 @@ export default function CategoriasDropdown({ onCloseNavbar }) {
   const handleItemClick = () => {
     setIsOpen(false);
     if (onCloseNavbar) onCloseNavbar();
-    window.scrollTo(0, 0); 
-
+    window.scrollTo(0, 0);
   };
 
   return (
-    <li
-      className={`nav-item dropdown ${isOpen ? "show" : ""}`}
-      ref={dropdownRef}
-    >
+    <li className={`nav-item dropdown ${isOpen ? "show" : ""}`} ref={dropdownRef}>
       <button
         className="nav-link dropdown-toggle btn btn-link"
         onClick={toggleDropdown}
@@ -55,17 +64,21 @@ export default function CategoriasDropdown({ onCloseNavbar }) {
       </button>
 
       <ul className={`dropdown-menu ${isOpen ? "show" : ""}`}>
-        {categorias.map((cat) => (
-          <li key={cat.id}>
-            <Link
-              className="dropdown-item"
-              to={`/categorias/${cat.id}`}
-              onClick={handleItemClick}
-            >
-              {cat.nombre}
-            </Link>
-          </li>
-        ))}
+        {categorias.length > 0 ? (
+          categorias.map((cat) => (
+            <li key={cat.id}>
+              <Link
+                className="dropdown-item"
+                to={`/categorias/${cat.id}`}
+                onClick={handleItemClick}
+              >
+                {cat.nombre}
+              </Link>
+            </li>
+          ))
+        ) : (
+          <li className="dropdown-item">Cargando...</li>
+        )}
       </ul>
     </li>
   );

@@ -1,0 +1,68 @@
+.drawer-overlay {
+    display: none;
+  }
+  
+  .drawer-panel {
+    display: none;
+  }
+  
+  .filtros-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1050;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+  }
+  
+  .filtros-modal-content {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    width: 100%;
+    max-width: 500px;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+  
+  @media (max-width: 768px) {
+    .drawer-overlay {
+      display: block;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.4);
+      z-index: 1040;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+  
+    .drawer-panel {
+      display: block;
+      position: fixed;
+      top: 0;
+      left: -100%;
+      width: 80%;
+      max-width: 300px;
+      height: 100vh;
+      background-color: #fff;
+      z-index: 1050;
+      box-shadow: 2px 0 8px rgba(0, 0, 0, 0.3);
+      transition: left 0.3s ease;
+    }
+  
+    .drawer-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+  
+    .drawer-panel.active {
+      left: 0;
+    }
+  }
+  

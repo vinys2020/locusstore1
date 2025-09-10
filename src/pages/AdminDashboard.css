@@ -1,10 +1,12 @@
 .admin-dashboard {
-    background-color: #2c2b2b;
-    min-height: 100vh;
-    color: #eaeaea;
-    font-family: "Poppins", sans-serif;
-    padding: 1rem 0;
-  }
+  background-color: #e4dfdf; /* Más oscuro y elegante */
+  min-height: 100vh;
+  color: #f5f5f5; /* Texto más legible */
+  font-family: "Poppins", sans-serif;
+  padding: 2rem 1rem; /* Padding uniforme */
+  margin-top: 100px; /* Ajustado para navbar */
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
   
   .admin-dashboard h1,
   .admin-dashboard h2,
