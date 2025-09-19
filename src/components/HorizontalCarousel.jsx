@@ -16,7 +16,7 @@ const HorizontalCarousel = () => {
     if (scrollRef.current) {
       const { scrollLeft, clientWidth, scrollWidth } = scrollRef.current;
       const maxScrollLeft = scrollWidth - clientWidth;
-      const scrollStep = clientWidth * 0.8; 
+      const scrollStep = clientWidth * 0.8;
 
       let targetScroll =
         direction === "next"
@@ -109,19 +109,19 @@ const HorizontalCarousel = () => {
                 <p className="scroll-producto-precio mb-0">
                   ${producto.precio ? producto.precio.toLocaleString() : "N/A"}
                 </p>
-{/* Precios en cuotas estilo Mercado Libre */}
-<div className="scroll-producto-cuotas text-start mt-1">
-  {producto.precio3Cuotas > 0 && (
-    <small className="text-success d-block fw-light">
-      3 cuotas de ${ (producto.precio3Cuotas / 3).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }
-    </small>
-  )}
-  {producto.precio6Cuotas > 0 && (
-    <small className="text-success text-start d-block fw-light mt-1">
-      6 cuotas de ${ (producto.precio6Cuotas / 6).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }
-    </small>
-  )}
-</div>
+                {/* Precios en cuotas estilo Mercado Libre */}
+                <div className="scroll-producto-cuotas text-start mt-1">
+                  {producto.precio3Cuotas > 0 && (
+                    <small className="text-success d-block fw-light">
+                      3 cuotas de ${(producto.precio3Cuotas / 3).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                    </small>
+                  )}
+                  {producto.precio6Cuotas > 0 && (
+                    <small className="text-success text-start d-block fw-light mt-1">
+                      6 cuotas de ${(producto.precio6Cuotas / 6).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                    </small>
+                  )}
+                </div>
 
 
 
@@ -131,7 +131,7 @@ const HorizontalCarousel = () => {
               <h6 className="scroll-producto-titulo text-start fs-6 "><b>{producto.nombre}</b></h6>
             </div>
             <button
-              className="scroll-producto-boton mt-lg-4 mt-0"
+              className="scroll-producto-boton mt-lg-4 mt-0 text-black"
               disabled={producto.stock === 0}
               onClick={(e) => {
                 e.stopPropagation();

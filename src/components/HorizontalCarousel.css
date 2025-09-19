@@ -169,10 +169,11 @@
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+
 @media (max-width: 768px) {
     .scroll-producto-card {
         min-width: 260px;
-        max-width: 270px;
+        max-width: 290px;
         padding: 6px;
 
     }
@@ -185,6 +186,7 @@
         font-size: 12px;
 
     }
+    
 
     .scroll-producto-boton {
         background-color: #ffd814;
@@ -231,9 +233,9 @@
 
 @media (max-width: 480px) {
     .scroll-producto-card {
-        min-width: 166px;
-        max-width: 166px;
-        height: 320px;
+        min-width: 170px;
+        max-width: 180px;
+        height: 380px;
     }
 
     .scroll-producto-card:hover {

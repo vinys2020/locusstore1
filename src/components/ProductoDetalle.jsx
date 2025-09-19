@@ -78,8 +78,10 @@ export default function ProductoDetalle() {
     return (
         <main className="producto-detalle-page container-fluid py-5 p-lg-5">
             <article className="row justify-content-center g-2 mt-lg-4 ">
+                
                 {/* Imagen del producto con zoom */}
                 <section className="col-lg-6 col-md-8 col-sm-10 text-center producto-zoom-container">
+                    
                     <div
                         className="producto-imagen-container"
                         onMouseEnter={() => setZoomVisible(true)}
@@ -168,9 +170,9 @@ export default function ProductoDetalle() {
                         </p>
 
                         {/* 🏦 Medios de pago */}
-                        <div className="col-12 text-center text-md-start mb-3 mb-md-0 mt-3">
+                        <div className="col-12 text-start text-lg-start mb-3 mb-md-0 mt-3">
                             <h6 className="text-primary mb-2">Medios de pago</h6>
-                            <div className="d-flex flex-wrap gap-2 justify-content-center justify-content-md-start">
+                            <div className="d-flex flex-wrap gap-2 justify-content-start justify-content-md-start">
                                 {/* Tarjetas de crédito */}
                                 <img
                                     alt="Visa"
