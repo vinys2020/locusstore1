@@ -25,6 +25,24 @@
   margin-top: 80px;
 }
 
+/* Hace que toda la página ocupe la altura total */
+html, body {
+  height: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+
+}
+
+
+/* El contenedor principal de la Home debe crecer para empujar el footer abajo */
+.home-background {
+  flex: 1; /* Toma el espacio disponible */
+  overflow-x: hidden;
+  
+}
+
+
 
 .icon-dark {
   filter: invert(1); /* Invierte el color del icono, haciéndolo negro */

@@ -87,15 +87,13 @@ const Navbar = ({ busqueda, setBusqueda }) => {
     let lastScrollY = window.scrollY;
     let accumulatedScrollUp = 0;
     let accumulatedScrollDown = 0;
-
-    const isMobile = window.innerWidth <= 768;
-    const mobileThresholdUp = 40;
-    const desktopThresholdUp = thresholdUp;
-
+  
+    const isMobile = window.innerWidth <= 768; // ≤768px → móvil
+    if (isMobile) return; // ❌ NO activar efecto en móvil
+  
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-      const thresholdUpValue = isMobile ? mobileThresholdUp : desktopThresholdUp;
-
+  
       if (currentScrollY > lastScrollY) {
         accumulatedScrollUp = 0;
         accumulatedScrollDown += currentScrollY - lastScrollY;
@@ -106,17 +104,19 @@ const Navbar = ({ busqueda, setBusqueda }) => {
       } else {
         accumulatedScrollDown = 0;
         accumulatedScrollUp += lastScrollY - currentScrollY;
-        if (accumulatedScrollUp >= thresholdUpValue) {
+        if (accumulatedScrollUp >= thresholdUp) {
           setScrollingUp(true);
           setScrollingDown(false);
         }
       }
+  
       lastScrollY = currentScrollY;
     };
-
+  
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, []); // solo se ejecuta al montar
+  
 
   return (
     <nav
@@ -311,13 +311,20 @@ const Navbar = ({ busqueda, setBusqueda }) => {
         Proyectos Futuros
       </Link>
     </li>
-    <li className="nav-item mx-2">
+    <ul className="navbar-nav mx-2 mx-lg-0">
   <CategoriasDropdown onCloseNavbar={cerrarMenu} />
-</li>
+  {/* otros <li> aquí */}
+</ul>
+
 
     <li className="nav-item mx-2">
       <Link className="nav-link text-white" to="/SobreNosotros" onClick={cerrarMenu}>
         Sobre Nosotros
+      </Link>
+    </li>
+    <li className="nav-item mx-2">
+      <Link className="nav-link text-white" to="/SobreNosotros" onClick={cerrarMenu}>
+        Esparcimiento
       </Link>
     </li>
     <li className="nav-item mx-2">

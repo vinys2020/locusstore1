@@ -1,6 +1,7 @@
 import React from "react";
 import locustoreLogo from "../assets/logolocus.png";
 import { FaFacebookF, FaInstagram, FaWhatsapp } from "react-icons/fa";
+import "./PreFooter.css";
 
 const PreFooter = () => {
   return (

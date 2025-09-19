@@ -3,7 +3,6 @@ import React, { useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
 import { auth } from "../config/firebase";
 import { useNavigate } from "react-router-dom";
-import logo from "../assets/sinfondologo.png";
 import "bootstrap/dist/css/bootstrap.min.css";
 import SwiperComponent from "../components/SwiperComponent";
 import HorizontalScroll2 from "../components/HorizontalScroll2"; // ✅ importamos tu componente
@@ -58,77 +57,142 @@ const Home = () => {
     <div className="home-background bg-light">
 
 
+<section
+  className="pf-home-presentation text-white mt-5 position-relative"
+  style={{
+    background:
+      "radial-gradient(circle at -50% 120%, rgba(208,242,36,0.15) 20%, #054a49 60%)",
+  }}
+>
+  <div className="container slide-up mt-lg-5 px-3 px-md-0 mt-4">
+    <div className="row justify-content-center">
+      <div className="col-12 col-md-10 col-lg-8 text-center">
+        <div
+          className="p-lg-4 p-3 p-md-5 rounded-4 shadow-lg"
+          style={{
+            background: "rgba(255,255,255,0.06)",
+            backdropFilter: "blur(10px)",
+            border: "1px solid rgba(255,255,255,0.15)",
+          }}
+        >
+          {/* Título principal */}
+          <h1
+            className="fw-bold mb-lg-3 mb-2"
+            style={{
+              fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
+              fontSize: "clamp(1.6rem, 6vw, 3rem)",
+              lineHeight: "1.1",
+              color: "#fff",
+              letterSpacing: "-0.5px",
+              textShadow: "1px 1px 4px rgba(0,0,0,0.3)",
+            }}
+          >
+            ¡Bienvenido a <span style={{ color: "#C7E86B" }}>Locus Store</span>!
+          </h1>
 
-      
+          {/* Subtítulo */}
+          <h2
+            className="fw-light mb-2"
+            style={{
+              fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
+              fontSize: "clamp(1.4rem, 4vw, 1.8rem)",
+              lineHeight: "1.3",
+              color: "rgba(255,255,255,0.95)",
+              letterSpacing: "-0.3px",
+            }}
+          >
+            Un espacio <b>dinámico</b> y en constante evolución, diseñado para que accedas fácilmente a <b>productos y servicios exclusivos</b>.
+          </h2>
 
+          {/* Descripción */}
+          <p
+            className="mx-auto mb-4"
+            style={{
+              fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
+              maxWidth: "100%",
+              color: "rgba(255,255,255,0.85)",
+              lineHeight: "1.7",
+              fontSize: "clamp(1.1rem, 3vw, 1.2rem)",
+            }}
+          >
+            Nuestro objetivo es ofrecer un acceso <b>sencillo</b> y <b>confiable</b> a <b>productos</b> en <b>cuotas</b>. Cada <b>interacción</b> refleja <b>cuidado</b>, <b>coherencia</b> y <b>valor</b>, para que tu <b>experiencia</b> en nuestra plataforma sea siempre <b>única</b>.
+          </p>
 
-
-
-
-      <section
-        className="pf-home-presentation text-white mt-5"
-        style={{
-          background:
-            "radial-gradient(circle at -50% 120%, rgba(208,242,36,0.15) 20%, #054a49 60%)",
-        }}
-      >
-        <div className="container slide-up mt-lg-5">
-          <div className="row justify-content-center">
-            <div className="col-12 col-md-10 col-lg-8 text-center">
-              <div
-                className="p-4 p-md-5 rounded-4 shadow-lg"
-                style={{
-                  background: "rgba(255,255,255,0.06)",
-                  backdropFilter: "blur(8px)",
-                  border: "1px solid rgba(255,255,255,0.15)",
-                }}
-              >
-                {/* 🌟 Título en Helvetica */}
-                <h2
-                  className="fw-normal mb-4"
-                  style={{
-                    fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
-                    fontSize: "clamp(1.8rem, 4vw, 2.5rem)", // ✅ Responsive font
-                    lineHeight: "1.2",
-                    color: "#fff",
-                    letterSpacing: "-0.5px",
-                  }}
-                >
-                  Locus Store es un espacio vivo y dinámico para acceder a productos y servicios preferenciales.        </h2>
-
-                {/* 📝 Texto descriptivo */}
-                <p
-                  className="mx-auto mb-4"
-                  style={{
-                    fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
-                    maxWidth: "700px",
-                    color: "rgba(255,255,255,0.85)",
-                    lineHeight: "1.75",
-                    fontSize: "1.1rem",
-                  }}
-                >
-                  Nuestro objetivo es que los usuarios puedan acceder a bienes en cuotas mediante un proceso claro, confiable y organizado. Queremos concentrar recursos para que cada experiencia en nuestra plataforma refleje atención al detalle, coherencia y valor.</p>
-
-                {/* CTA */}
-                <Link
-                  to="/SobreNosotros"
-                  className="btn btn-light btn-lg fw-bold px-4 py-3 rounded-pill shadow"
-                  style={{
-                    fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
-                    color: "#054a49",
-                    letterSpacing: "0.3px",
-                    transition: "all 0.3s ease",
-                  }}
-                  onMouseEnter={(e) => (e.target.style.backgroundColor = "#f8f9fa")}
-                  onMouseLeave={(e) => (e.target.style.backgroundColor = "#fff")}
-                >
-                  Saber más
-                </Link>
-              </div>
-            </div>
-          </div>
+          {/* CTA */}
+          <Link
+            to="/SobreNosotros"
+            className="btn btn-light btn-lg fw-bold px-4 px-md-5 py-3 rounded-pill shadow"
+            style={{
+              fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
+              color: "#054a49",
+              letterSpacing: "0.4px",
+              fontSize: "clamp(1rem, 3vw, 1.1rem)",
+              transition: "all 0.3s ease",
+            }}
+            onMouseEnter={(e) => (e.target.style.backgroundColor = "#f8f9fa")}
+            onMouseLeave={(e) => (e.target.style.backgroundColor = "#fff")}
+          >
+            Saber más
+          </Link>
         </div>
-      </section>
+      </div>
+    </div>
+  </div>
+
+{/* Flecha estilo Apple clicable */}
+<div
+  style={{
+    position: "absolute",
+    bottom: "30px",
+    left: "50%",
+    transform: "translateX(-50%)",
+    textAlign: "center",
+    zIndex: 10,
+    cursor: "pointer", // hace que se vea clicable
+  }}
+  onClick={() =>
+    window.scrollBy({ top: window.innerHeight * 0.9, behavior: "smooth" })
+  }
+>
+  <svg
+    width="34"
+    height="34"
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    style={{
+      stroke: "#C7E86B",
+      strokeWidth: 3,
+      strokeLinecap: "round",
+      strokeLinejoin: "round",
+      animation: "fadeMove 2s infinite",
+    }}
+  >
+    <line x1="12" y1="5" x2="12" y2="19" />
+    <polyline points="6,13 12,19 18,13" />
+  </svg>
+
+  <style>
+    {`
+      @keyframes fadeMove {
+        0%, 100% {
+          transform: translateY(0);
+          opacity: 0.6;
+        }
+        50% {
+          transform: translateY(8px);
+          opacity: 1;
+        }
+      }
+    `}
+  </style>
+</div>
+
+
+</section>
+
+
+
 
       {/* SWIPER PRINCIPAL */}
       <section className="container-fluid px-0 mt-0">
@@ -151,16 +215,16 @@ const Home = () => {
         <SwiperMini />
       </section>
 
-      
+
 
 
       <section className="mx-lg-5 slide-up">
-        
-          <div className="container-fluid w-100 mt-3">
-            
-            <div className="container px-0  px-2 text-center mt-5">
-              
-              {/* 🏷️ Título de sección con línea decorativa */}
+
+        <div className="container-fluid w-100 mt-3">
+
+          <div className="container px-0  px-2 text-center mt-5">
+
+            {/* 🏷️ Título de sección con línea decorativa */}
             <h2
               className="fw-bold mb-3"
               style={{
@@ -197,62 +261,62 @@ const Home = () => {
               Explora nuestras categorías y encuentra los productos que estás buscando de forma rápida y sencilla.
             </p>
 
-              <HorizontalCarousel />
+            <HorizontalCarousel />
 
 
 
-            </div>
           </div>
+        </div>
 
-        </section>
+      </section>
 
-        <section className="py-lg-4 slide-up">
-          <div className="container">
-            <div className="row g-3">
+      <section className="py-lg-4 slide-up">
+        <div className="container">
+          <div className="row g-3">
 
-              <div className="col-6 col-md-6 col-lg-3">
-                <div className="card border-0 shadow-sm p-0">
-                  <img
-                    src="https://http2.mlstatic.com/D_NQ_NP2X_903719-MLA71136006834_082023-B.webp"
-                    className="card-img-top mb-0 "
-                    alt="Pinturas"
-                  />
-                </div>
+            <div className="col-6 col-md-6 col-lg-3">
+              <div className="card border-0 shadow-sm p-0">
+                <img
+                  src="https://http2.mlstatic.com/D_NQ_NP2X_903719-MLA71136006834_082023-B.webp"
+                  className="card-img-top mb-0 "
+                  alt="Pinturas"
+                />
               </div>
-
-              <div className="col-6 col-md-6 col-lg-3">
-                <div className="card border-0 shadow-sm p-0">
-                  <img
-                    src="https://http2.mlstatic.com/D_NQ_NP2X_612153-MLA71329696758_082023-B.webp"
-                    className="card-img-top"
-                    alt="Bombas"
-                  />
-                </div>
-              </div>
-
-              <div className="col-6 col-md-6 col-lg-3">
-                <div className="card border-0 shadow-sm p-0">
-                  <img
-                    src="https://http2.mlstatic.com/D_NQ_NP2X_675521-MLA71305994603_082023-B.webp"
-                    className="card-img-top"
-                    alt="Electricidad"
-                  />
-                </div>
-              </div>
-
-              <div className="col-6 col-md-6 col-lg-3">
-                <div className="card border-0 shadow-sm p-0">
-                  <img
-                    src="https://http2.mlstatic.com/D_NQ_NP2X_763287-MLA71306430107_082023-B.webp"
-                    className="card-img-top"
-                    alt="Pisos y Revestimientos"
-                  />
-                </div>
-              </div>
-
             </div>
+
+            <div className="col-6 col-md-6 col-lg-3">
+              <div className="card border-0 shadow-sm p-0">
+                <img
+                  src="https://http2.mlstatic.com/D_NQ_NP2X_612153-MLA71329696758_082023-B.webp"
+                  className="card-img-top"
+                  alt="Bombas"
+                />
+              </div>
+            </div>
+
+            <div className="col-6 col-md-6 col-lg-3">
+              <div className="card border-0 shadow-sm p-0">
+                <img
+                  src="https://http2.mlstatic.com/D_NQ_NP2X_675521-MLA71305994603_082023-B.webp"
+                  className="card-img-top"
+                  alt="Electricidad"
+                />
+              </div>
+            </div>
+
+            <div className="col-6 col-md-6 col-lg-3">
+              <div className="card border-0 shadow-sm p-0">
+                <img
+                  src="https://http2.mlstatic.com/D_NQ_NP2X_763287-MLA71306430107_082023-B.webp"
+                  className="card-img-top"
+                  alt="Pisos y Revestimientos"
+                />
+              </div>
+            </div>
+
           </div>
-        </section>
+        </div>
+      </section>
 
 
 

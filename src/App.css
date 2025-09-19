@@ -9,6 +9,8 @@ body {
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
+
+
 .logo {
   height: 6em;
   padding: 1.5em;
@@ -53,5 +55,7 @@ body {
 }
 
 main.flex-grow-1 {
-  flex-grow: 1;
+  flex: 1; /* asegura que main ocupe todo el espacio restante */
+  min-height: 100%; /* evita que el footer suba mientras carga contenido */
 }
+

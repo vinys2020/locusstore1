@@ -191,7 +191,7 @@ const Carrito = () => {
   return (
     <section className="carrito-pagina py-4">
       <div className="container">
-        <h2 className="text-center mb-4">Tu Carrito de Compras</h2>
+        <h1 className="text-center mb-4 fs-bold">Tu Carrito de Compras</h1>
 
         {cart.length === 0 ? (
           <div className="text-center py-5">

@@ -309,56 +309,87 @@ export default function CategoriasPage() {
 
 
 
-        {/* Productos */}
-        <div className="categoriaspage-productos row g-3 mx-lg-4">
-          {cargando ? (
-            <div className="text-center my-5 w-100">
-              <div className="spinner-border text-warning" role="status"></div>
-            </div>
-          ) : productosFiltrados.length === 0 ? (
-            <p>No hay productos para mostrar.</p>
-          ) : (
-            productosFiltrados.map((p) => (
-              <article
-                key={p.id}
-                className="categoriaspage-product col-12 col-sm-6 col-md-4 col-lg-3"
+{/* Productos */}
+<div className="categoriaspage-productos row g-3 mx-lg-4">
+  {cargando ? (
+    <div className="text-center my-5 w-100">
+      <div className="spinner-border text-warning" role="status"></div>
+    </div>
+  ) : productosFiltrados.length === 0 ? (
+    <p>No hay productos para mostrar.</p>
+  ) : (
+    productosFiltrados.map((p) => (
+      <div
+        key={p.id}
+        className="categoriaspage-product col-12 col-sm-6 col-md-4 col-lg-3"
+      >
+        <div className="card h-100 shadow-sm hover-shadow">
+          <div
+            className="categoriaspage-img-container"
+            role="link"
+            tabIndex={0}
+            aria-label={`Ver detalles de ${p.nombre}`}
+            onClick={() => navigate(`/categorias/${categoriaId}/producto/${p.id}`)}
+            style={{ cursor: "pointer" }}
+          >
+            <img
+              src={p.imagen || "https://via.placeholder.com/200"}
+              className="categoriaspage-img card-img-top"
+              alt={p.nombre}
+              loading="lazy"
+              style={{ height: "220px", objectFit: "cover" }}
+            />
+          </div>
+          <div className="card-body d-flex flex-column">
+            <div className="categoriaspage-precio-wrapper mb-2">
+              <span
+                style={{
+                  textDecoration: "line-through",
+                  color: "#888",
+                  fontSize: "0.85rem",
+                }}
+                className="mb-0 d-block"
               >
-                <div className="card h-100 shadow-sm hover-shadow">
-                  <div
-                    className="categoriaspage-img-container"
-                    role="link"
-                    tabIndex={0}
-                    aria-label={`Ver detalles de ${p.nombre}`}
-                    onClick={() => navigate(`/categorias/${categoriaId}/producto/${p.id}`)}
-                    style={{ cursor: "pointer" }}
-                  >
-                    <img
-                      src={p.imagen || "https://via.placeholder.com/200"}
-                      className="categoriaspage-img card-img-top"
-                      alt={p.nombre}
-                      loading="lazy"
-                      style={{ height: "220px", objectFit: "cover" }}
-                    />
-                  </div>
-                  <div className="card-body d-flex flex-column">
-                    <h5 className="card-title text-dark">{p.nombre}</h5>
-                    <p className="text-muted mb-2">Marca: {p.marca}</p>
-                    <p className="mb-3">
-                      Precio: <span className="fw-bold">${p.precio?.toFixed(2)}</span>
-                    </p>
-                    <button
-                      className="btn btn-warning-custom mt-auto"
-                      disabled={p.stock === 0}
-                      onClick={(e) => { e.stopPropagation(); agregarAlCarrito(p, categoriaId); }}
-                    >
-                      {p.stock === 0 ? "Agotado" : "Agregar al carrito"}
-                    </button>
-                  </div>
-                </div>
-              </article>
-            ))
-          )}
+                ${p.precio ? Math.round(p.precio * 1.2).toLocaleString() : "-"}
+              </span>
+              <p className="fw-bold fs-5 mb-1">${p.precio?.toFixed(2)}</p>
+
+              {/* Cuotas */}
+              <div className="categoriaspage-cuotas text-start">
+                {p.precio3Cuotas > 0 && (
+                  <small className="text-success d-block fw-light">
+                    3 cuotas de ${ (p.precio3Cuotas / 3).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }
+                  </small>
+                )}
+                {p.precio6Cuotas > 0 && (
+                  <small className="text-success d-block fw-light mt-0">
+                    6 cuotas de ${ (p.precio6Cuotas / 6).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }
+                  </small>
+                )}
+              </div>
+
+
+            </div>
+
+            <h6 className="scroll-producto-titulo text-start mb-2"><b>{p.nombre}</b></h6>
+
+            <button
+              className="btn btn-warning-custom mt-auto"
+              disabled={p.stock === 0}
+              onClick={(e) => { 
+                e.stopPropagation(); 
+                if (p.stock > 0) agregarAlCarrito(p, categoriaId); 
+              }}
+            >
+              {p.stock === 0 ? "Agotado" : "Agregar al carrito"}
+            </button>
+          </div>
         </div>
+      </div>
+    ))
+  )}
+</div>
+
       </main>
     </div>
   );

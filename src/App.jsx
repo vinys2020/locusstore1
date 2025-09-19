@@ -80,7 +80,7 @@ function App() {
         <Navbar busqueda={busqueda} setBusqueda={setBusqueda} />
       )}
 
-      <main className="flex-grow-1">
+      <main className="flex-grow-1 min-vh-100 bg-white">
         <Routes>
           <Route path="/" element={<Login />} />
           <Route

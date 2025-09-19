@@ -5,7 +5,9 @@ import { db } from "../config/firebase";
 import { CartContext } from "../context/CartContext";
 import ProductosRelacionados from "../components/ProductosRelacionados";
 
+
 import "./ProductoDetalle.css";
+
 
 export default function ProductoDetalle() {
     const { categoriaId, productoId } = useParams();
@@ -71,6 +73,8 @@ export default function ProductoDetalle() {
     }
 
 
+
+
     return (
         <main className="producto-detalle-page container-fluid py-5 p-lg-5">
             <article className="row justify-content-center g-2 mt-lg-4 ">
@@ -129,9 +133,30 @@ export default function ProductoDetalle() {
                         </p>
 
                         {/* Precio actual */}
-                        <h2 className="producto-precio text-success fw-bold mb-3">
+                        <h2 className="producto-precio text-black fw-light fs-1 mb-3">
                             ${producto.precio.toLocaleString()}
                         </h2>
+
+                        {/* Precio de financiación estilo Mercado Libre */}
+                        <div className="scroll-producto-cuotas mt-2">
+                            {producto.precio3Cuotas > 0 && (
+                                <h6 className="text-success d-block fw-light">
+                                    3 cuotas de ${(producto.precio3Cuotas / 3).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                                </h6>
+                            )}
+                            {producto.precio6Cuotas > 0 && (
+                                <h6 className="text-success d-block fw-light mt-1">
+                                    6 cuotas de ${(producto.precio6Cuotas / 6).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                                </h6>
+                            )}
+                        </div>
+
+
+
+
+
+
+
 
 
                         <p className="mb-2 text-black">
@@ -142,16 +167,44 @@ export default function ProductoDetalle() {
                             {producto.stock > 0 ? producto.stock : "Agotado"}
                         </p>
 
-                        {/* Info adicional */}
-                        <div className="mb-4 info-adicional">
-                            <p className="text-success mb-1 fw-semibold d-flex align-items-center gap-0">
-                                Locus Store<i className="bi bi-lightning-fill text-warning"></i>
-                            </p>
-                            <p className="text-primary mb-0 fw-semibold">
-                                Precio de Financiacion <i className="bi bi-bag-check"></i>
-                            </p>
+                        {/* 🏦 Medios de pago */}
+                        <div className="col-12 text-center text-md-start mb-3 mb-md-0 mt-3">
+                            <h6 className="text-primary mb-2">Medios de pago</h6>
+                            <div className="d-flex flex-wrap gap-2 justify-content-center justify-content-md-start">
+                                {/* Tarjetas de crédito */}
+                                <img
+                                    alt="Visa"
+                                    height="30"
+                                    src="https://res.cloudinary.com/dqesszxgv/image/upload/v1757440161/visa_2x_la3lfi.png"
+                                />
+                                <img
+                                    alt="Mastercard"
+                                    height="30"
+                                    src="https://res.cloudinary.com/dqesszxgv/image/upload/v1757442922/mastercard_2x_qlp3sk.png"
+                                />
+                                <img
+                                    alt="Amex"
+                                    height="30"
+                                    src="https://res.cloudinary.com/dqesszxgv/image/upload/v1757442926/tarjeta-naranja_2x_ohravu.png"
+                                />
 
+                                {/* Efectivo */}
+                                <img
+                                    alt="Pago Fácil"
+                                    height="30"
+                                    src="https://res.cloudinary.com/dqesszxgv/image/upload/v1757443047/amex_2x_w20vu7.png"
+                                />
+                                <img
+                                    alt="Rapipago"
+                                    height="30"
+                                    src="https://res.cloudinary.com/dqesszxgv/image/upload/v1757443156/tarjeta-shopping_2x_tsejmn.png"
+                                />
+                            </div>
                         </div>
+
+
+
+
 
 
                     </section>
@@ -168,7 +221,7 @@ export default function ProductoDetalle() {
                     </footer>
                 </section>
 
-                {/* 🏷️ CARACTERÍSTICAS DEL PRODUCTO - ESTILO MERCADO LIBRE */}
+                {/* 🏷️ CARACTERÍSTICAS DEL PRODUCTO */}
                 <section
                     id="highlighted_specs_attrs"
                     className="ui-pdp-container__row ui-pdp-container__row--highlighted-specs-attrs my-5"
@@ -182,107 +235,60 @@ export default function ProductoDetalle() {
                         </div>
 
                         {/* ATRIBUTOS DESTACADOS */}
-                        <div className="row bg-light rounded">
-                            {[
-                                { label: "Tipos de soldadora", value: producto.tipos || "MMA" },
-                                { label: "Amperaje máximo", value: producto.amperajeMax || "105 A" },
-                                { label: "Con display digital", value: producto.display ? "Sí" : "No" },
-                                {
-                                    label: "Con tecnología inverter",
-                                    value: producto.inverter ? "Sí" : "No",
-                                },
-                                { label: "Ciclos de trabajo", value: producto.ciclo || "30%" },
-                            ].map((attr, i) => (
+                        <div className="row bg-light rounded p-lg-3">
+                            {producto.caracteristicas && producto.caracteristicas.length > 0 ? (
                                 <div
-                                    key={i}
-                                    className="flex items-center col-lg-5 gap-3 p-3 rounded-md hover:bg-gray-50 transition"
+                                    className="d-grid gap-4"
+                                    style={{ gridTemplateColumns: 'repeat(2, 1fr)' }}
                                 >
-                                    {/* Ícono gris */}
-                                    <div className="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center">
-                                        <img
-                                            src="https://http2.mlstatic.com/storage/catalog-technical-specs/images/assets/vectorial/default.svg"
-                                            alt=""
-                                            className="w-4 h-4 opacity-70"
-                                        />
-                                    </div>
-                                    <p className="text-sm">
-                                        <span className="text-gray-600">{attr.label}: </span>
-                                        <span className="font-semibold text-gray-800">{attr.value}</span>
-                                    </p>
+                                    {producto.caracteristicas.map((carac, i) => (
+                                        <div
+                                            key={i}
+                                            className="flex items-center gap-2 rounded-md  "
+                                        >
+                                            {/* Ícono gris */}
+                                            <span className="inline-flex items-center justify-center w-6 h-6 bg-gray-200 rounded-full flex-shrink-0">
+                                                <img
+                                                    src="https://http2.mlstatic.com/storage/catalog-technical-specs/images/assets/vectorial/default.svg"
+                                                    alt="✔"
+                                                    className="w-3 h-3"
+                                                />
+                                            </span>
+
+                                            {/* Texto de la característica */}
+                                            <span className="text-sm text-gray-800">{carac}</span>
+                                        </div>
+                                    ))}
                                 </div>
-                            ))}
+                            ) : (
+                                <p className="text-gray-700 p-3">No hay características agregadas para este producto.</p>
+                            )}
                         </div>
 
-                        {/* 🔽 CARACTERÍSTICAS GENERALES EN GRID 3x3 */}
-                        <div className="mt-5 border-t pt-4">
-                            <h3 className="text-lg font-semibold mb-3">Características generales</h3>
 
-                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                                {/* Marca */}
-                                <div className="bg-gray-50 p-3 rounded-lg shadow-sm hover:shadow transition">
-                                    <p className="text-gray-500 text-sm font-medium">Marca</p>
-                                    <p className="text-gray-900 font-semibold">
-                                        {producto.marca || "Lüsqtoff"}
-                                    </p>
-                                </div>
 
-                                {/* Modelo */}
-                                <div className="bg-gray-50 p-3 rounded-lg shadow-sm hover:shadow transition">
-                                    <p className="text-gray-500 text-sm font-medium">Modelo</p>
-                                    <p className="text-gray-900 font-semibold">
-                                        {producto.modelo || "MEGAIRON100-8"}
-                                    </p>
-                                </div>
+                        {/* 📝 DESCRIPCIÓN DETALLADA */}
+                        <section className="mt-4">
+                            <h2 className="text-dark">Descripción</h2>
 
-                                {/* Voltaje */}
-                                <div className="bg-gray-50 p-3 rounded-lg shadow-sm hover:shadow transition">
-                                    <p className="text-gray-500 text-sm font-medium">Voltaje</p>
-                                    <p className="text-gray-900 font-semibold">
-                                        {producto.voltaje || "220V"}
-                                    </p>
-                                </div>
-
-                                {/* Accesorios incluidos */}
-                                <div className="bg-gray-50 p-3 rounded-lg shadow-sm hover:shadow transition col-span-1 sm:col-span-2 lg:col-span-3">
-                                    <p className="text-gray-500 text-sm font-medium">
-                                        Accesorios incluidos
-                                    </p>
-                                    <p className="text-gray-900 font-semibold">
-                                        {producto.accesorios ||
-                                            "Cepillo, Correa de hombro, Manual, Pinza de masa, Pinza porta electrodo"}
-                                    </p>
+                            <div className="container">
+                                <div className="row justify-content-start">
+                                    <div className="col-12 col-md-8 col-lg-6 p-2 ">
+                                        <p
+                                            className="text-dark"
+                                            style={{ whiteSpace: 'pre-line', lineHeight: '1.5' }}
+                                        >
+                                            {producto.descripcion || "No hay descripción disponible"}
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </section>
 
                     </div>
-
-                    {/* 📝 DESCRIPCIÓN DETALLADA */}
-                    <section className="ui-pdp-container__row ui-pdp-container__row--description">
-                        <div className="ui-pdp-description bg-white p-4 rounded shadow-sm">
-                            <h2 className="text-xl font-bold mb-3 text-gray-900">Descripción</h2>
-                            <p
-                                className="text-gray-700 leading-relaxed"
-                                dangerouslySetInnerHTML={{
-                                    __html:
-                                        producto.descripcionHTML ||
-                                        `• Soldadora inverter portátil y compacta.<br>
-          • Ideal para trabajos de herrería básicos y tareas en el hogar.<br><br>
-          <strong>Datos técnicos:</strong><br>
-          • Tensión de entrada: 220V<br>
-          • Potencia: 3.5kW<br>
-          • Ciclo de trabajo: 30%<br>
-          • Clase de aislamiento: H<br><br>
-          <strong>Incluye:</strong><br>
-          • Cable con pinza porta-electrodo<br>
-          • Cable con pinza masa<br>
-          • Correa de transporte<br>
-          • Máscara fotosensible`,
-                                }}
-                            />
-                        </div>
-                    </section>
                 </section>
+
+
 
 
 

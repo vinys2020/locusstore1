@@ -14,6 +14,14 @@ export default function CrearCategoriaProducto() {
   const [productoActivo, setProductoActivo] = useState(true);
   const [campoExtraNombre, setCampoExtraNombre] = useState("");
   const [campoExtraValor, setCampoExtraValor] = useState("");
+  const [caracteristicas, setCaracteristicas] = useState([{ nombre: "", valor: "" }]);
+  const [descripcion, setDescripcion] = useState("");
+  const [precioFinanciacion3, setPrecioFinanciacion3] = useState(""); // 3 cuotas (+15%)
+  const [precioFinanciacion6, setPrecioFinanciacion6] = useState(""); // 6 cuotas (+30%)
+  const [porcentaje3, setPorcentaje3] = useState(15);
+  const [porcentaje6, setPorcentaje6] = useState(30);
+
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -37,7 +45,12 @@ export default function CrearCategoriaProducto() {
       stock: productoStock ? Number(productoStock) : null,
       imagen: productoImagen.trim() || null,
       activo: productoActivo,
+      caracteristicas: caracteristicas.filter(c => c.nombre && c.valor), // sólo con valores
+      descripcion: descripcion.trim() || null,
+      precio3Cuotas: precioFinanciacion3 ? Number(precioFinanciacion3) : null,
+      precio6Cuotas: precioFinanciacion6 ? Number(precioFinanciacion6) : null,
     };
+
 
     if (campoExtraNombre.trim()) {
       producto[campoExtraNombre.trim()] = campoExtraValor.trim();
@@ -66,9 +79,9 @@ export default function CrearCategoriaProducto() {
   };
 
   return (
-    <div className=" bg-white p-4 rounded-4 shadow-sm text-black">
-      <h2 className="text-dark text-center"><i className="bi bi-plus-circle me-2"></i>Crear Nueva Categoría</h2>
+    <div className=" rounded-4 shadow-sm text-black">
       <form onSubmit={handleSubmit}>
+        <h2 className="text-dark text-center mb-lg-3">Crear Nueva Categoría</h2>
 
         <div className="mb-3">
           <label htmlFor="categoriaNombre" className="form-label">
@@ -163,11 +176,123 @@ export default function CrearCategoriaProducto() {
             id="productoPrecio"
             className="form-control"
             value={productoPrecio}
-            onChange={(e) => setProductoPrecio(e.target.value)}
+            onChange={(e) => {
+              const valor = e.target.value;
+              setProductoPrecio(valor);
+
+              if (valor) {
+                setPrecioFinanciacion3((Number(valor) * (1 + Number(porcentaje3) / 100)).toFixed(2));
+                setPrecioFinanciacion6((Number(valor) * (1 + Number(porcentaje6) / 100)).toFixed(2));
+              } else {
+                setPrecioFinanciacion3("");
+                setPrecioFinanciacion6("");
+              }
+            }}
             step="0.01"
             min="0"
           />
+
         </div>
+
+        <div className="mb-3 row g-3">
+          {/* Porcentaje para 3 cuotas */}
+          <div className="col-md-6">
+            <label className="form-label">Porcentaje para 3 cuotas (%)</label>
+            <input
+              type="number"
+              className="form-control"
+              value={porcentaje3}
+              onChange={(e) => {
+                const valor = e.target.value;
+                setPorcentaje3(valor);
+                if (productoPrecio) setPrecioFinanciacion3((Number(productoPrecio) * (1 + Number(valor) / 100)).toFixed(2));
+              }}
+              min="0"
+              step="0.01"
+            />
+            <small className="text-muted">
+              Precio final: {precioFinanciacion3 || "0"}
+            </small>
+          </div>
+
+          {/* Porcentaje para 6 cuotas */}
+          <div className="col-md-6">
+            <label className="form-label">Porcentaje para 6 cuotas (%)</label>
+            <input
+              type="number"
+              className="form-control"
+              value={porcentaje6}
+              onChange={(e) => {
+                const valor = e.target.value;
+                setPorcentaje6(valor);
+                if (productoPrecio) setPrecioFinanciacion6((Number(productoPrecio) * (1 + Number(valor) / 100)).toFixed(2));
+              }}
+              min="0"
+              step="0.01"
+            />
+            <small className="text-muted">
+              Precio final: {precioFinanciacion6 || "0"}
+            </small>
+          </div>
+        </div>
+
+        <div className="mb-4">
+          <label className="mb-2">Características principales del producto</label>
+          {caracteristicas.map((item, index) => (
+            <div key={index} className="mb-2 row g-2 align-items-center">
+              <div className="col">
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Nombre de la característica"
+                  value={item.nombre}
+                  onChange={(e) => {
+                    const newCarac = [...caracteristicas];
+                    newCarac[index].nombre = e.target.value;
+                    setCaracteristicas(newCarac);
+                  }}
+                />
+              </div>
+              <div className="col-auto">
+                <button
+                  type="button"
+                  className="btn btn-danger"
+                  onClick={() => {
+                    const newCarac = caracteristicas.filter((_, i) => i !== index);
+                    setCaracteristicas(newCarac);
+                  }}
+                >
+                  Eliminar
+                </button>
+              </div>
+            </div>
+          ))}
+
+          <button
+            type="button"
+            className="btn btn-primary mt-2"
+            onClick={() =>
+              setCaracteristicas([...caracteristicas, { nombre: "" }])
+            }
+          >
+            + Agregar característica
+          </button>
+        </div>
+
+        <div className="mb-3">
+          <label className="form-label">Descripción del producto</label>
+          <textarea
+            className="form-control"
+            rows="4"
+            value={descripcion}
+            onChange={(e) => setDescripcion(e.target.value)}
+          />
+        </div>
+
+
+
+
+
 
         <div className="mb-3">
           <label htmlFor="productoStock" className="form-label">
@@ -195,6 +320,8 @@ export default function CrearCategoriaProducto() {
             onChange={(e) => setProductoImagen(e.target.value)}
           />
         </div>
+
+
 
         <div className="form-check mb-4">
           <input

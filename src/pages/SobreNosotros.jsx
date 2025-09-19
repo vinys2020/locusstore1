@@ -131,14 +131,7 @@ const SobreNosotros = () => {
         </div>
       </section>
 
-      {/* CTA Final */}
-      <section className="text-center py-5 bg-primary text-white slide-up">
-        <h2 className="mb-3">¿Querés unirte a Locus Store?</h2>
-        <p>Explorá nuestros productos exclusivos y disfrutá de beneficios especiales.</p>
-        <a href="#contacto" className="btn btn-light mt-3">
-          Contactanos
-        </a>
-      </section>
+
     </main>
   );
 };
