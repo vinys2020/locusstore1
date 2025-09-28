@@ -7,6 +7,19 @@ import "./perfil.css";
 const Perfil = () => {
   const { usuario } = useContext(AuthContext);
   const [datosUsuario, setDatosUsuario] = useState(null);
+  const [pedidos, setPedidos] = useState([]);
+  const [paginaActual, setPaginaActual] = useState(1);
+  const pedidosPorPagina = 4; // cuantos pedidos mostrar por página
+  const totalPaginas = Math.ceil(pedidos.length / pedidosPorPagina);
+  const [cupones, setCupones] = useState([]);
+
+  const [pedidoSeleccionado, setPedidoSeleccionado] = useState(null);
+  const [mostrarModal, setMostrarModal] = useState(false);
+
+  const verDetalles = (pedido) => {
+    setPedidoSeleccionado(pedido);
+    setMostrarModal(true);
+  };
 
   const capitalizeWords = (str) => {
     if (!str) return "";
@@ -15,6 +28,37 @@ const Perfil = () => {
       .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
       .join(" ");
   };
+
+  useEffect(() => {
+    if (!usuario) return;
+
+    const cuponesRef = collection(db, "usuarios", usuario.uid, "cuponesid");
+
+    const unsubscribe = onSnapshot(cuponesRef, (snapshot) => {
+      const cuponesData = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+      setCupones(cuponesData);
+    });
+
+    return () => unsubscribe();
+  }, [usuario]);
+
+  useEffect(() => {
+    if (!usuario) return;
+
+    const pedidosRef = collection(db, "pedidos");
+
+    const unsubscribe = onSnapshot(pedidosRef, (snapshot) => {
+      const pedidosUsuario = snapshot.docs
+        .map(doc => ({ id: doc.id, ...doc.data() }))
+        .filter(pedido => pedido.userId === usuario.uid); // solo los del usuario
+      setPedidos(pedidosUsuario);
+    });
+
+    return () => unsubscribe();
+  }, [usuario]);
 
   useEffect(() => {
     if (!usuario) return;
@@ -99,36 +143,205 @@ const Perfil = () => {
   return (
     <section className="perfil-container">
       <div className="perfil-card shadow-lg rounded-4 p-4">
-      <div className="perfil-header d-flex flex-column flex-md-row align-items-center gap-4 mb-4">
-  {/* Foto */}
-  <div className="d-flex justify-content-md-end justify-content-center mb-lg-3 ">
-    <img
-      src={user.foto}
-      alt={user.nombre}
-      className="perfil-foto rounded-circle border border-warning shadow-sm"
-      style={{ width: "120px", height: "120px", objectFit: "cover" }}
-    />
-  </div>
+        <div className="perfil-header d-flex flex-column flex-md-row align-items-center gap-4 mb-4">
+          {/* Foto */}
+          <div className="d-flex justify-content-md-end justify-content-center mb-lg-3 ">
+            <img
+              src={user.foto}
+              alt={user.nombre}
+              className="perfil-foto rounded-circle  border-success shadow-sm"
+              style={{ width: "120px", height: "120px", objectFit: "cover" }}
+            />
+          </div>
 
-  {/* Texto de bienvenida */}
-  <div className="text-center text-md-start">
-  <h2 className="fw-bold mb-1 mt-4 text-dark">
-  ¡Bienvenido, {capitalizeWords(user.nombre)}!
-</h2>
-    <p className="text-dark mb-2 fs-5 text-lg-start">
-      Nos alegra verte de nuevo. <br className="d-none d-md-inline" />
-    </p>
-    <span className="badge bg-success fs-6">⭐ {user.puntos} puntos acumulados</span>
-  </div>
-</div>
+          {/* Texto de bienvenida */}
+          <div className="text-center text-md-start">
+            <h2 className="fw-bold mb-1 mt-4 text-dark">
+              ¡Bienvenido, {capitalizeWords(user.nombre)}!
+            </h2>
+            <p className="text-dark mb-2 fs-5 text-lg-start">
+              Nos alegra verte de nuevo. <br className="d-none d-md-inline" />
+            </p>
+            <span className="badge bg-success fs-6">⭐ {user.puntos} puntos acumulados</span>
+          </div>
+        </div>
 
 
         <div className="perfil-section">
+
+          <section className="mis-pedidos border-top pt-4 mt-5">
+            <h4 className="mb-3">Historial de Compras</h4>
+
+            {pedidos.length === 0 ? (
+              <p className="text-muted">Aún no realizaste ningún pedido.</p>
+            ) : (
+              <>
+                <ul className="list-group compras-recientes ">
+                  {pedidos
+                    .sort((a, b) => b.fecha?.seconds - a.fecha?.seconds)
+                    .slice((paginaActual - 1) * pedidosPorPagina, paginaActual * pedidosPorPagina)
+                    .map((pedido) => (
+                      <li className="list-group-item mb-3 border p-2" key={pedido.id}>
+                        <div className="d-flex justify-content-between align-items-center mx-lg-1 ">
+                          <div>
+                            <strong className="text-black">Pedido ID: {pedido.id}</strong>
+                            <div
+                              className={`small ${pedido.estado === "pendiente"
+                                  ? "text-danger"
+                                  : pedido.estado === "completado"
+                                    ? "text-primary"
+                                    : ""
+                                }`}
+                            >
+                              {pedido.estado === "pendiente"
+                                ? "⏳ Estamos preparando tu pedido.."
+                                : pedido.estado === "completado"
+                                  ? "✅ Completado"
+                                  : ""}
+                            </div>
+
+                            <div className="text-muted small">
+                              Método de pago:{" "}
+                              {pedido.metodoPago === "efectivo"
+                                ? "💵 Efectivo"
+                                : pedido.metodoPago === "tarjeta"
+                                  ? "💳 Tarjeta"
+                                  : "📲 Transferencia"}
+                            </div>
+                          </div>
+                          <span className="text-success fw-bold">
+                            Total: {pedido.totalpedido?.toLocaleString("es-AR", { style: "currency", currency: "ARS" }) || "-"}
+
+                          </span>
+                        </div>
+
+                        {/* 🔽 Botón para ver detalles */}
+                        <button
+                          className="btn btn-primary btn-lg-xs mt-2 mx-lg-1 "
+                          onClick={() =>
+                            setPedidos((prev) =>
+                              prev.map((p) =>
+                                p.id === pedido.id ? { ...p, mostrarDetalles: !p.mostrarDetalles } : p
+                              )
+                            )
+                          }
+                        >
+                          {pedido.mostrarDetalles ? "Ocultar detalles" : "Ver detalles"}
+                        </button>
+
+                        {/* 🔽 Detalles visibles solo si mostrarDetalles es true */}
+                        {pedido.mostrarDetalles && (
+                          <div className="mt-3 p-3 border rounded bg-light text-dark">
+                            <h5 className="fw-bold mb-2">Detalles del pedido</h5>
+
+                            <div className="mb-2">
+                              <p><strong>Nombre:</strong> {pedido.Cliente?.nombre || "-"}</p>
+                              <p><strong>Email:</strong> {pedido.Cliente?.email || "-"}</p>
+                              <p><strong>Teléfono:</strong> {pedido.Cliente?.telefono || "-"}</p>
+                              <p><strong>DNI:</strong> {pedido.Cliente?.dni || "-"}</p>
+                              <p><strong>Gremio:</strong> {pedido.Cliente?.gremio || "-"}</p>
+                              <p><strong>Organismo:</strong> {pedido.Cliente?.organismo || "-"}</p>
+                              <p><strong>Cupón aplicado:</strong> {pedido.Cliente?.cupon || "-"}</p>
+                              <p>
+                                <strong>Fecha:</strong>{" "}
+                                {pedido.fecha?.seconds
+                                  ? new Date(pedido.fecha.seconds * 1000).toLocaleString("es-AR")
+                                  : "Sin fecha"}
+                              </p>
+                              <p><strong>Método de pago:</strong> {pedido.metodopago || "-"}</p>
+                            </div>
+
+                            <h6 className="fw-bold mt-3">Productos</h6>
+                            <ul className="list-unstyled">
+                              {pedido.productos?.map((prod, i) => {
+                                const cantidad = prod.cantidad || 1;
+                                const precioBase = prod.preciounitario * cantidad;
+
+                                let descripcionPago = "contado"; // valor por defecto
+                                let totalProducto = precioBase;
+
+                                if (prod.metodo === "3cuotas") {
+                                  totalProducto = +(precioBase * 1.15).toFixed(2); // 15% de interés
+                                  const cuota = +(totalProducto / 3).toFixed(2);
+                                  descripcionPago = `3 cuotas de $${cuota.toLocaleString("es-AR", { minimumFractionDigits: 2 })}`;
+                                } else if (prod.metodo === "6cuotas") {
+                                  totalProducto = +(precioBase * 1.30).toFixed(2); // 30% de interés
+                                  const cuota = +(totalProducto / 6).toFixed(2);
+                                  descripcionPago = `6 cuotas de $${cuota.toLocaleString("es-AR", { minimumFractionDigits: 2 })}`;
+                                } else {
+                                  totalProducto = precioBase;
+                                  descripcionPago = `Contado`;
+                                }
+
+                                return (
+                                  <li key={i} className="mb-2 p-2 border rounded bg-white">
+                                    <strong>{prod.nombre}</strong>
+                                    <div><strong>Cantidad:</strong> {cantidad}</div>
+                                    <div>
+                                      <strong>Precio unitario:</strong>{" "}
+                                      {prod.preciounitario?.toLocaleString("es-AR", { style: "currency", currency: "ARS" }) || "-"}
+                                    </div>
+                                    <div>
+                                      <strong>Total:</strong>{" "}
+                                      {totalProducto.toLocaleString("es-AR", { style: "currency", currency: "ARS" }) || "-"}
+                                    </div>
+                                    <div>
+                                      <strong>Forma de pago:</strong> {descripcionPago}
+                                    </div>
+                                  </li>
+                                );
+                              })}
+                            </ul>
+
+
+                            <p className="fw-bold mt-2">
+                              Total del pedido:{" "}
+                              {pedido.totalpedido?.toLocaleString("es-AR", { style: "currency", currency: "ARS" }) || "-"}
+                            </p>
+                          </div>
+                        )}
+
+
+                      </li>
+                    ))}
+                </ul>
+
+                {/* 🔽 Paginación */}
+                {totalPaginas > 1 && (
+                  <div className="d-flex justify-content-center mt-3">
+                    <nav>
+                      <ul className="pagination">
+                        {Array.from({ length: totalPaginas }, (_, index) => (
+                          <li
+                            key={index}
+                            className={`page-item ${paginaActual === index + 1 ? "active" : ""
+                              }`}
+                          >
+                            <button
+                              className="page-link"
+                              onClick={() => setPaginaActual(index + 1)}
+                            >
+                              {index + 1}
+                            </button>
+                          </li>
+                        ))}
+                      </ul>
+                    </nav>
+                  </div>
+                )}
+              </>
+            )}
+          </section>
+
           <section className="puntos-beneficios border-top pt-4 mt-5">
-            <h4 className="mb-3">🎁 Canjea tus puntos</h4>
+            <h4 className="mb-3">Canjea tus puntos</h4>
             <p className="text-muted">
-              🎯 Acumulá puntos en tus compras y canjealos por increíbles cupones de descuento.
+              Acumulá puntos cada vez que realices una compra en nuestra tienda.
+              ¡Entre más compres, más beneficios obtenés! Canjeá tus puntos fácilmente desde esta sección,
+              elegí el cupón que más te convenga y disfrutá de tus recompensas al instante.
+              Luego, podrás utilizar el cupón al momento de realizar tu próxima compra.
             </p>
+
             <article className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
               <div className="col">
                 <div className="card h-100 shadow-sm">
@@ -188,6 +401,75 @@ const Perfil = () => {
               </div>
             </article>
           </section>
+
+          <section className="mis-cupones border-top pt-4 mt-5">
+            <h4 className="mb-4 text-dark">Mis Cupones</h4>
+            {!usuario ? (
+              <p className="text-muted">Debes iniciar sesión para ver tus cupones.</p>
+            ) : (
+              <>
+                {cupones.length === 0 && <p className="text-muted">Aún no tenés cupones.</p>}
+
+                {/* 🔹 Cupones Disponibles */}
+                <div className="mb-5">
+                  <h5 className="mb-3 text-success text-center">Cupones Disponibles</h5>
+                  <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                    {cupones.filter(c => !c.usado).map((cupon) => (
+                      <div className="col" key={cupon.id}>
+                        <div className="card bg-light h-100 border-success shadow-xl">
+                          <div className="card-body text-center">
+                            <h6 className=" text-dark fw-bold">
+                              {cupon.nombre} {cupon.descuento ? `- ${cupon.descuento}%` : ""}
+                            </h6>
+                            <hr className="bg-success" />
+                            <p className="text-success fw-semibold mb-2">Disponible ✅</p>
+                            {cupon.fechaCompra && (
+                              <p className="small text-muted mb-0">
+                                Comprado el: {cupon.fechaCompra.toDate
+                                  ? cupon.fechaCompra.toDate().toLocaleDateString("es-AR")
+                                  : new Date(cupon.fechaCompra.seconds * 1000).toLocaleDateString("es-AR")}
+                              </p>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                    {cupones.filter(c => !c.usado).length === 0 && <p className="text-muted ms-3">No hay cupones disponibles en este momento.</p>}
+                  </div>
+                </div>
+
+                {/* 🔹 Cupones Usados */}
+                <div>
+                  <h5 className="mb-3 text-danger text-center">Cupones Utilizados</h5>
+                  <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                    {cupones.filter(c => c.usado).map((cupon) => (
+                      <div className="col" key={cupon.id}>
+                        <div className="card h-100 border-secondary shadow-xl bg-light">
+                          <div className="card-body text-center">
+                            <h6 className="text-dark fw-bold">
+                              {cupon.nombre} {cupon.descuento ? `- ${cupon.descuento}%` : ""}
+                            </h6>
+                            <hr className="bg-secondary" />
+                            <p className="text-danger fw-semibold mb-2">Ya utilizado ❌</p>
+                            {cupon.fechaCompra && (
+                              <p className="small text-muted mb-0">
+                                Comprado el: {cupon.fechaCompra.toDate
+                                  ? cupon.fechaCompra.toDate().toLocaleDateString("es-AR")
+                                  : new Date(cupon.fechaCompra.seconds * 1000).toLocaleDateString("es-AR")}
+                              </p>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                    {cupones.filter(c => c.usado).length === 0 && <p className="text-muted ms-3">No hay cupones usados.</p>}
+                  </div>
+                </div>
+              </>
+            )}
+          </section>
+
+
         </div>
       </div>
     </section>

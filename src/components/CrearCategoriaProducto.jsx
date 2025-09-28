@@ -10,11 +10,12 @@ export default function CrearCategoriaProducto() {
   const [productoMarca, setProductoMarca] = useState("");
   const [productoPrecio, setProductoPrecio] = useState("");
   const [productoStock, setProductoStock] = useState("");
-  const [productoImagen, setProductoImagen] = useState("");
+  const [imagenes, setImagenes] = useState([]);
+
   const [productoActivo, setProductoActivo] = useState(true);
   const [campoExtraNombre, setCampoExtraNombre] = useState("");
   const [campoExtraValor, setCampoExtraValor] = useState("");
-  const [caracteristicas, setCaracteristicas] = useState([{ nombre: "", valor: "" }]);
+  const [caracteristicas, setCaracteristicas] = useState([]);
   const [descripcion, setDescripcion] = useState("");
   const [precioFinanciacion3, setPrecioFinanciacion3] = useState(""); // 3 cuotas (+15%)
   const [precioFinanciacion6, setPrecioFinanciacion6] = useState(""); // 6 cuotas (+30%)
@@ -43,9 +44,9 @@ export default function CrearCategoriaProducto() {
       marca: productoMarca.trim() || null,
       precio: productoPrecio ? Number(productoPrecio) : null,
       stock: productoStock ? Number(productoStock) : null,
-      imagen: productoImagen.trim() || null,
+      imagenes: imagenes.length > 0 ? imagenes.map(i => i.url) : null,
       activo: productoActivo,
-      caracteristicas: caracteristicas.filter(c => c.nombre && c.valor), // sólo con valores
+      caracteristicas: caracteristicas.filter(c => c), // elimina strings vacíos
       descripcion: descripcion.trim() || null,
       precio3Cuotas: precioFinanciacion3 ? Number(precioFinanciacion3) : null,
       precio6Cuotas: precioFinanciacion6 ? Number(precioFinanciacion6) : null,
@@ -68,7 +69,7 @@ export default function CrearCategoriaProducto() {
       setProductoMarca("");
       setProductoPrecio("");
       setProductoStock("");
-      setProductoImagen("");
+      setImagenes([]);
       setProductoActivo(true);
       setCampoExtraNombre("");
       setCampoExtraValor("");
@@ -237,47 +238,20 @@ export default function CrearCategoriaProducto() {
         </div>
 
         <div className="mb-4">
-          <label className="mb-2">Características principales del producto</label>
-          {caracteristicas.map((item, index) => (
-            <div key={index} className="mb-2 row g-2 align-items-center">
-              <div className="col">
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Nombre de la característica"
-                  value={item.nombre}
-                  onChange={(e) => {
-                    const newCarac = [...caracteristicas];
-                    newCarac[index].nombre = e.target.value;
-                    setCaracteristicas(newCarac);
-                  }}
-                />
-              </div>
-              <div className="col-auto">
-                <button
-                  type="button"
-                  className="btn btn-danger"
-                  onClick={() => {
-                    const newCarac = caracteristicas.filter((_, i) => i !== index);
-                    setCaracteristicas(newCarac);
-                  }}
-                >
-                  Eliminar
-                </button>
-              </div>
-            </div>
-          ))}
+  <label className="form-label">Características (separadas por coma)</label>
+  <input
+    type="text"
+    className="form-control"
+    placeholder="Ej: resistente, impermeable, ligero"
+    value={caracteristicas.join(", ")}
+    onChange={(e) =>
+      setCaracteristicas(
+        e.target.value.split(",").map((c) => c.trim())
+      )
+    }
+  />
+</div>
 
-          <button
-            type="button"
-            className="btn btn-primary mt-2"
-            onClick={() =>
-              setCaracteristicas([...caracteristicas, { nombre: "" }])
-            }
-          >
-            + Agregar característica
-          </button>
-        </div>
 
         <div className="mb-3">
           <label className="form-label">Descripción del producto</label>
@@ -309,17 +283,98 @@ export default function CrearCategoriaProducto() {
         </div>
 
         <div className="mb-3">
-          <label htmlFor="productoImagen" className="form-label">
-            Imagen del Producto (URL)
-          </label>
-          <input
-            type="text"
-            id="productoImagen"
-            className="form-control"
-            value={productoImagen}
-            onChange={(e) => setProductoImagen(e.target.value)}
+  <label className="form-label">Imágenes o Videos del Producto</label>
+
+  {/* Lista de miniaturas */}
+  <div className="d-flex flex-wrap gap-2 mb-2">
+    {imagenes.map((item, index) => (
+      <div key={index} className="position-relative">
+        {item.type?.startsWith("video") ? (
+          <video
+            src={item.url}
+            controls
+            className="rounded shadow-sm"
+            style={{ width: "80px", height: "80px", objectFit: "cover" }}
           />
-        </div>
+        ) : (
+          <img
+            src={item.url || item} // compatibilidad con URLs directas
+            alt={`Producto ${index}`}
+            className="rounded shadow-sm"
+            style={{ width: "80px", height: "80px", objectFit: "cover" }}
+          />
+        )}
+
+        <button
+          type="button"
+          className="btn-close position-absolute top-0 end-0 bg-light rounded-circle"
+          style={{ transform: "scale(0.8)" }}
+          onClick={() =>
+            setImagenes(prev => prev.filter((_, i) => i !== index))
+          }
+        />
+      </div>
+    ))}
+  </div>
+
+  {/* Input de subida por URL */}
+  <input
+    type="text"
+    className="form-control mb-2"
+    placeholder="Pegá la URL de la imagen o video y presiona Enter"
+    onKeyDown={e => {
+      if (e.key === "Enter" && e.target.value.trim()) {
+        e.preventDefault();
+        const url = e.target.value.trim();
+        const tipoVideo = /\.(mp4|webm|ogg)$/i.test(url) ? "video/mp4" : "image";
+        setImagenes(prev => [...prev, { url, type: tipoVideo }]);
+        e.target.value = "";
+      }
+    }}
+  />
+
+  {/* Input archivos desde dispositivo */}
+  <input
+  type="file"
+  accept="image/*,video/*"
+  multiple
+  className="form-control"
+  onChange={async (e) => {
+    if (e.target.files) {
+      let nuevasImgs = [...imagenes];
+
+      for (let i = 0; i < e.target.files.length; i++) {
+        const file = e.target.files[i];
+
+        const formData = new FormData();
+        formData.append("file", file);
+        formData.append("upload_preset", "ml_default"); // tu preset de Cloudinary
+
+        try {
+          const res = await fetch(
+            "https://api.cloudinary.com/v1_1/dqesszxgv/upload",
+            { method: "POST", body: formData }
+          );
+          const data = await res.json();
+          if (data.secure_url) {
+            nuevasImgs.push({ url: data.secure_url, type: file.type });
+          }
+        } catch (err) {
+          console.error("Error subiendo archivo:", err);
+        }
+      }
+
+      setImagenes(nuevasImgs);
+    }
+  }}
+/>
+
+</div>
+
+
+
+
+
 
 
 

@@ -17,15 +17,14 @@
   .producto-imagen {
     max-height: 500px;
     object-fit: contain;
-    border-radius: 8px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
     transition: transform 0.5s ease;
     cursor: zoom-in;
     display: block;
     margin: 0 auto;
     max-width: 100%;
     position: relative;
-    padding: 20px;
+    padding: 0px;
+    background-color: white;
   }
   
   .producto-imagen-container:hover .producto-imagen {
@@ -74,7 +73,6 @@
   .producto-zoom-container {
     position: relative;
     display: flex;
-    gap: 20px;
     align-items: flex-start;
     justify-content: center;
   }

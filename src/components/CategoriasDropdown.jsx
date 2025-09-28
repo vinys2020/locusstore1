@@ -63,8 +63,10 @@ export default function CategoriasDropdown({ onCloseNavbar }) {
         Categorías
       </button>
 
-      <ul className={`dropdown-menu ${isOpen ? "show" : ""}`}>
-        {categorias.length > 0 ? (
+      <ul
+  className={`dropdown-menu ${isOpen ? "show" : ""}`}
+  style={{ minWidth: "220px" , backgroundColor: "#261731"}} // <-- 🔧 Ajusta el ancho aquí
+>        {categorias.length > 0 ? (
           categorias.map((cat) => (
             <li key={cat.id}>
               <Link

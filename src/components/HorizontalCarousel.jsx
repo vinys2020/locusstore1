@@ -89,26 +89,34 @@ const HorizontalCarousel = () => {
             onClick={() => handleProductoClick(producto)}
           >
             <img
-              src={producto.imagen}
+              src={producto.imagenes?.[0] || ""}
               alt={producto.nombre}
               className="scroll-producto-img"
             />
             <div className="scroll-producto-body">
               <div className="scroll-producto-precio-wrapper d-flex flex-column align-items-start">
-                <span
-                  style={{
-                    textDecoration: "line-through",
-                    color: "#888",
-                    fontSize: "0.85rem",
-                  }}
-                  className="mt-lg-3"
-                >
-                  ${producto.precio ? Math.round(producto.precio * 1.2).toLocaleString() : "-"}
-                </span>
+              <span
+  style={{
+    textDecoration: "line-through",
+    color: "#888",
+    fontSize: "0.85rem",
+  }}
+  className="mt-lg-3"
+>
+  {producto.precio
+    ? `$${Math.round(producto.precio * 1.2).toLocaleString("es-AR", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      })}`
+    : "-"}
+</span>
 
                 <p className="scroll-producto-precio mb-0">
-                  ${producto.precio ? producto.precio.toLocaleString() : "N/A"}
-                </p>
+  ${producto.precio 
+    ? producto.precio.toLocaleString("es-AR", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) 
+    : "N/A"}
+</p>
+
                 {/* Precios en cuotas estilo Mercado Libre */}
                 <div className="scroll-producto-cuotas text-start mt-1">
                   {producto.precio3Cuotas > 0 && (
@@ -131,7 +139,7 @@ const HorizontalCarousel = () => {
               <h6 className="scroll-producto-titulo text-start fs-6 "><b>{producto.nombre}</b></h6>
             </div>
             <button
-              className="scroll-producto-boton mt-lg-4 mt-0 text-black"
+              className="scroll-producto-boton text-dark mt-lg-4 mt-0"
               disabled={producto.stock === 0}
               onClick={(e) => {
                 e.stopPropagation();

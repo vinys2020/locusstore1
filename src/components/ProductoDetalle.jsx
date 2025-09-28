@@ -14,40 +14,45 @@ export default function ProductoDetalle() {
     const [producto, setProducto] = useState(null);
     const { agregarAlCarrito } = useContext(CartContext);
 
-
-    // Estado para controlar el zoom y posición del lens
+    // Zoom
     const [zoomVisible, setZoomVisible] = useState(false);
     const [lensPosition, setLensPosition] = useState({ x: 0, y: 0 });
     const [backgroundPosition, setBackgroundPosition] = useState("0% 0%");
     const imgRef = useRef(null);
 
+    // Imagen seleccionada
+    const [imagenSeleccionada, setImagenSeleccionada] = useState(0);
 
     useEffect(() => {
         const ref = doc(db, "categorias", categoriaId, "Productosid", productoId);
-
-        // Suscripción en tiempo real
         const unsubscribe = onSnapshot(ref, (docSnap) => {
             if (docSnap.exists()) {
-                setProducto({ id: docSnap.id, ...docSnap.data() });
+                const data = docSnap.data();
+                setProducto({
+                    id: docSnap.id,
+                    ...data,
+                    imagenes: data.imagenes && data.imagenes.length > 0
+                        ? data.imagenes
+                        : data.imagen
+                            ? [data.imagen]
+                            : [], // Evita undefined
+                });
             } else {
                 setProducto(null);
             }
         });
-
-        // Limpieza al desmontar
         return () => unsubscribe();
     }, [categoriaId, productoId]);
+    
+    
 
-
-    const lensSize = 120; // tamaño del recuadro lens
+    const lensSize = 120;
 
     const handleMouseMove = (e) => {
         const rect = imgRef.current.getBoundingClientRect();
-
         let x = e.clientX - rect.left - lensSize / 2;
         let y = e.clientY - rect.top - lensSize / 2;
 
-        // Limitar que el lens no se salga de la imagen
         if (x < 0) x = 0;
         if (y < 0) y = 0;
         if (x > rect.width - lensSize) x = rect.width - lensSize;
@@ -55,7 +60,6 @@ export default function ProductoDetalle() {
 
         setLensPosition({ x, y });
 
-        // Calcular posición de fondo para el zoom
         const bgX = (x / rect.width) * 100;
         const bgY = (y / rect.height) * 100;
         setBackgroundPosition(`${bgX}% ${bgY}%`);
@@ -79,46 +83,116 @@ export default function ProductoDetalle() {
         <main className="producto-detalle-page container-fluid py-5 p-lg-5">
             <article className="row justify-content-center g-2 mt-lg-4 ">
                 
-                {/* Imagen del producto con zoom */}
-                <section className="col-lg-6 col-md-8 col-sm-10 text-center producto-zoom-container">
-                    
-                    <div
-                        className="producto-imagen-container"
-                        onMouseEnter={() => setZoomVisible(true)}
-                        onMouseLeave={() => setZoomVisible(false)}
-                        onMouseMove={handleMouseMove}
-                    >
-                        <img
-                            src={producto.imagen}
-                            alt={producto.nombre}
-                            className="producto-imagen img-fluid rounded shadow-sm mt-lg-4 mt-2"
-                            ref={imgRef}
-                        />
-                        {zoomVisible && (
-                            <div
-                                className="zoom-lens"
-                                style={{
-                                    left: lensPosition.x,
-                                    top: lensPosition.y,
-                                    width: lensSize,
-                                    height: lensSize,
-                                }}
-                            />
-                        )}
-                    </div>
+            <section className="producto-zoom-container col-lg-6 col-md-8 col-sm-10 col-12 mx-auto text-start mt-lg-5 d-flex flex-row">
+  {/* Miniaturas */}
+  <div
+    className="miniaturas d-flex flex-column gap-2  me-1"
+    style={{ overflowY: "auto", maxHeight: "400px", flexShrink: 0 }}
+  >
+    {producto.imagenes.map((img, index) => (
+      <button
+        key={index}
+        className={`miniatura-btn border p-1 rounded ${index === imagenSeleccionada ? "border-primary" : "border-secondary"}`}
+        onClick={() => setImagenSeleccionada(index)}
+        style={{ background: "transparent", flex: "0 0 auto" }}
+      >
+        {img.endsWith(".mp4") ? (
+          <video
+            src={img}
+            style={{ width: "60px", height: "60px", objectFit: "cover", borderRadius: "4px" }}
+          />
+        ) : img.includes("youtube") ? (
+          <iframe
+            src={img}
+            style={{ width: "60px", height: "60px", borderRadius: "4px" }}
+            title={`youtube-${index}`}
+          />
+        ) : (
+          <img
+            src={img}
+            alt={`${producto.nombre} ${index + 1}`}
+            style={{ width: "60px", height: "60px", objectFit: "cover", borderRadius: "4px" }}
+          />
+        )}
+      </button>
+    ))}
+  </div>
+{/* Imagen principal */}
+<div
+  className="producto-imagen-container position-relative d-flex align-items-center justify-content-center"
+  style={{
+    height: "400px",
+    backgroundImage: zoomVisible
+      ? `url(${producto.imagenes[imagenSeleccionada]})`
+      : "none",
+    backgroundRepeat: "no-repeat",
+    backgroundSize: "200%", // 🔥 zoom al 200%
+    backgroundPosition: backgroundPosition, // 🔥 sigue el mouse
+  }}
+  onMouseEnter={() => setZoomVisible(true)}
+  onMouseLeave={() => setZoomVisible(false)}
+  onMouseMove={handleMouseMove}
+>
+  {producto.imagenes[imagenSeleccionada].endsWith(".mp4") ? (
+    <video
+      src={producto.imagenes[imagenSeleccionada]}
+      controls
+      className="producto-imagen rounded shadow-sm"
+      style={{ maxHeight: "100%", maxWidth: "100%", objectFit: "contain" }}
+      ref={imgRef}
+    />
+  ) : producto.imagenes[imagenSeleccionada].includes("youtube") ? (
+    <iframe
+      src={producto.imagenes[imagenSeleccionada]}
+      title="Video"
+      className="producto-imagen rounded shadow-sm"
+      style={{
+        width: "100%",
+        height: "100%",
+        border: "none",
+      }}
+    />
+  ) : (
+    <img
+      src={producto.imagenes[imagenSeleccionada]}
+      alt={producto.nombre}
+      className="producto-imagen rounded shadow-none"
+      style={{
+        maxHeight: "100%",
+        maxWidth: "100%",
+        objectFit: "contain",
+        opacity: zoomVisible ? 0 : 1, // 🔥 ocultar imagen real al hacer zoom
+      }}
+      ref={imgRef}
+    />
+  )}
 
-                    {zoomVisible && (
-                        <div
-                            className="zoom-result"
-                            style={{
-                                backgroundImage: `url(${producto.imagen})`,
-                                backgroundPosition: backgroundPosition,
-                                backgroundSize: `${imgRef.current?.width * 2}px ${imgRef.current?.height * 2
-                                    }px`,
-                            }}
-                        />
-                    )}
-                </section>
+  {/* Zoom lens solo decorativo */}
+  {zoomVisible &&
+    !producto.imagenes[imagenSeleccionada].endsWith(".mp4") &&
+    !producto.imagenes[imagenSeleccionada].includes("youtube") && (
+      <div
+        className="zoom-lens position-absolute"
+        style={{
+          left: lensPosition.x,
+          top: lensPosition.y,
+          width: lensSize,
+          height: lensSize,
+          border: "2px solid rgba(0,0,0,0.3)",
+          backgroundColor: "rgba(255,255,255,0.2)",
+          cursor: "crosshair",
+        }}
+      />
+    )}
+</div>
+        
+
+</section>
+
+
+
+
+
 
                 {/* Información del producto */}
                 <section className="col-lg-5 col-md-8 col-sm-10 d-flex flex-column mt-3">
@@ -131,13 +205,14 @@ export default function ProductoDetalle() {
                     <section>
                         {/* Precio anterior */}
                         <p className="text-muted mb-1 text-decoration-line-through fs-5">
-                            ${Math.round(producto.precio * 1.2).toLocaleString()}
-                        </p>
+  ${Math.round(producto.precio * 1.2).toLocaleString("es-AR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+</p>
 
-                        {/* Precio actual */}
+
                         <h2 className="producto-precio text-black fw-light fs-1 mb-3">
-                            ${producto.precio.toLocaleString()}
-                        </h2>
+  ${producto.precio.toLocaleString("es-AR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+</h2>
+
 
                         {/* Precio de financiación estilo Mercado Libre */}
                         <div className="scroll-producto-cuotas mt-2">

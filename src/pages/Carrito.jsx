@@ -113,7 +113,7 @@ const Carrito = () => {
         const { id: productoId, categoriaId, cantidad, nombre } = producto;
         if (!categoriaId) throw new Error(`Falta categoriaId para ${nombre}`);
 
-        const docRef = doc(db, `Categoriasid/${categoriaId}/Productosid/${productoId}`);
+        const docRef = doc(db, `categorias/${categoriaId}/Productosid/${productoId}`);
         const docSnap = await getDoc(docRef);
         if (!docSnap.exists()) throw new Error(`Producto no encontrado: ${nombre}`);
 

@@ -11,6 +11,11 @@ import {
 import CrearCategoriaProducto from "../components/CrearCategoriaProducto";
 import { db } from "../config/firebase";
 import AjustarInflacion from "../components/AjustarInflacion";
+import AdminPresupuesto from "../components/AdminPresupuesto"; // ajustá la ruta si es necesario
+import AdminUsers from "../components/AdminUsers";
+
+
+
 
 import "./admindashboard.css";
 
@@ -30,6 +35,8 @@ const AdminDashboard = () => {
     caracteristicas: [],       // ✅ NUEVO
     precio3Cuotas: "",         // ✅ NUEVO
     precio6Cuotas: "",         // ✅ NUEVO
+    activo3: true,  // ✅ agregado
+    activo6: true,  // ✅ agregado
   });
 
 
@@ -51,7 +58,7 @@ const AdminDashboard = () => {
   };
 
   // ✅ Subida de imagen a Cloudinary
-  const subirImagenCloudinary = async (file, productoId) => {
+  const subirImagenCloudinary = async (file, productoId, imagenesPrevias = []) => {
     const formData = new FormData();
     formData.append("file", file);
     formData.append("upload_preset", "ml_default");
@@ -63,16 +70,15 @@ const AdminDashboard = () => {
       );
       const data = await res.json();
       if (data.secure_url) {
-        if (productoId) {
-          await actualizarProducto(productoId, "imagen", data.secure_url);
-        } else {
-          setNuevoProducto((prev) => ({ ...prev, imagen: data.secure_url }));
-        }
+        // Agregamos la nueva URL al array de imágenes existente
+        const nuevasImgs = [...imagenesPrevias, data.secure_url];
+        await actualizarProducto(productoId, "imagenes", nuevasImgs);
       }
     } catch (err) {
       console.error("Error subiendo imagen a Cloudinary:", err);
     }
   };
+
 
   // ✅ Escuchar productos en tiempo real
   const escucharProductos = () => {
@@ -118,6 +124,7 @@ const AdminDashboard = () => {
 
     const productoAGuardar = {
       ...nuevoProducto,
+      imagenes: nuevoProducto.imagenes || [],
       precio: Number(nuevoProducto.precio),
       stock: Number(nuevoProducto.stock) || 0,
       activo: true,
@@ -134,7 +141,7 @@ const AdminDashboard = () => {
       setNuevoProducto({
         nombre: "",
         precio: "",
-        imagen: "",
+        imagenes: [],  // <-- ahora es un array de imágenes/videos
         marca: "",
         stock: "",
         contenido: "",
@@ -142,6 +149,8 @@ const AdminDashboard = () => {
         caracteristicas: [],       // ✅ NUEVO
         precio3Cuotas: "",         // ✅ NUEVO
         precio6Cuotas: "",
+        activo3: nuevoProducto.activo3,  // ✅ agregar si no está
+        activo6: nuevoProducto.activo6,  // ✅ agregar si no está
       });
     } catch (err) {
       console.error("Error creando producto:", err);
@@ -156,17 +165,17 @@ const AdminDashboard = () => {
       `categorias/${categoriaSeleccionada}/Productosid`,
       id
     );
-  
+
     try {
       let updateData = {};
-  
+
       const productoActual = productos.find((p) => p.id === id);
       const precioBase = Number(productoActual.precio || 0);
-  
+
       if (campo === "precio") {
         const interes3 = Number(productoActual.interes3 || 15);
         const interes6 = Number(productoActual.interes6 || 30);
-  
+
         updateData = {
           precio: Number(valor),
           precio3Cuotas: productoActual.activo3
@@ -207,9 +216,9 @@ const AdminDashboard = () => {
       } else {
         updateData[campo] = campo === "stock" ? Number(valor) : valor;
       }
-  
+
       await updateDoc(productoDoc, updateData);
-  
+
       // Actualizamos localmente
       setProductos((prev) =>
         prev.map((p) => (p.id === id ? { ...p, ...updateData } : p))
@@ -218,7 +227,7 @@ const AdminDashboard = () => {
       console.error("Error actualizando producto:", err);
     }
   };
-  
+
 
 
 
@@ -344,11 +353,14 @@ const AdminDashboard = () => {
                     onChange={(e) =>
                       setNuevoProducto({
                         ...nuevoProducto,
-                        caracteristicas: e.target.value.split(",").map((c) => c.trim()),
+                        caracteristicas: e.target.value
+                          .split(",")
+                          .map((c) => c.trim()), // Solo recorta espacios al inicio/final
                       })
                     }
                   />
                 </div>
+
 
 
                 {/* Descripción */}
@@ -439,25 +451,110 @@ const AdminDashboard = () => {
                   </div>
                 )}
 
-                {/* Imagen */}
-                <div className="col-md-4">
+                {/* Imágenes o Videos */}
+                <div className="col-md-12">
+                  {/* Lista de miniaturas */}
+                  <div className="d-flex flex-wrap gap-2 mb-2">
+                    {Array.isArray(nuevoProducto.imagenes) &&
+                      nuevoProducto.imagenes.map((item, index) => (
+                        <div key={index} className="position-relative">
+                          {item.endsWith(".mp4") || item.includes("video") ? (
+                            <video
+                              src={item}
+                              controls
+                              className="rounded shadow-sm"
+                              style={{ width: "80px", height: "80px", objectFit: "cover" }}
+                            />
+                          ) : (
+                            <img
+                              src={item}
+                              alt={`media-${index}`}
+                              className="rounded shadow-sm"
+                              style={{ width: "80px", height: "80px", objectFit: "cover" }}
+                            />
+                          )}
+
+                          {/* Botón eliminar */}
+                          <button
+                            type="button"
+                            className="btn-close position-absolute top-0 end-0 bg-light rounded-circle"
+                            style={{ transform: "scale(0.8)" }}
+                            onClick={() =>
+                              setNuevoProducto((prev) => ({
+                                ...prev,
+                                imagenes: prev.imagenes.filter((_, i) => i !== index),
+                              }))
+                            }
+                          />
+                        </div>
+                      ))}
+                  </div>
+
+                  {/* Input URL */}
                   <input
+                    type="text"
                     className="form-control mb-2"
-                    placeholder="Imagen URL"
-                    value={nuevoProducto.imagen}
-                    readOnly
+                    placeholder="Pegá la URL de la imagen o video y presiona Enter"
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" && e.target.value.trim()) {
+                        e.preventDefault();
+                        setNuevoProducto((prev) => ({
+                          ...prev,
+                          imagenes: [...(prev.imagenes || []), e.target.value.trim()],
+                        }));
+                        e.target.value = "";
+                      }
+                    }}
                   />
+
+                  {/* Input local (múltiples archivos) */}
+                  <label htmlFor="file-upload-nuevo" className="btn btn-primary btn-sm mb-2">
+                    Subir Archivos
+                  </label>
                   <input
+                    id="file-upload-nuevo"
                     type="file"
-                    accept="image/*"
-                    className="form-control"
+                    accept="image/*,video/*"
+                    multiple
+                    style={{ display: "none" }}
                     onChange={async (e) => {
-                      if (e.target.files && e.target.files[0]) {
-                        await subirImagenCloudinary(e.target.files[0]);
+                      if (e.target.files) {
+                        let nuevasImgs = [...(nuevoProducto.imagenes || [])];
+                        for (let i = 0; i < e.target.files.length; i++) {
+                          const file = e.target.files[i];
+
+                          // Crear URL local temporal para preview
+                          const localUrl = URL.createObjectURL(file);
+                          nuevasImgs.push(localUrl);
+
+                          // Subir a Cloudinary (si querés subir a la nube inmediatamente)
+                          const formData = new FormData();
+                          formData.append("file", file);
+                          formData.append("upload_preset", "ml_default");
+
+                          try {
+                            const res = await fetch(
+                              "https://api.cloudinary.com/v1_1/dqesszxgv/upload",
+                              { method: "POST", body: formData }
+                            );
+                            const data = await res.json();
+                            if (data.secure_url) {
+                              // Reemplazamos la URL local con la de Cloudinary
+                              nuevasImgs = nuevasImgs.map((img) =>
+                                img === localUrl ? data.secure_url : img
+                              );
+                            }
+                          } catch (err) {
+                            console.error("Error subiendo archivo:", err);
+                          }
+                        }
+                        setNuevoProducto((prev) => ({ ...prev, imagenes: nuevasImgs }));
                       }
                     }}
                   />
                 </div>
+
+
 
                 {/* Botón Agregar */}
                 <div className="col-md-4 d-grid">
@@ -491,8 +588,8 @@ const AdminDashboard = () => {
                       {categoriaSeleccionada === "Bebidasid" && <th>Contenido</th>}
                       <th>Caract.</th>
                       <th>Descrip.</th>
-                      <th>(%)3</th> {/* Nueva columna */}
-                      <th>(%)6</th> {/* Nueva columna */}
+                      <th>(%)3</th>
+                      <th>(%)6</th>
                       <th>Total 3</th>
                       <th>Total 6</th>
                       <th>Estado</th>
@@ -500,244 +597,175 @@ const AdminDashboard = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {productos
-                      .filter((p) =>
-                        p.nombre.toLowerCase().includes(busqueda.toLowerCase())
-                      )
-                      .map((producto) => (
-                        <tr key={producto.id}>
-                          <td>
-                            <input
-                              className="form-control"
-                              value={producto.nombre}
-                              onChange={(e) =>
-                                actualizarProducto(producto.id, "nombre", e.target.value)
-                              }
-                            />
-                          </td>
-                          <td>
-                            <input
-                              type="number"
-                              className="form-control"
-                              value={producto.precio}
-                              onChange={(e) =>
-                                actualizarProducto(producto.id, "precio", e.target.value)
-                              }
-                            />
-                          </td>
-                          <td style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                    {productos.filter(p => p.nombre.toLowerCase().includes(busqueda.toLowerCase())).map(producto => (
+                      <tr key={producto.id}>
+                        <td><input className="form-control" value={producto.nombre} onChange={e => actualizarProducto(producto.id, "nombre", e.target.value)} /></td>
+                        <td><input type="number" className="form-control" value={producto.precio} onChange={e => actualizarProducto(producto.id, "precio", e.target.value)} /></td>
+                        <td>
+                          <div className="d-flex flex-wrap align-items-center gap-2">
+                            {/* Mostrar miniaturas de imágenes o videos */}
+                            {(producto.imagenes || []).map((item, index) => (
+                              <div key={index} className="position-relative">
+                                {item.endsWith(".mp4") || item.includes("video") ? (
+                                  <video
+                                    src={item}
+                                    controls
+                                    style={{ width: "60px", height: "60px", objectFit: "cover", borderRadius: "4px" }}
+                                  />
+                                ) : (
+                                  <img
+                                    src={item}
+                                    alt={`producto-${index}`}
+                                    style={{ width: "60px", height: "60px", objectFit: "cover", borderRadius: "4px" }}
+                                  />
+                                )}
+
+                                {/* Botón para eliminar */}
+                                <button
+                                  type="button"
+                                  className="btn-close position-absolute top-0 end-0"
+                                  style={{ transform: "scale(0.7)" }}
+                                  onClick={() => {
+                                    const nuevasImgs = (producto.imagenes || []).filter((_, i) => i !== index);
+                                    actualizarProducto(producto.id, "imagenes", nuevasImgs);
+                                  }}
+                                />
+                              </div>
+                            ))}
+
+                            {/* Input URL */}
                             <input
                               type="text"
                               className="form-control"
-                              value={producto.imagen || ""}
-                              onChange={(e) =>
-                                actualizarProducto(producto.id, "imagen", e.target.value)
-                              }
+                              placeholder="Agregar URL de imagen o video y presionar Enter"
+                              onKeyDown={(e) => {
+                                if (e.key === "Enter" && e.target.value.trim()) {
+                                  const nuevasImgs = [...(producto.imagenes || []), e.target.value.trim()];
+                                  actualizarProducto(producto.id, "imagenes", nuevasImgs);
+                                  e.target.value = "";
+                                }
+                              }}
+                              style={{ minWidth: "150px" }}
                             />
-                            {producto.imagen && (
-                              <img
-                                src={producto.imagen}
-                                alt={producto.nombre}
-                                style={{
-                                  width: "60px",
-                                  height: "60px",
-                                  objectFit: "cover",
-                                  borderRadius: "4px",
-                                }}
-                              />
-                            )}
-                            <label
-                              htmlFor={`file-upload-${producto.id}`}
-                              className="btn btn-primary btn-sm"
-                            >
+
+                            {/* Input archivo */}
+                            <label htmlFor={`file-upload-${producto.id}`} className="btn btn-primary btn-sm">
                               Subir
                             </label>
                             <input
                               id={`file-upload-${producto.id}`}
                               type="file"
-                              accept="image/*"
+                              accept="image/*,video/*"
+                              multiple
                               style={{ display: "none" }}
                               onChange={async (e) => {
-                                if (e.target.files && e.target.files[0]) {
-                                  await subirImagenCloudinary(e.target.files[0], producto.id);
+                                if (e.target.files) {
+                                  let nuevasImgs = [...(producto.imagenes || [])];
+                                  for (let i = 0; i < e.target.files.length; i++) {
+                                    const file = e.target.files[i];
+
+                                    // Subir a Cloudinary
+                                    const formData = new FormData();
+                                    formData.append("file", file);
+                                    formData.append("upload_preset", "ml_default");
+
+                                    try {
+                                      const res = await fetch(
+                                        "https://api.cloudinary.com/v1_1/dqesszxgv/upload",
+                                        { method: "POST", body: formData }
+                                      );
+                                      const data = await res.json();
+                                      if (data.secure_url) nuevasImgs.push(data.secure_url);
+                                    } catch (err) {
+                                      console.error("Error subiendo archivo:", err);
+                                    }
+                                  }
+                                  actualizarProducto(producto.id, "imagenes", nuevasImgs);
                                 }
                               }}
                             />
-                          </td>
-                          <td>
+                          </div>
+                        </td>
+
+
+
+                        <td><input className="form-control" value={producto.marca} onChange={e => actualizarProducto(producto.id, "marca", e.target.value)} /></td>
+                        <td><input type="number" className="form-control" value={producto.stock} onChange={e => actualizarProducto(producto.id, "stock", e.target.value)} /></td>
+                        {categoriaSeleccionada === "Bebidasid" && <td><select className="form-control" value={producto.contenido || "sin alcohol"} onChange={e => actualizarProducto(producto.id, "contenido", e.target.value)}><option value="sin alcohol">Sin alcohol</option><option value="con alcohol">Con alcohol</option></select></td>}
+                        <td><input type="text" className="form-control" value={producto.caracteristicas ? producto.caracteristicas.join(", ") : ""} onChange={e => actualizarProducto(producto.id, "caracteristicas", e.target.value.split(",").map(c => c.trim()))} /></td>
+                        <td><textarea className="form-control" value={producto.descripcion || ""} onChange={e => actualizarProducto(producto.id, "descripcion", e.target.value)} /></td>
+                        <td>
+                          <input
+                            type="number"
+                            className="form-control mb-1"
+                            value={producto.interes3 ?? 15} // valor por defecto 15
+                            onChange={(e) => actualizarProducto(producto.id, "interes3", e.target.value)}
+                            disabled={!producto.activo3} // deshabilitado si no está activo
+                          />
+                          <div className="form-check mt-1">
                             <input
-                              className="form-control"
-                              value={producto.marca}
-                              onChange={(e) =>
-                                actualizarProducto(producto.id, "marca", e.target.value)
-                              }
+                              className="form-check-input"
+                              type="checkbox"
+                              checked={producto.activo3 ?? true} // por defecto true
+                              onChange={(e) => actualizarProducto(producto.id, "activo3", e.target.checked)}
+                              id={`activo3-${producto.id}`}
                             />
-                          </td>
-                          <td>
+                            <label className="form-check-label" htmlFor={`activo3-${producto.id}`}>
+                              Activo
+                            </label>
+                          </div>
+                        </td>
+
+                        <td>
+                          <input
+                            type="number"
+                            className="form-control mb-1"
+                            value={producto.interes6 ?? 30} // valor por defecto 30
+                            onChange={(e) => actualizarProducto(producto.id, "interes6", e.target.value)}
+                            disabled={!producto.activo6} // deshabilitado si no está activo
+                          />
+                          <div className="form-check mt-1">
                             <input
-                              type="number"
-                              className="form-control"
-                              value={producto.stock}
-                              onChange={(e) =>
-                                actualizarProducto(producto.id, "stock", e.target.value)
-                              }
+                              className="form-check-input"
+                              type="checkbox"
+                              checked={producto.activo6 ?? true} // por defecto true
+                              onChange={(e) => actualizarProducto(producto.id, "activo6", e.target.checked)}
+                              id={`activo6-${producto.id}`}
                             />
-                          </td>
-                          {categoriaSeleccionada === "Bebidasid" && (
-                            <td>
-                              <select
-                                className="form-control"
-                                value={producto.contenido || "sin alcohol"}
-                                onChange={(e) =>
-                                  actualizarProducto(
-                                    producto.id,
-                                    "contenido",
-                                    e.target.value
-                                  )
-                                }
-                              >
-                                <option value="sin alcohol">Sin alcohol</option>
-                                <option value="con alcohol">Con alcohol</option>
-                              </select>
-                            </td>
-                          )}
-                          <td>
+                            <label className="form-check-label" htmlFor={`activo6-${producto.id}`}>
+                              Activo
+                            </label>
+                          </div>
+                        </td>
 
-                            <input
-                              type="text"
-                              className="form-control"
-                              value={producto.caracteristicas ? producto.caracteristicas.join(", ") : ""}
-                              onChange={(e) =>
-                                actualizarProducto(
-                                  producto.id,
-                                  "caracteristicas",
-                                  e.target.value.split(",").map((c) => c.trim())
-                                )
-                              }
-                            />
-                          </td>
-
-                          <td>
-                            <textarea
-                              className="form-control"
-                              value={producto.descripcion || ""}
-                              onChange={(e) =>
-                                actualizarProducto(producto.id, "descripcion", e.target.value)
-                              }
-                            />
-                          </td>
-{/* Interés 3 cuotas */}
-<td>
-  {producto.activo3 && (
-    <input
-      type="number"
-      className="form-control mb-1"
-      value={producto.interes3 || 15}
-      onChange={(e) =>
-        actualizarProducto(producto.id, "interes3", e.target.value)
-      }
-    />
-  )}
-  <div className="form-check">
-    <input
-      className="form-check-input"
-      type="checkbox"
-      checked={producto.activo3 || false}
-      onChange={(e) =>
-        actualizarProducto(producto.id, "activo3", e.target.checked)
-      }
-      id={`activo3-${producto.id}`}
-    />
-    <label className="form-check-label" htmlFor={`activo3-${producto.id}`}>
-      Activo
-    </label>
-  </div>
-</td>
-
-{/* Interés 6 cuotas */}
-<td>
-  {producto.activo6 && (
-    <input
-      type="number"
-      className="form-control mb-1"
-      value={producto.interes6 || 30}
-      onChange={(e) =>
-        actualizarProducto(producto.id, "interes6", e.target.value)
-      }
-    />
-  )}
-  <div className="form-check">
-    <input
-      className="form-check-input"
-      type="checkbox"
-      checked={producto.activo6 || false}
-      onChange={(e) =>
-        actualizarProducto(producto.id, "activo6", e.target.checked)
-      }
-      id={`activo6-${producto.id}`}
-    />
-    <label className="form-check-label" htmlFor={`activo6-${producto.id}`}>
-      Activo
-    </label>
-  </div>
-</td>
-
-
-
-                          <td>
-                            <input
-                              type="number"
-                              className="form-control"
-                              value={producto.precio3Cuotas || ""}
-                              onChange={(e) =>
-                                actualizarProducto(producto.id, "precio3Cuotas", e.target.value)
-                              }
-                            />
-                          </td>
-
-
-                          <td>
-                            <input
-                              type="number"
-                              className="form-control"
-                              value={producto.precio6Cuotas || ""}
-                              onChange={(e) =>
-                                actualizarProducto(producto.id, "precio6Cuotas", e.target.value)
-                              }
-                            />
-                          </td>
-
-
-
-                          <td>
-                            <button
-                              className={`btn btn-sm ${producto.activo ? "btn-success" : "btn-secondary"
-                                }`}
-                              onClick={() =>
-                                actualizarProducto(producto.id, "activo", !producto.activo)
-                              }
-                            >
-                              {producto.activo ? "Activo" : "Inactivo"}
-                            </button>
-                          </td>
-                          <td>
-                            <button
-                              className="btn btn-danger btn-sm"
-                              onClick={() => eliminarProducto(producto.id)}
-                            >
-                              Eliminar
-                            </button>
-                          </td>
-                        </tr>
-                      ))}
+                        <td><input type="number" className="form-control" value={producto.precio3Cuotas || ""} onChange={e => actualizarProducto(producto.id, "precio3Cuotas", e.target.value)} /></td>
+                        <td><input type="number" className="form-control" value={producto.precio6Cuotas || ""} onChange={e => actualizarProducto(producto.id, "precio6Cuotas", e.target.value)} /></td>
+                        <td><button className={`btn btn-sm ${producto.activo ? "btn-success" : "btn-secondary"}`} onClick={() => actualizarProducto(producto.id, "activo", !producto.activo)}>{producto.activo ? "Activo" : "Inactivo"}</button></td>
+                        <td><button className="btn btn-danger btn-sm" onClick={() => eliminarProducto(producto.id)}>Eliminar</button></td>
+                      </tr>
+                    ))}
                   </tbody>
                 </table>
+
               </div>
             </div>
           </article>
         </section>
         {/* Ajustar Precios por Inflación */}
         <AjustarInflacion />
+        {/* Gestión de presupuestos */}
+<section className="row mb-5">
+  <article className="col-12">
+    <AdminPresupuesto />
+  </article>
+</section>
+
+<section className="row mb-5">
+  <article className="col-12">
+    <AdminUsers />
+  </article>
+</section>
+
       </div>
     </section>
   );

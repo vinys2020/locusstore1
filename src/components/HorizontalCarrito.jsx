@@ -17,7 +17,7 @@ const HorizontalCarousel = () => {
     if (scrollRef.current) {
       const { scrollLeft, clientWidth, scrollWidth } = scrollRef.current;
       const maxScrollLeft = scrollWidth - clientWidth;
-      const scrollStep = clientWidth * 0.8; 
+      const scrollStep = clientWidth * 0.8;
 
       let targetScroll = direction === "next"
         ? Math.min(scrollLeft + scrollStep, maxScrollLeft)
@@ -50,18 +50,18 @@ const HorizontalCarousel = () => {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-<div className="d-flex justify-content-between align-items-center mb-lg-1">
-  <h4 className="text-white mb-0">
-    Podria interesarte
-  </h4>
-  <a
-    className="splinter-link dynamic__carousel-link fw-bold text-decoration-none fs-6"
-    href="/categorias/golosinasychocolatesid"
-    style={{ color: "#3483fa" }}
-  >
-    Mostrar todos
-  </a>
-</div>
+      <div className="d-flex justify-content-between align-items-center mb-lg-1">
+        <h4 className="text-white mb-0">
+          Podria interesarte
+        </h4>
+        <a
+          className="splinter-link dynamic__carousel-link fw-bold text-decoration-none fs-6"
+          href="/categorias/golosinasychocolatesid"
+          style={{ color: "#3483fa" }}
+        >
+          Mostrar todos
+        </a>
+      </div>
 
 
       {isHovered && (
@@ -100,7 +100,7 @@ const HorizontalCarousel = () => {
             onClick={() => handleProductoClick(producto)}
           >
             <img
-              src={producto.imagen}
+              src={producto.imagenes?.[0] || ""}
               alt={producto.nombre}
               className="scroll-producto-img"
             />

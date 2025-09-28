@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect, useRef } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { CartContext } from "../context/CartContext";
 import { useAuth } from "../context/AuthContext";
 import { signOut } from "firebase/auth";
@@ -26,6 +26,9 @@ const Navbar = ({ busqueda, setBusqueda }) => {
   const navbarRef = useRef(null);
   const navigate = useNavigate();
   const [menuAbierto, setMenuAbierto] = useState(false);
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  
 
   const toggleMenu = () => setMenuAbierto(!menuAbierto);
   const cerrarMenu = () => setMenuAbierto(false);
@@ -59,11 +62,11 @@ const Navbar = ({ busqueda, setBusqueda }) => {
         cerrarMenu();
       }
     };
-  
+
     document.addEventListener("mousedown", handleClickFuera);
     return () => document.removeEventListener("mousedown", handleClickFuera);
   }, [menuAbierto]);
-  
+
 
 
   const ejecutarBusqueda = () => {
@@ -87,13 +90,13 @@ const Navbar = ({ busqueda, setBusqueda }) => {
     let lastScrollY = window.scrollY;
     let accumulatedScrollUp = 0;
     let accumulatedScrollDown = 0;
-  
+
     const isMobile = window.innerWidth <= 768; // ≤768px → móvil
     if (isMobile) return; // ❌ NO activar efecto en móvil
-  
+
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-  
+
       if (currentScrollY > lastScrollY) {
         accumulatedScrollUp = 0;
         accumulatedScrollDown += currentScrollY - lastScrollY;
@@ -109,14 +112,14 @@ const Navbar = ({ busqueda, setBusqueda }) => {
           setScrollingDown(false);
         }
       }
-  
+
       lastScrollY = currentScrollY;
     };
-  
+
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []); // solo se ejecuta al montar
-  
+
 
   return (
     <nav
@@ -200,8 +203,15 @@ const Navbar = ({ busqueda, setBusqueda }) => {
                       className="list-group-item text-white border-0 px-1 py-1 "
                       style={{ cursor: "pointer", backgroundColor: "#261731" }}
                       onClick={() => {
+                        // Limpiar estado local de búsqueda
                         setBusqueda("");
                         setSugerencias([]);
+                        
+                        // Actualizar el input en CategoriasPage vía query params
+                        searchParams.set("search", producto.nombre);
+                        setSearchParams(searchParams);
+                    
+                        // Navegar a la categoría (opcional si ya estás en la misma página)
                         navigate(`/categorias/${producto.categoria}?search=${encodeURIComponent(producto.nombre)}`);
                       }}
                     >
@@ -277,98 +287,98 @@ const Navbar = ({ busqueda, setBusqueda }) => {
             <FloatingCart />
           </div>
 
-{/* TOGGLE MÓVIL */}
-<button
-  className="navbar-toggler border border-light ms-2"
-  type="button"
-  aria-controls="navbarNav"
-  aria-expanded={menuAbierto}
-  aria-label="Toggle navigation"
-  onClick={toggleMenu}
->
-  <span className="navbar-toggler-icon"></span>
-</button>
+          {/* TOGGLE MÓVIL */}
+          <button
+            className="navbar-toggler border border-light ms-2"
+            type="button"
+            aria-controls="navbarNav"
+            aria-expanded={menuAbierto}
+            aria-label="Toggle navigation"
+            onClick={toggleMenu}
+          >
+            <span className="navbar-toggler-icon"></span>
+          </button>
 
 
         </div>
 
-{/* FILA INFERIOR: LINKS + ADMIN/EMPLEADO + LOGIN/AVATAR MÓVIL */}
-<div
-  className={`collapse navbar-collapse w-100 ${menuAbierto ? "show" : ""}`}
-  id="navbarNav"
-  ref={navbarRef}
->
-  <ul className="navbar-nav mx-auto d-flex flex-wrap justify-content-center align-items-start">
+        {/* FILA INFERIOR: LINKS + ADMIN/EMPLEADO + LOGIN/AVATAR MÓVIL */}
+        <div
+          className={`collapse navbar-collapse w-100 ${menuAbierto ? "show" : ""}`}
+          id="navbarNav"
+          ref={navbarRef}
+        >
+          <ul className="navbar-nav mx-auto d-flex flex-wrap justify-content-center align-items-start">
 
-    {/* Links normales */}
-    <li className="nav-item mx-2">
-      <Link className="nav-link text-white" to="/home" onClick={cerrarMenu}>
-        Inicio
-      </Link>
-    </li>
-    <li className="nav-item mx-2">
-      <Link className="nav-link text-white" to="/ProyectosFuturos" onClick={cerrarMenu}>
-        Proyectos Futuros
-      </Link>
-    </li>
-    <ul className="navbar-nav mx-2 mx-lg-0">
-  <CategoriasDropdown onCloseNavbar={cerrarMenu} />
-  {/* otros <li> aquí */}
-</ul>
+            {/* Links normales */}
+            <li className="nav-item mx-2">
+              <Link className="nav-link text-white" to="/home" onClick={cerrarMenu}>
+                Inicio
+              </Link>
+            </li>
+            <li className="nav-item mx-2">
+              <Link className="nav-link text-white" to="/ProyectosFuturos" onClick={cerrarMenu}>
+                Proyectos Futuros
+              </Link>
+            </li>
+            <ul className="navbar-nav mx-2 mx-lg-0">
+              <CategoriasDropdown onCloseNavbar={cerrarMenu} />
+              {/* otros <li> aquí */}
+            </ul>
 
 
-    <li className="nav-item mx-2">
-      <Link className="nav-link text-white" to="/SobreNosotros" onClick={cerrarMenu}>
-        Sobre Nosotros
-      </Link>
-    </li>
-    <li className="nav-item mx-2">
-      <Link className="nav-link text-white" to="/SobreNosotros" onClick={cerrarMenu}>
-        Esparcimiento
-      </Link>
-    </li>
-    <li className="nav-item mx-2">
-      <Link className="nav-link text-white" to="/contacto" onClick={cerrarMenu}>
-        Contacto
-      </Link>
-    </li>
+            <li className="nav-item mx-2">
+              <Link className="nav-link text-white" to="/SobreNosotros" onClick={cerrarMenu}>
+                Sobre Nosotros
+              </Link>
+            </li>
+            <li className="nav-item mx-2">
+              <Link className="nav-link text-white" to="/SobreNosotros" onClick={cerrarMenu}>
+                Esparcimiento
+              </Link>
+            </li>
+            <li className="nav-item mx-2">
+              <Link className="nav-link text-white" to="/contacto" onClick={cerrarMenu}>
+                Contacto
+              </Link>
+            </li>
 
-    {/* ADMIN / EMPLEADO + LOGIN/AVATAR MÓVIL */}
-    <div className="d-flex d-md-none flex-column mt-2 w-100">
-      {usuario && adminEmail.includes(usuario.email) && (
-        <Link className="nav-link text-white mx-2" to="/admin" onClick={cerrarMenu}>
-          Admin
-        </Link>
-      )}
-      {usuario && empleadosEmails.includes(usuario.email) && (
-        <Link className="nav-link text-white" to="/empleado" onClick={cerrarMenu}>
-          Empleado
-        </Link>
-      )}
-      {usuario ? (
-        <>
-          <Link className="nav-link d-flex align-items-center text-white" to="/perfil" onClick={cerrarMenu}>
-            <img
-              src={usuario.photoURL || "https://via.placeholder.com/40"}
-              alt="Avatar"
-              className="avatar-img rounded-circle me-2"
-              style={{ width: "40px", height: "40px", objectFit: "cover" }}
-            />
-            {usuario.displayName || usuario.email}
-          </Link>
-          <button className="btn btn-link nav-link text-white p-0" onClick={() => { cerrarSesion(); cerrarMenu(); }}>
-            Cerrar sesión
-          </button>
-        </>
-      ) : (
-        <Link className="nav-link text-white" to="/login" onClick={cerrarMenu}>
-          Iniciar Sesión
-        </Link>
-      )}
-    </div>
+            {/* ADMIN / EMPLEADO + LOGIN/AVATAR MÓVIL */}
+            <div className="d-flex d-md-none flex-column mt-2 w-100">
+              {usuario && adminEmail.includes(usuario.email) && (
+                <Link className="nav-link text-white mx-2" to="/admin" onClick={cerrarMenu}>
+                  Admin
+                </Link>
+              )}
+              {usuario && empleadosEmails.includes(usuario.email) && (
+                <Link className="nav-link text-white" to="/empleado" onClick={cerrarMenu}>
+                  Empleado
+                </Link>
+              )}
+              {usuario ? (
+                <>
+                  <Link className="nav-link d-flex align-items-center text-white" to="/perfil" onClick={cerrarMenu}>
+                    <img
+                      src={usuario.photoURL || "https://via.placeholder.com/40"}
+                      alt="Avatar"
+                      className="avatar-img rounded-circle me-2"
+                      style={{ width: "40px", height: "40px", objectFit: "cover" }}
+                    />
+                    {usuario.displayName || usuario.email}
+                  </Link>
+                  <button className="btn btn-link nav-link text-white p-0" onClick={() => { cerrarSesion(); cerrarMenu(); }}>
+                    Cerrar sesión
+                  </button>
+                </>
+              ) : (
+                <Link className="nav-link text-white" to="/login" onClick={cerrarMenu}>
+                  Iniciar Sesión
+                </Link>
+              )}
+            </div>
 
-  </ul>
-</div>
+          </ul>
+        </div>
 
 
       </div>

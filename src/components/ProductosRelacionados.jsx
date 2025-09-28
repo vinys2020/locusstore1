@@ -107,11 +107,11 @@ const ProductosRelacionados = ({ categoriaId, productoActualId }) => {
             style={{ scrollSnapAlign: "start", cursor: "pointer" }}
             onClick={() => handleProductoClick(producto)}
           >
-            <img
-              src={producto.imagen}
-              alt={producto.nombre}
-              className="scroll-producto-img"
-            />
+<img
+  src={producto.imagenes?.[0] || ""}
+  alt={producto.nombre}
+  className="scroll-producto-img"
+/>
             <div className="scroll-producto-body">
               <div className="scroll-producto-precio-wrapper d-flex flex-column align-items-start">
                 <span

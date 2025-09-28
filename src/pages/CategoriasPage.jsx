@@ -27,6 +27,11 @@ export default function CategoriasPage() {
   const toggleDrawer = () => setDrawerAbierto(!drawerAbierto);
 
   const [busqueda, setBusqueda] = useState(searchQuery);
+  useEffect(() => {
+    const search = searchParams.get("search") || "";
+    setBusqueda(search); // Actualiza el input cuando cambia el query
+  }, [searchParams]);
+  
   const [filtroStock, setFiltroStock] = useState("todos");
   const [ordenPrecio, setOrdenPrecio] = useState("ninguno");
   const [precioMin, setPrecioMin] = useState(precioMinQuery);
@@ -333,8 +338,8 @@ export default function CategoriasPage() {
             style={{ cursor: "pointer" }}
           >
             <img
-              src={p.imagen || "https://via.placeholder.com/200"}
-              className="categoriaspage-img card-img-top"
+src={(p.imagenes && p.imagenes.length > 0 ? p.imagenes[0] : "https://via.placeholder.com/200")}
+className="categoriaspage-img card-img-top"
               alt={p.nombre}
               loading="lazy"
               style={{ height: "220px", objectFit: "cover" }}

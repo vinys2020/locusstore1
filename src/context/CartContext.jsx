@@ -1,5 +1,15 @@
 import React, { createContext, useState, useEffect } from "react";
-import { getFirestore, collection, getDocs, doc, getDoc, runTransaction, updateDoc } from "firebase/firestore";
+import { 
+  getFirestore, 
+  collection, 
+  getDocs, 
+  doc, 
+  getDoc, 
+  runTransaction, 
+  updateDoc,
+  addDoc,             // ✅ falta
+  serverTimestamp     // ✅ falta
+} from "firebase/firestore";
 import { getApp } from "firebase/app";
 
 export const CartContext = createContext();
@@ -10,11 +20,58 @@ export const CartProvider = ({ children, userId }) => {
   const [coupon, setCoupon] = useState(null);
   const [telefonoUsuario, setTelefonoUsuario] = useState("");
   const [cuponesUsuario, setCuponesUsuario] = useState([]);
+  const app = getApp();
+  const db = getFirestore(app);
 
   const [loadingCupones, setLoadingCupones] = useState(true);
 
-  const app = getApp();
-  const db = getFirestore(app);
+  const registrarPedido = async (clienteFormulario, metodoPago = "Contado") => {
+    if (!cart.length) throw new Error("El carrito está vacío");
+
+    const stockDisponible = await verificarStockDisponible();
+    if (!stockDisponible) throw new Error("No hay suficiente stock para uno o más productos");
+
+    const pedido = {
+      userId: userId, // usar prop recibida
+      Cliente: {
+        nombre: clienteFormulario.nombre || "",
+        email: clienteFormulario.email || "",
+        telefono: clienteFormulario.telefono || "",
+        dni: clienteFormulario.dni || "",
+        gremio: clienteFormulario.gremio || "",
+        organismo: clienteFormulario.organismo || "",
+        cupon: coupon?.codigo || null,
+      },
+      productos: cart.map((p) => ({
+        id: p.id,
+        nombre: p.nombre || p.descripcion,
+        cantidad: p.cantidad,
+        preciounitario: Number(p.precio || 0),
+        total: Number((p.cantidad * (p.precio || 0)).toFixed(2)),
+        metodopago: p.metodo || metodoPago,
+      })),
+      subtotal: calcularSubtotal(),
+      totalpedido: calcularTotal(),
+      descuento: calcularDescuentoMonetario(),
+      metodopago: metodoPago,
+      estado: "pendiente",
+      fecha: serverTimestamp(),
+    };
+
+    try {
+      await descontarStock();
+      const pedidosCol = collection(db, "pedidos");
+      const docRef = await addDoc(pedidosCol, pedido);
+      if (coupon) await marcarCuponComoUsado(coupon.codigo);
+      setCart([]);
+      return docRef.id;
+    } catch (error) {
+      console.error("Error al registrar pedido:", error);
+      throw error;
+    }
+  };
+
+
 
     useEffect(() => {
       const storedCart = localStorage.getItem("cart");
@@ -56,6 +113,7 @@ export const CartProvider = ({ children, userId }) => {
   }, [userId, db]);
 
 
+
   const marcarCuponComoUsado = async (codigoCupon) => {
     if (!userId || !codigoCupon) return;
   
@@ -80,14 +138,23 @@ export const CartProvider = ({ children, userId }) => {
   
 
   const obtenerCategoriaId = (producto) => {
-    if (producto.categoriaId) return producto.categoriaId;
-    if (producto.Categoriasid) return producto.Categoriasid;
-    if (producto.categoria) return producto.categoria;
-    if (producto.Categorias) return producto.Categorias;
+    const categoria =
+      producto.categoriaId ||
+      producto.categoriasId ||
+      producto.categoria ||
+      producto.categorias ||
+      producto.categoryId ||
+      producto.CategoryId ||
+      null;
   
-    console.warn(`Producto con id ${producto.id} no tiene categoriaId definido.`);
-    return "sin-categoria"; 
+    if (!categoria) {
+      console.error(`⚠️ Producto sin categoría: ${producto.descripcion || producto.nombre || producto.id}`);
+      return null;
+    }
+  
+    return categoria;
   };
+  
 
   const agregarAlCarrito = (producto, categoriaId) => {
     const productoConCategoria = { ...producto, categoriaId };
@@ -103,6 +170,8 @@ export const CartProvider = ({ children, userId }) => {
       }
     });
   };
+  
+  
 
   const eliminarDelCarrito = (productoId) => {
     setCart((prevCart) => prevCart.filter((p) => p.id !== productoId));
@@ -165,7 +234,7 @@ const calcularDescuentoMonetario = () => {
           console.warn(`Falta categoriaId para el producto: ${item.descripcion || item.id}`);
           return false;
         }
-        const productoDocRef = doc(db, `Categoriasid/${item.categoriaId}/Productosid/${item.id}`);
+        const productoDocRef = doc(db, `categorias/${item.categoriaId}/Productosid/${item.id}`);
         const productoSnap = await getDoc(productoDocRef);
         if (!productoSnap.exists()) {
           console.warn(`Producto no encontrado en Firebase: ${item.id}`);
@@ -180,6 +249,13 @@ const calcularDescuentoMonetario = () => {
       return false;
     }
   };
+
+  // Dentro de CartProvider
+const actualizarProducto = (id, cambios) => {
+  setCart((prevCart) =>
+    prevCart.map((p) => (p.id === id ? { ...p, ...cambios } : p))
+  );
+};
   
   
   const descontarStock = async () => {
@@ -188,7 +264,7 @@ const calcularDescuentoMonetario = () => {
         for (const item of cart) {
           if (!item.categoriaId) continue;
   
-          const productoDocRef = doc(db, `Categoriasid/${item.categoriaId}/Productosid/${item.id}`);
+          const productoDocRef = doc(db, `categorias/${item.categoriaId}/Productosid/${item.id}`);
           const productoDoc = await transaction.get(productoDocRef);
   
           if (!productoDoc.exists()) {
@@ -221,6 +297,7 @@ const calcularDescuentoMonetario = () => {
         disminuirCantidad,
         totalItems,
         totalPrecio: calcularTotal(),
+        actualizarProducto, // <--- nueva función
         descuentoMonetario: calcularDescuentoMonetario(),
         aplicarCupon,
         coupon,
@@ -233,6 +310,7 @@ const calcularDescuentoMonetario = () => {
         verificarStockDisponible,
         descontarStock,
         marcarCuponComoUsado,
+        registrarPedido, // <--- la exportás aquí
       }}
     >
       {children}

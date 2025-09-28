@@ -16,6 +16,8 @@ import SobreNosotros from "./pages/SobreNosotros";
 import CategoriasPage from "./pages/CategoriasPage";
 import ProductoDetalle from "./components/ProductoDetalle";
 import PreFooter from "./components/PreFooter"; // ✅ Importa tu PreFooter
+import "react-toastify/dist/ReactToastify.css";
+import ToastWithSound from "./components/ToastWithSound";
 
 
 
@@ -48,10 +50,12 @@ function ProtectedRoute({ children, rolPermitido }) {
 function AppWrapper() {
   return (
     <AuthProvider>
-      <CartProvider>
+      <CartProvider >
         <ScrollToTop /> {/* ✅ Agregado aquí */}
 
         <App />
+        <ToastWithSound />
+
       </CartProvider>
     </AuthProvider>
   );
@@ -75,6 +79,7 @@ function App() {
   }, [usuario, location.pathname]);
 
   return (
+    
     <div className="app-wrapper d-flex flex-column min-vh-100">
       {location.pathname !== "/" && (
         <Navbar busqueda={busqueda} setBusqueda={setBusqueda} />

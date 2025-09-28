@@ -9,7 +9,7 @@ const useProductosFerreteria = () => {
   useEffect(() => {
     const fetchProductos = async () => {
       try {
-        const productosRef = collection(db, "Categoriasid", "ferreteriaid", "Productosid");
+        const productosRef = collection(db, "categorias", "ferreteriaid", "Productosid");
         const snapshot = await getDocs(productosRef);
         const productosData = snapshot.docs.map(doc => ({
           id: doc.id,

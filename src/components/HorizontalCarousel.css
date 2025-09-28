@@ -159,10 +159,12 @@
 }
 
 
+
 .scroll-producto-boton:hover {
-    background-color: #000;
-    color: #ffd814;
+    background-color: #261731; /* amarillo warning de Bootstrap */
+    color: #fff !important; /* texto blanco en hover */
     cursor: pointer;
+    transform: translateY(-2px); /* efecto sutil de "levantado" */
 }
 
 .scroll-producto-boton {
