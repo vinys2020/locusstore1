@@ -7,21 +7,21 @@ const items = [
   {
     image: "https://res.cloudinary.com/dqesszxgv/image/upload/v1757430352/er_15_vvakvr.png",
     alt: "OFERTAS",
-    link: "/categorias/Ofertasid",
-    title: "HERRAMIENTAS & ACCESORIOS"
+    link: "/categorias/herramientasid",
+    title: "HERRAMIENTAS"
   },
   {
     image: "https://res.cloudinary.com/dqesszxgv/image/upload/v1757430745/er_18_cjxquo.png",
     alt: "CAFÉ",
-    link: "/categorias/Almacenid?search=Cafe",
-    title: "LADRILLOS & BLOQUES"
+    link: "/categorias/materialesdeconstrucciónid",
+    title: "MATERIALES"
   },
   
   {
     image: "https://res.cloudinary.com/dqesszxgv/image/upload/v1757431449/er_22_xwl1ae.png",
     alt: "LIMPIEZA",
     link: "/categorias/Articuloslimpiezaid",
-    title: "HIERROS & ALAMBRES"
+    title: "HIERROS y ACEROS"
   },
   {
     image: "https://res.cloudinary.com/dqesszxgv/image/upload/v1757431866/er_24_nagvs1.png",
@@ -32,8 +32,8 @@ const items = [
   {
     image: "https://res.cloudinary.com/dqesszxgv/image/upload/v1757442249/er_28_hv7xgc.png",
     alt: "ALMACÉN",
-    link: "/categorias/Almacenid",
-    title: "MAQUINARIA & EQUIPOS"
+    link: "/categorias/serviciosid",
+    title: "SERVICIOS"
   },
   {
     image: "https://res.cloudinary.com/dqesszxgv/image/upload/v1757432773/er_26_psnmrv.png",

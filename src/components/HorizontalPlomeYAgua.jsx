@@ -1,15 +1,15 @@
 import React, { useState, useRef, useContext } from "react";
-import useProductosMaterialesConstruccion from "../hooks/useProductosMaterialesConstruccion"; // 👈 NUEVO HOOK
+import usePlomeriaYAgua from "../hooks/usePlomeriaYAgua"; // 👈 NUEVO HOOK
 import { useNavigate } from "react-router-dom";
 import { CartContext } from "../context/CartContext";
 import "./HorizontalCarousel.css";
 
-const HorizontalCarousel = () => {
+const HorizontalPlomeYAgua = () => {
   const [isHovered, setIsHovered] = useState(false);
   const scrollRef = useRef(null);
   const navigate = useNavigate();
 
-  const { productos, loading } = useProductosMaterialesConstruccion();
+  const { productos, loading } = usePlomeriaYAgua(); // 👈 USO DEL HOOK
   const { agregarAlCarrito } = useContext(CartContext);
 
   const scroll = (direction) => {
@@ -28,7 +28,6 @@ const HorizontalCarousel = () => {
   };
 
   const handleProductoClick = (producto) => {
-    // Usamos la categoría dinámica para la ruta
     navigate(`/categorias/${producto.categoria}/producto/${producto.id}`, {
       state: { producto },
     });
@@ -51,8 +50,6 @@ const HorizontalCarousel = () => {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-
-
       {isHovered && (
         <button
           className="andes-carousel-snapped__control andes-carousel-snapped__control--size-large position-absolute start-0 top-50 translate-middle-y z-3 prev-button"
@@ -95,48 +92,56 @@ const HorizontalCarousel = () => {
             />
             <div className="scroll-producto-body">
               <div className="scroll-producto-precio-wrapper d-flex flex-column align-items-start">
-              <span
-  style={{
-    textDecoration: "line-through",
-    color: "#888",
-    fontSize: "0.85rem",
-  }}
-  className="mt-lg-3"
->
-  {producto.precio
-    ? `$${Math.round(producto.precio * 1.2).toLocaleString("es-AR", {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2,
-      })}`
-    : "-"}
-</span>
+                <span
+                  style={{
+                    textDecoration: "line-through",
+                    color: "#888",
+                    fontSize: "0.85rem",
+                  }}
+                  className="mt-lg-3"
+                >
+                  {producto.precio
+                    ? `$${Math.round(producto.precio * 1.2).toLocaleString("es-AR", {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2,
+                      })}`
+                    : "-"}
+                </span>
 
                 <p className="scroll-producto-precio mb-0">
-  ${producto.precio 
-    ? producto.precio.toLocaleString("es-AR", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) 
-    : "N/A"}
-</p>
+                  $
+                  {producto.precio
+                    ? producto.precio.toLocaleString("es-AR", {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2,
+                      })
+                    : "N/A"}
+                </p>
 
-                {/* Precios en cuotas estilo Mercado Libre */}
                 <div className="scroll-producto-cuotas text-start mt-1">
                   {producto.precio3Cuotas > 0 && (
                     <small className="text-success d-block fw-light">
-                      3 cuotas de ${(producto.precio3Cuotas / 3).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                      3 cuotas de{" "}
+                      {(producto.precio3Cuotas / 3).toLocaleString(undefined, {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2,
+                      })}
                     </small>
                   )}
                   {producto.precio6Cuotas > 0 && (
                     <small className="text-success text-start d-block fw-light mt-1">
-                      6 cuotas de ${(producto.precio6Cuotas / 6).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                      6 cuotas de{" "}
+                      {(producto.precio6Cuotas / 6).toLocaleString(undefined, {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2,
+                      })}
                     </small>
                   )}
                 </div>
-
-
-
-
-
               </div>
-              <h6 className="scroll-producto-titulo text-start fs-6 "><b>{producto.nombre}</b></h6>
+              <h6 className="scroll-producto-titulo text-start fs-6 ">
+                <b>{producto.nombre}</b>
+              </h6>
             </div>
             <button
               className="scroll-producto-boton text-dark mt-lg-4 mt-0"
@@ -176,4 +181,4 @@ const HorizontalCarousel = () => {
   );
 };
 
-export default HorizontalCarousel;
+export default HorizontalPlomeYAgua;

@@ -429,7 +429,7 @@ const AdminPresupuesto = () => {
             <div className="row justify-content-center">
                 <article className="col-12 col-md-10 col-lg-8">
                     <div className="adminpedidos-card shadow-lg rounded-4 p-4">
-                        <h2 className="adminpedidos-title mb-4 text-center text-dark">Gestiona Presupuestos</h2>
+                        <h3 className="adminpedidos-title mb-4 text-center text-dark">Gestiona Presupuestos</h3>
 
                         <div className="position-relative mb-3 d-flex align-items-center gap-3 flex-wrap justify-content-center">
                             <div className="position-relative d-inline-block">

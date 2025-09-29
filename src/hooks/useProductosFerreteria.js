@@ -1,32 +1,40 @@
 import { useEffect, useState } from "react";
-import { collection, getDocs } from "firebase/firestore";
+import { doc, getDoc } from "firebase/firestore";
 import { db } from "../config/firebase";
 
-const useProductosFerreteria = () => {
-  const [productos, setProductos] = useState([]);
+const useProductoMaterialConstruccion = () => {
+  const [producto, setProducto] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchProductos = async () => {
+    const fetchProducto = async () => {
       try {
-        const productosRef = collection(db, "categorias", "ferreteriaid", "Productosid");
-        const snapshot = await getDocs(productosRef);
-        const productosData = snapshot.docs.map(doc => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
-        setProductos(productosData);
+        const productoRef = doc(
+          db,
+          "categorias",
+          "materialesdeconstrucciónid",
+          "Productosid",
+          "CRp6CAaQZxaIhv3m4QbW"
+        );
+        const snapshot = await getDoc(productoRef);
+
+        if (snapshot.exists()) {
+          setProducto({ id: snapshot.id, ...snapshot.data() });
+        } else {
+          console.warn("El producto no existe en Firestore.");
+          setProducto(null);
+        }
       } catch (error) {
-        console.error("Error fetching products: ", error);
+        console.error("Error fetching product: ", error);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchProductos();
+    fetchProducto();
   }, []);
 
-  return { productos, loading };
+  return { producto, loading };
 };
 
-export default useProductosFerreteria;
+export default useProductoMaterialConstruccion;

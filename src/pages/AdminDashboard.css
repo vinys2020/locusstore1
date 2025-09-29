@@ -40,6 +40,27 @@
   .scale:hover {
     transform: scale(1.03);
   }
+
+  .table-responsive {
+    margin-bottom: 150px;
+
+  }
+
+  .table-responsive::-webkit-scrollbar {
+    height: 10px; /* altura de la barra horizontal */
+
+  }
+  
+  .table-responsive::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    border-radius: 4px;
+  }
+  
+  .table-responsive::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+
+  }
   
   .card-orders {
     background-color: #2d2f41;

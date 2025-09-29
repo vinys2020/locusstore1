@@ -576,31 +576,58 @@ const AdminDashboard = () => {
               />
 
               {/* Tabla Productos */}
-              <div className="table-responsive">
-                <table className="table table-bordered table-striped mb-5">
+              <div
+  className="table-responsive"
+  style={{
+    overflowX: "scroll",   // ✅ SIEMPRE visible
+    whiteSpace: "nowrap", // ✅ Evita que las columnas se partan
+    borderRadius: "10px",
+    border: "1px solid #dee2e6",
+  }}
+>                <table className="table table-bordered table-striped"     style={{
+      minWidth: "1200px", // ✅ Fuerza ancho mínimo
+    }}>
                   <thead>
                     <tr>
-                      <th>Nombre</th>
-                      <th>Precio</th>
-                      <th>Imagen</th>
-                      <th>Marca</th>
-                      <th>Stock</th>
-                      {categoriaSeleccionada === "Bebidasid" && <th>Contenido</th>}
-                      <th>Caract.</th>
-                      <th>Descrip.</th>
-                      <th>(%)3</th>
-                      <th>(%)6</th>
-                      <th>Total 3</th>
-                      <th>Total 6</th>
-                      <th>Estado</th>
-                      <th>Acciones</th>
+                    <th style={{ minWidth: "180px", textAlign: "center"  }}>Nombre</th>
+        <th style={{ minWidth: "120px", textAlign: "center"  }}>Precio</th>
+        <th style={{ minWidth: "250px", textAlign: "center"  }}>Imagen</th>
+        <th style={{ minWidth: "120px", textAlign: "center"  }}>Marca</th>
+        <th style={{ minWidth: "100px", textAlign: "center"  }}>Stock</th>
+        {categoriaSeleccionada === "Bebidasid" && (
+          <th style={{ minWidth: "140px", textAlign: "center"  }}>Contenido</th>
+        )}
+        <th style={{ minWidth: "200px", textAlign: "center"  }}>Caract.</th>
+        <th style={{ minWidth: "250px", textAlign: "center"  }}>Descrip.</th>
+        <th style={{ minWidth: "80px", textAlign: "center"  }}>(%)3</th>
+        <th style={{ minWidth: "80px", textAlign: "center"  }}>(%)6</th>
+        <th style={{ minWidth: "150px",textAlign: "center"  }}>Total 3</th>
+        <th style={{ minWidth: "150px", textAlign: "center"  }}>Total 6</th>
+        <th style={{ minWidth: "100px", textAlign: "center"  }}>Estado</th>
+        <th style={{ minWidth: "120px", textAlign: "center"  }}>Acciones</th>
                     </tr>
                   </thead>
                   <tbody>
                     {productos.filter(p => p.nombre.toLowerCase().includes(busqueda.toLowerCase())).map(producto => (
                       <tr key={producto.id}>
                         <td><input className="form-control" value={producto.nombre} onChange={e => actualizarProducto(producto.id, "nombre", e.target.value)} /></td>
-                        <td><input type="number" className="form-control" value={producto.precio} onChange={e => actualizarProducto(producto.id, "precio", e.target.value)} /></td>
+                        <td className="text-center">
+  <div className="input-group">
+    <input
+      type="text"
+      className="form-control text-end"
+      value={new Intl.NumberFormat("es-AR", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      }).format(producto.precio)}
+      onChange={e => {
+        // Eliminamos puntos y reemplazamos coma por punto para guardar como número
+        const rawValue = e.target.value.replace(/\./g, "").replace(",", ".");
+        actualizarProducto(producto.id, "precio", rawValue);
+      }}
+    />
+  </div>
+</td>
                         <td>
                           <div className="d-flex flex-wrap align-items-center gap-2">
                             {/* Mostrar miniaturas de imágenes o videos */}
@@ -738,8 +765,36 @@ const AdminDashboard = () => {
                           </div>
                         </td>
 
-                        <td><input type="number" className="form-control" value={producto.precio3Cuotas || ""} onChange={e => actualizarProducto(producto.id, "precio3Cuotas", e.target.value)} /></td>
-                        <td><input type="number" className="form-control" value={producto.precio6Cuotas || ""} onChange={e => actualizarProducto(producto.id, "precio6Cuotas", e.target.value)} /></td>
+                        <td className="text-center">
+  <input
+    type="text"
+    className="form-control text-start"
+    value={new Intl.NumberFormat("es-AR", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    }).format(producto.precio3Cuotas || 0)}
+    onChange={(e) => {
+      const rawValue = e.target.value.replace(/\./g, "").replace(",", ".");
+      actualizarProducto(producto.id, "precio3Cuotas", rawValue);
+    }}
+  />
+</td>
+
+<td className="text-center">
+  <input
+    type="text"
+    className="form-control text-start"
+    value={new Intl.NumberFormat("es-AR", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    }).format(producto.precio6Cuotas || 0)}
+    onChange={(e) => {
+      const rawValue = e.target.value.replace(/\./g, "").replace(",", ".");
+      actualizarProducto(producto.id, "precio6Cuotas", rawValue);
+    }}
+  />
+</td>
+
                         <td><button className={`btn btn-sm ${producto.activo ? "btn-success" : "btn-secondary"}`} onClick={() => actualizarProducto(producto.id, "activo", !producto.activo)}>{producto.activo ? "Activo" : "Inactivo"}</button></td>
                         <td><button className="btn btn-danger btn-sm" onClick={() => eliminarProducto(producto.id)}>Eliminar</button></td>
                       </tr>
@@ -751,20 +806,22 @@ const AdminDashboard = () => {
             </div>
           </article>
         </section>
+        
+        <section className="row mb-5">
+          <article className="col-12">
+            <AdminPresupuesto />
+          </article>
+        </section>
+
+        <section className="row mb-5">
+          <article className="col-12">
+            <AdminUsers />
+          </article>
+        </section>
+
+
         {/* Ajustar Precios por Inflación */}
         <AjustarInflacion />
-        {/* Gestión de presupuestos */}
-<section className="row mb-5">
-  <article className="col-12">
-    <AdminPresupuesto />
-  </article>
-</section>
-
-<section className="row mb-5">
-  <article className="col-12">
-    <AdminUsers />
-  </article>
-</section>
 
       </div>
     </section>

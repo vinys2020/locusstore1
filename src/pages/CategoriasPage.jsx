@@ -347,17 +347,34 @@ className="categoriaspage-img card-img-top"
           </div>
           <div className="card-body d-flex flex-column">
             <div className="categoriaspage-precio-wrapper mb-2">
-              <span
-                style={{
-                  textDecoration: "line-through",
-                  color: "#888",
-                  fontSize: "0.85rem",
-                }}
-                className="mb-0 d-block"
-              >
-                ${p.precio ? Math.round(p.precio * 1.2).toLocaleString() : "-"}
-              </span>
-              <p className="fw-bold fs-5 mb-1">${p.precio?.toFixed(2)}</p>
+            <span
+  style={{
+    textDecoration: "line-through",
+    color: "#888",
+    fontSize: "0.85rem",
+  }}
+  className="mb-0 d-block"
+>
+  {p.precio
+    ? new Intl.NumberFormat("es-AR", {
+        style: "currency",
+        currency: "ARS",
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      }).format(p.precio * 1.2)
+    : "-"}
+</span>
+
+<p className="fw-bold fs-5 mb-1">
+  {p.precio
+    ? new Intl.NumberFormat("es-AR", {
+        style: "currency",
+        currency: "ARS",
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      }).format(p.precio)
+    : "-"}
+</p>
 
               {/* Cuotas */}
               <div className="categoriaspage-cuotas text-start">

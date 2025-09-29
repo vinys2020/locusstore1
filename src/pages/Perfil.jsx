@@ -156,11 +156,12 @@ const Perfil = () => {
 
           {/* Texto de bienvenida */}
           <div className="text-center text-md-start">
+            
             <h2 className="fw-bold mb-1 mt-4 text-dark">
-              ¡Bienvenido, {capitalizeWords(user.nombre)}!
+              {capitalizeWords(user.nombre)}
             </h2>
             <p className="text-dark mb-2 fs-5 text-lg-start">
-              Nos alegra verte de nuevo. <br className="d-none d-md-inline" />
+              Nos alegra verte de nuevo<br className="d-none d-md-inline" />
             </p>
             <span className="badge bg-success fs-6">⭐ {user.puntos} puntos acumulados</span>
           </div>
