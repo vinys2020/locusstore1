@@ -11,7 +11,6 @@ export default function CrearCategoriaProducto() {
   const [productoPrecio, setProductoPrecio] = useState("");
   const [productoStock, setProductoStock] = useState("");
   const [imagenes, setImagenes] = useState([]);
-
   const [productoActivo, setProductoActivo] = useState(true);
   const [campoExtraNombre, setCampoExtraNombre] = useState("");
   const [campoExtraValor, setCampoExtraValor] = useState("");
@@ -21,7 +20,6 @@ export default function CrearCategoriaProducto() {
   const [precioFinanciacion6, setPrecioFinanciacion6] = useState(""); // 6 cuotas (+30%)
   const [porcentaje3, setPorcentaje3] = useState(15);
   const [porcentaje6, setPorcentaje6] = useState(30);
-
 
 
   const handleSubmit = async (e) => {
@@ -172,6 +170,10 @@ export default function CrearCategoriaProducto() {
           <label htmlFor="productoPrecio" className="form-label">
             Precio
           </label>
+          <div className="form-text text-muted">
+            Ingresá el número sin separar miles. Por ejemplo: <strong>10000.50</strong>.
+            El punto <strong>(.)</strong> indica los decimales. Una vez subido el producto se ajusta con <strong>(.) y (,)</strong>
+          </div>
           <input
             type="number"
             id="productoPrecio"
@@ -238,19 +240,23 @@ export default function CrearCategoriaProducto() {
         </div>
 
         <div className="mb-4">
-  <label className="form-label">Características (separadas por coma)</label>
-  <input
-    type="text"
-    className="form-control"
-    placeholder="Ej: resistente, impermeable, ligero"
-    value={caracteristicas.join(", ")}
-    onChange={(e) =>
-      setCaracteristicas(
-        e.target.value.split(",").map((c) => c.trim())
-      )
-    }
-  />
-</div>
+          <label className="form-label">Características</label>
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Ej: resistente, impermeable, ligero"
+            value={caracteristicas.join(", ")}
+            onChange={(e) =>
+              setCaracteristicas(
+                e.target.value.split(",").map((c) => c.trim())
+              )
+            }
+          />
+          <div className="form-text text-muted">
+            Copiá y pegá las características desde otro documento. Armalas fuera de este campo y luego pegá aquí separadas por comas, ya que no se permiten espacios entre ellas dentro del input.
+          </div>
+        </div>
+
 
 
         <div className="mb-3">
@@ -283,93 +289,93 @@ export default function CrearCategoriaProducto() {
         </div>
 
         <div className="mb-3">
-  <label className="form-label">Imágenes o Videos del Producto</label>
+          <label className="form-label">Imágenes o Videos del Producto</label>
 
-  {/* Lista de miniaturas */}
-  <div className="d-flex flex-wrap gap-2 mb-2">
-    {imagenes.map((item, index) => (
-      <div key={index} className="position-relative">
-        {item.type?.startsWith("video") ? (
-          <video
-            src={item.url}
-            controls
-            className="rounded shadow-sm"
-            style={{ width: "80px", height: "80px", objectFit: "cover" }}
+          {/* Lista de miniaturas */}
+          <div className="d-flex flex-wrap gap-2 mb-2">
+            {imagenes.map((item, index) => (
+              <div key={index} className="position-relative">
+                {item.type?.startsWith("video") ? (
+                  <video
+                    src={item.url}
+                    controls
+                    className="rounded shadow-sm"
+                    style={{ width: "80px", height: "80px", objectFit: "cover" }}
+                  />
+                ) : (
+                  <img
+                    src={item.url || item} // compatibilidad con URLs directas
+                    alt={`Producto ${index}`}
+                    className="rounded shadow-sm"
+                    style={{ width: "80px", height: "80px", objectFit: "cover" }}
+                  />
+                )}
+
+                <button
+                  type="button"
+                  className="btn-close position-absolute top-0 end-0 bg-light rounded-circle"
+                  style={{ transform: "scale(0.8)" }}
+                  onClick={() =>
+                    setImagenes(prev => prev.filter((_, i) => i !== index))
+                  }
+                />
+              </div>
+            ))}
+          </div>
+
+          {/* Input de subida por URL */}
+          <input
+            type="text"
+            className="form-control mb-2"
+            placeholder="Pegá la URL de la imagen o video y presiona Enter"
+            onKeyDown={e => {
+              if (e.key === "Enter" && e.target.value.trim()) {
+                e.preventDefault();
+                const url = e.target.value.trim();
+                const tipoVideo = /\.(mp4|webm|ogg)$/i.test(url) ? "video/mp4" : "image";
+                setImagenes(prev => [...prev, { url, type: tipoVideo }]);
+                e.target.value = "";
+              }
+            }}
           />
-        ) : (
-          <img
-            src={item.url || item} // compatibilidad con URLs directas
-            alt={`Producto ${index}`}
-            className="rounded shadow-sm"
-            style={{ width: "80px", height: "80px", objectFit: "cover" }}
+
+          {/* Input archivos desde dispositivo */}
+          <input
+            type="file"
+            accept="image/*,video/*"
+            multiple
+            className="form-control"
+            onChange={async (e) => {
+              if (e.target.files) {
+                let nuevasImgs = [...imagenes];
+
+                for (let i = 0; i < e.target.files.length; i++) {
+                  const file = e.target.files[i];
+
+                  const formData = new FormData();
+                  formData.append("file", file);
+                  formData.append("upload_preset", "ml_default"); // tu preset de Cloudinary
+
+                  try {
+                    const res = await fetch(
+                      "https://api.cloudinary.com/v1_1/dqesszxgv/upload",
+                      { method: "POST", body: formData }
+                    );
+                    const data = await res.json();
+                    if (data.secure_url) {
+                      nuevasImgs.push({ url: data.secure_url, type: file.type });
+                    }
+                  } catch (err) {
+                    console.error("Error subiendo archivo:", err);
+                  }
+                }
+
+                setImagenes(nuevasImgs);
+              }
+            }}
           />
-        )}
 
-        <button
-          type="button"
-          className="btn-close position-absolute top-0 end-0 bg-light rounded-circle"
-          style={{ transform: "scale(0.8)" }}
-          onClick={() =>
-            setImagenes(prev => prev.filter((_, i) => i !== index))
-          }
-        />
-      </div>
-    ))}
-  </div>
-
-  {/* Input de subida por URL */}
-  <input
-    type="text"
-    className="form-control mb-2"
-    placeholder="Pegá la URL de la imagen o video y presiona Enter"
-    onKeyDown={e => {
-      if (e.key === "Enter" && e.target.value.trim()) {
-        e.preventDefault();
-        const url = e.target.value.trim();
-        const tipoVideo = /\.(mp4|webm|ogg)$/i.test(url) ? "video/mp4" : "image";
-        setImagenes(prev => [...prev, { url, type: tipoVideo }]);
-        e.target.value = "";
-      }
-    }}
-  />
-
-  {/* Input archivos desde dispositivo */}
-  <input
-  type="file"
-  accept="image/*,video/*"
-  multiple
-  className="form-control"
-  onChange={async (e) => {
-    if (e.target.files) {
-      let nuevasImgs = [...imagenes];
-
-      for (let i = 0; i < e.target.files.length; i++) {
-        const file = e.target.files[i];
-
-        const formData = new FormData();
-        formData.append("file", file);
-        formData.append("upload_preset", "ml_default"); // tu preset de Cloudinary
-
-        try {
-          const res = await fetch(
-            "https://api.cloudinary.com/v1_1/dqesszxgv/upload",
-            { method: "POST", body: formData }
-          );
-          const data = await res.json();
-          if (data.secure_url) {
-            nuevasImgs.push({ url: data.secure_url, type: file.type });
-          }
-        } catch (err) {
-          console.error("Error subiendo archivo:", err);
-        }
-      }
-
-      setImagenes(nuevasImgs);
-    }
-  }}
-/>
-
-</div>
+        </div>
 
 
 

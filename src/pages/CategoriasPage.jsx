@@ -393,7 +393,7 @@ className="categoriaspage-img card-img-top"
 
             </div>
 
-            <h6 className="scroll-producto-titulo text-start mb-2"><b>{p.nombre}</b></h6>
+            <h6 className="scroll-producto-titulo text-start mb-4"><b>{p.nombre}</b></h6>
 
             <button
               className="btn btn-warning-custom mt-auto"

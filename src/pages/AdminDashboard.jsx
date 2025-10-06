@@ -263,7 +263,7 @@ const AdminDashboard = () => {
         {/* CRUD Productos */}
         <section className="row">
           <article className="col-12">
-            <div className="cards shadow-sm rounded-4 p-3 bg-white">
+            <div className="cards shadow-sm rounded-4 p-3 mt-5 bg-white">
               <h2 className="text-center mb-4 text-black">Gestión de Productos</h2>
 
               {/* Selección de Categoría */}
@@ -317,6 +317,9 @@ const AdminDashboard = () => {
                       });
                     }}
                   />
+                    <small className="form-text text-muted">
+    Ingresá el número sin separar miles. Ejemplo: <b>10000.50</b>  
+  </small>
                 </div>
 
                 {/* Marca */}
@@ -577,34 +580,34 @@ const AdminDashboard = () => {
 
               {/* Tabla Productos */}
               <div
-  className="table-responsive"
-  style={{
-    overflowX: "scroll",   // ✅ SIEMPRE visible
-    whiteSpace: "nowrap", // ✅ Evita que las columnas se partan
-    borderRadius: "10px",
-    border: "1px solid #dee2e6",
-  }}
->                <table className="table table-bordered table-striped"     style={{
-      minWidth: "1200px", // ✅ Fuerza ancho mínimo
-    }}>
+                className="table-responsive"
+                style={{
+                  overflowX: "scroll",   // ✅ SIEMPRE visible
+                  whiteSpace: "nowrap", // ✅ Evita que las columnas se partan
+                  borderRadius: "10px",
+                  border: "1px solid #dee2e6",
+                }}
+              >                <table className="table table-bordered table-striped" style={{
+                minWidth: "1200px", // ✅ Fuerza ancho mínimo
+              }}>
                   <thead>
                     <tr>
-                    <th style={{ minWidth: "180px", textAlign: "center"  }}>Nombre</th>
-        <th style={{ minWidth: "120px", textAlign: "center"  }}>Precio</th>
-        <th style={{ minWidth: "250px", textAlign: "center"  }}>Imagen</th>
-        <th style={{ minWidth: "120px", textAlign: "center"  }}>Marca</th>
-        <th style={{ minWidth: "100px", textAlign: "center"  }}>Stock</th>
-        {categoriaSeleccionada === "Bebidasid" && (
-          <th style={{ minWidth: "140px", textAlign: "center"  }}>Contenido</th>
-        )}
-        <th style={{ minWidth: "200px", textAlign: "center"  }}>Caract.</th>
-        <th style={{ minWidth: "250px", textAlign: "center"  }}>Descrip.</th>
-        <th style={{ minWidth: "80px", textAlign: "center"  }}>(%)3</th>
-        <th style={{ minWidth: "80px", textAlign: "center"  }}>(%)6</th>
-        <th style={{ minWidth: "150px",textAlign: "center"  }}>Total 3</th>
-        <th style={{ minWidth: "150px", textAlign: "center"  }}>Total 6</th>
-        <th style={{ minWidth: "100px", textAlign: "center"  }}>Estado</th>
-        <th style={{ minWidth: "120px", textAlign: "center"  }}>Acciones</th>
+                      <th style={{ minWidth: "180px", textAlign: "center" }}>Nombre</th>
+                      <th style={{ minWidth: "120px", textAlign: "center" }}>Precio</th>
+                      <th style={{ minWidth: "250px", textAlign: "center" }}>Imagen</th>
+                      <th style={{ minWidth: "120px", textAlign: "center" }}>Marca</th>
+                      <th style={{ minWidth: "100px", textAlign: "center" }}>Stock</th>
+                      {categoriaSeleccionada === "Bebidasid" && (
+                        <th style={{ minWidth: "140px", textAlign: "center" }}>Contenido</th>
+                      )}
+                      <th style={{ minWidth: "200px", textAlign: "center" }}>Caract.</th>
+                      <th style={{ minWidth: "250px", textAlign: "center" }}>Descrip.</th>
+                      <th style={{ minWidth: "80px", textAlign: "center" }}>(%)3</th>
+                      <th style={{ minWidth: "80px", textAlign: "center" }}>(%)6</th>
+                      <th style={{ minWidth: "150px", textAlign: "center" }}>Total 3</th>
+                      <th style={{ minWidth: "150px", textAlign: "center" }}>Total 6</th>
+                      <th style={{ minWidth: "100px", textAlign: "center" }}>Estado</th>
+                      <th style={{ minWidth: "120px", textAlign: "center" }}>Acciones</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -612,22 +615,22 @@ const AdminDashboard = () => {
                       <tr key={producto.id}>
                         <td><input className="form-control" value={producto.nombre} onChange={e => actualizarProducto(producto.id, "nombre", e.target.value)} /></td>
                         <td className="text-center">
-  <div className="input-group">
-    <input
-      type="text"
-      className="form-control text-end"
-      value={new Intl.NumberFormat("es-AR", {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2,
-      }).format(producto.precio)}
-      onChange={e => {
-        // Eliminamos puntos y reemplazamos coma por punto para guardar como número
-        const rawValue = e.target.value.replace(/\./g, "").replace(",", ".");
-        actualizarProducto(producto.id, "precio", rawValue);
-      }}
-    />
-  </div>
-</td>
+                          <div className="input-group">
+                            <input
+                              type="text"
+                              className="form-control text-end"
+                              value={new Intl.NumberFormat("es-AR", {
+                                minimumFractionDigits: 2,
+                                maximumFractionDigits: 2,
+                              }).format(producto.precio)}
+                              onChange={e => {
+                                // Eliminamos puntos y reemplazamos coma por punto para guardar como número
+                                const rawValue = e.target.value.replace(/\./g, "").replace(",", ".");
+                                actualizarProducto(producto.id, "precio", rawValue);
+                              }}
+                            />
+                          </div>
+                        </td>
                         <td>
                           <div className="d-flex flex-wrap align-items-center gap-2">
                             {/* Mostrar miniaturas de imágenes o videos */}
@@ -766,34 +769,34 @@ const AdminDashboard = () => {
                         </td>
 
                         <td className="text-center">
-  <input
-    type="text"
-    className="form-control text-start"
-    value={new Intl.NumberFormat("es-AR", {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
-    }).format(producto.precio3Cuotas || 0)}
-    onChange={(e) => {
-      const rawValue = e.target.value.replace(/\./g, "").replace(",", ".");
-      actualizarProducto(producto.id, "precio3Cuotas", rawValue);
-    }}
-  />
-</td>
+                          <input
+                            type="text"
+                            className="form-control text-start"
+                            value={new Intl.NumberFormat("es-AR", {
+                              minimumFractionDigits: 2,
+                              maximumFractionDigits: 2,
+                            }).format(producto.precio3Cuotas || 0)}
+                            onChange={(e) => {
+                              const rawValue = e.target.value.replace(/\./g, "").replace(",", ".");
+                              actualizarProducto(producto.id, "precio3Cuotas", rawValue);
+                            }}
+                          />
+                        </td>
 
-<td className="text-center">
-  <input
-    type="text"
-    className="form-control text-start"
-    value={new Intl.NumberFormat("es-AR", {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
-    }).format(producto.precio6Cuotas || 0)}
-    onChange={(e) => {
-      const rawValue = e.target.value.replace(/\./g, "").replace(",", ".");
-      actualizarProducto(producto.id, "precio6Cuotas", rawValue);
-    }}
-  />
-</td>
+                        <td className="text-center">
+                          <input
+                            type="text"
+                            className="form-control text-start"
+                            value={new Intl.NumberFormat("es-AR", {
+                              minimumFractionDigits: 2,
+                              maximumFractionDigits: 2,
+                            }).format(producto.precio6Cuotas || 0)}
+                            onChange={(e) => {
+                              const rawValue = e.target.value.replace(/\./g, "").replace(",", ".");
+                              actualizarProducto(producto.id, "precio6Cuotas", rawValue);
+                            }}
+                          />
+                        </td>
 
                         <td><button className={`btn btn-sm ${producto.activo ? "btn-success" : "btn-secondary"}`} onClick={() => actualizarProducto(producto.id, "activo", !producto.activo)}>{producto.activo ? "Activo" : "Inactivo"}</button></td>
                         <td><button className="btn btn-danger btn-sm" onClick={() => eliminarProducto(producto.id)}>Eliminar</button></td>
@@ -806,22 +809,24 @@ const AdminDashboard = () => {
             </div>
           </article>
         </section>
-        
-        <section className="row mb-5">
+
+        <section className="row mb-5 mt-5">
           <article className="col-12">
             <AdminPresupuesto />
           </article>
         </section>
 
-        <section className="row mb-5">
-          <article className="col-12">
+        <section className="row">
+          <article className="col-12 mt-5">
             <AdminUsers />
           </article>
         </section>
 
-
-        {/* Ajustar Precios por Inflación */}
-        <AjustarInflacion />
+        <section className="row mb-4">
+          <article className="col-12">
+          <AjustarInflacion />
+          </article>
+        </section>
 
       </div>
     </section>

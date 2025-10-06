@@ -13,14 +13,14 @@ const usePinturasYReve = () => {
         const productosRef = collection(
           db,
           "categorias",
-          "pinturasyrevestimientosid",
+          "pinturasid",
           "Productosid"
         );
 
         const snapshot = await getDocs(productosRef);
         const productosData = snapshot.docs.map((doc) => ({
           id: doc.id,
-          categoria: "pinturasyrevestimientosid", // propiedad para navegación
+          categoria: "pinturasid", // propiedad para navegación
           ...doc.data(),
         }));
 

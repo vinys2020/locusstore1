@@ -15,9 +15,9 @@ import {
   writeBatch
 } from "firebase/firestore";
 import { obtenerCuponesUsuario } from "../hooks/useCupones";
-import HorizontalCarrito from "../components/HorizontalCarrito";
+import HorizontalHerramientas from "../components/HorizontalHerramientas";
 import { toast } from "react-toastify";
-
+import "react-toastify/dist/ReactToastify.css";
 import "./Carrito.css";
 
 const Carrito = () => {
@@ -29,36 +29,117 @@ const Carrito = () => {
     totalPrecio,
     aplicarCupon,
     discount,
-    telefonoUsuario,
-    setTelefonoUsuario,
     agregarAlCarrito,
     vaciarCarrito,
+    actualizarProducto,
   } = useContext(CartContext);
 
   const [usuario, setUsuario] = useState(null);
+  const [telefonoUsuario, setTelefonoUsuario] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [step, setStep] = useState(1);
   const [metodoPago, setMetodoPago] = useState("");
   const [cupones, setCupones] = useState([]);
   const [cuponSeleccionado, setCuponSeleccionado] = useState(null);
 
+  
   useEffect(() => {
-    const user = auth.currentUser;
-    if (user) {
-      setUsuario({
-        nombre: user.displayName,
-        email: user.email,
-        telefono: telefonoUsuario,
-        uid: user.uid,
-      });
-    }
-  }, [telefonoUsuario]);
+    const unsubscribe = auth.onAuthStateChanged(async (user) => {
+      if (!user) return;
+  
+      try {
+        const userDocRef = doc(db, `usuarios/${user.uid}`);
+        const userSnap = await getDoc(userDocRef);
+  
+        if (userSnap.exists()) {
+          const userData = userSnap.data();
+          setUsuario({
+            nombre: userData.nombre || user.displayName || "",
+            email: userData.email || user.email || "",
+            uid: user.uid,
+            telefono: userData.telefono || "",
+            dni: userData.dni,
+            gremio: userData.gremio,
+            organismo: userData.organismo,
+            puntos: userData.puntos || 0,
+          });
+          if (userData.telefono) setTelefonoUsuario(userData.telefono);
+        } else {
+          console.log("Documento de usuario no existe");
+        }
+      } catch (err) {
+        console.error("Error al traer usuario desde Firebase:", err);
+      }
+    });
+  
+    return () => unsubscribe();
+  }, []);
 
   useEffect(() => {
     if (usuario?.uid) {
-      obtenerCuponesUsuario(usuario.uid).then(setCupones);
+      obtenerCuponesUsuario(usuario.uid)
+        .then(setCupones)
+        .catch(err => console.error("Error al obtener cupones:", err));
     }
-  }, [usuario]);
+  }, [usuario?.uid]);
+
+
+
+  const renderProductos = () => {
+    return cart.map(producto => {
+      const metodo = producto.metodo || "contado";
+      const cantidad = producto.cantidad || 1;
+      const precioBase = producto.precio * cantidad;
+
+      let infoCuota;
+      let precioTotalConInteres = precioBase;
+
+      if (metodo === "contado") {
+        infoCuota = (
+          <div>
+            {`Total: $${precioBase.toLocaleString("es-AR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`}
+            <br />
+            <span style={{ fontSize: "1em", color: "green" }}>(en un pago)</span>
+          </div>
+        );
+      } else if (metodo === "3cuotas") {
+        precioTotalConInteres = precioBase * 1.15; // +15%
+        const cuota = precioTotalConInteres / 3;
+        infoCuota = (
+          <div>
+            {`Total: $${precioTotalConInteres.toLocaleString("es-AR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`}
+            <br />
+            <span style={{ fontSize: "1em", color: "green" }}>(3 cuotas de ${cuota.toLocaleString("es-AR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })})</span>
+          </div>
+        );
+      } else if (metodo === "6cuotas") {
+        precioTotalConInteres = precioBase * 1.30; // +30%
+        const cuota = precioTotalConInteres / 6;
+        infoCuota = (
+          <div>
+            {`Total: $${precioTotalConInteres.toLocaleString("es-AR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`}
+            <br />
+            <span style={{ fontSize: "1em", color: "green" }}>(6 cuotas de ${cuota.toLocaleString("es-AR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })})</span>
+          </div>
+        );
+      }
+
+
+      return (
+        <div key={producto.id} className=" mx-lg-5 cart-item border rounded gap-lg-4 p-lg-3 gap-0">
+        <img className="imagencarritodesktop mx-1" src={producto.imagenes?.[0] || producto.imagen} alt={producto.nombre} />
+          <div className=" cart-item-details ">
+            <h5 className="fw-bold">{producto.nombre}</h5>
+            <small className="text-dark" style={{ fontSize: "1rem" }}>{infoCuota}</small>
+          </div>
+        </div>
+      );
+    });
+  };
+
+
+  
+
 
   const handleSeleccionCupon = (e) => {
     const idCupon = e.target.value;
@@ -71,7 +152,7 @@ const Carrito = () => {
     if (!usuario?.uid || !codigoCupon) return;
 
     try {
-      const cuponDocRef = doc(db, `Usuariosid/${usuario.uid}/Cuponesid/${codigoCupon}`);
+      const cuponDocRef = doc(db, `usuarios/${usuario.uid}/Cuponesid/${codigoCupon}`);
       await updateDoc(cuponDocRef, { usado: true });
 
       setCupones(prev =>
@@ -87,226 +168,541 @@ const Carrito = () => {
     }
   };
 
-  const handleTelefonoChange = (e) => setTelefonoUsuario(e.target.value);
 
-  const handleConfirmarTelefono = () => {
-    if (!telefonoUsuario || telefonoUsuario.length < 6) {
-      toast.error("Ingresá un número de teléfono válido.", { autoClose: 3000 });
-    } else {
-      setStep(2);
-    }
-  };
 
   const registrarPedido = async () => {
-    if (totalPrecio <= 0 || !usuario || !telefonoUsuario || !metodoPago) {
-      toast.error("Completa todos los datos para continuar.", { autoClose: 3000 });
+  
+    if (totalPrecio <= 0) {
       return;
     }
-
-    setIsLoading(true);
-
+    if (!usuario) {
+      toast.info("Por favor, inicia sesión para realizar un pedido.", {
+        onClose: () => (window.location.href = "/login"),
+      });
+      return;
+    }
+  
     try {
-      const totalConDescuentoLocal = discount > 0 ? totalPrecio * (1 - discount / 100) : totalPrecio;
+      setIsLoading(true);
+  
       const productosAFinalizar = [];
-
+  
       for (const producto of cart) {
         const { id: productoId, categoriaId, cantidad, nombre } = producto;
-        if (!categoriaId) throw new Error(`Falta categoriaId para ${nombre}`);
-
+  
+        if (!categoriaId) {
+          setIsLoading(false);
+          return;
+        }
+  
         const docRef = doc(db, `categorias/${categoriaId}/Productosid/${productoId}`);
         const docSnap = await getDoc(docRef);
-        if (!docSnap.exists()) throw new Error(`Producto no encontrado: ${nombre}`);
-
+  
+        if (!docSnap.exists()) {
+          setIsLoading(false);
+          return;
+        }
+  
         const stockActual = docSnap.data().stock ?? 0;
-        if (stockActual < cantidad) throw new Error(`No hay suficiente stock: ${nombre}`);
-
+        if (stockActual < cantidad) {
+          setIsLoading(false);
+          return;
+        }
+  
         productosAFinalizar.push({ ref: docRef, stockActual, cantidad });
       }
-
+  
+  
       const pedidoData = {
-        cliente: {
+        userId: usuario.uid,
+        Cliente: {
           nombre: usuario.nombre,
           email: usuario.email,
-          telefono: telefonoUsuario,
-          direccion: "Retiro en local",
+          telefono: usuario.telefono,
+          dni: usuario.dni,
+          gremio: usuario.gremio,
+          organismo: usuario.organismo,
+          direccion: "Calle Ficticia 123",
           cupon: cuponSeleccionado ? cuponSeleccionado.nombre : null,
           descuento: discount,
         },
         estado: "pendiente",
         fecha: Timestamp.now(),
         metodopago: metodoPago,
-        productos: cart.map(p => ({
-          nombre: p.nombre,
-          cantidad: p.cantidad,
-          preciounitario: p.precio,
-          total: p.precio * p.cantidad,
-        })),
-        totalpedido: totalConDescuentoLocal,
+        productos: cart.map(p => {
+          const cantidad = p.cantidad || 1;
+          const precioBase = p.precio * cantidad;
+          let totalConInteres = precioBase;
+          let descripcionPago = "contado";
+  
+          if (p.metodo === "3cuotas") {
+            totalConInteres = +(precioBase * 1.15).toFixed(2);
+            const cuota = +(totalConInteres / 3).toFixed(2);
+            descripcionPago = `3 cuotas de $${cuota.toLocaleString("es-AR", { minimumFractionDigits: 2 })}`;
+          } else if (p.metodo === "6cuotas") {
+            totalConInteres = +(precioBase * 1.30).toFixed(2);
+            const cuota = +(totalConInteres / 6).toFixed(2);
+            descripcionPago = `6 cuotas de $${cuota.toLocaleString("es-AR", { minimumFractionDigits: 2 })}`;
+          }
+  
+          return {
+            nombre: p.nombre,
+            cantidad,
+            preciounitario: +p.precio.toFixed(2),
+            total: totalConInteres,
+            metodo: p.metodo || "contado",
+            descripcionPago,
+            imagenUrl: p.imagenes?.[0] || p.imagen,
+          };
+        }),
+        totalpedido: +cart.reduce((acc, p) => {
+          const cantidad = p.cantidad || 1;
+          let total = p.precio * cantidad;
+          if (p.metodo === "3cuotas") total *= 1.15;
+          if (p.metodo === "6cuotas") total *= 1.30;
+          return acc + total;
+        }, 0).toFixed(2),
       };
-
-      await addDoc(collection(db, "Pedidosid"), pedidoData);
-
+  
+  
+      await addDoc(collection(db, "pedidos"), {
+        ...pedidoData,
+        userId: auth.currentUser.uid
+      });
+  
+  
       const batch = writeBatch(db);
       productosAFinalizar.forEach(({ ref, stockActual, cantidad }) => {
         batch.update(ref, { stock: Math.max(0, stockActual - cantidad) });
       });
       await batch.commit();
-
-      if (cuponSeleccionado && !cuponSeleccionado.usado) await marcarCuponComoUsado(cuponSeleccionado.id);
-
-      const puntosGanados = totalConDescuentoLocal >= 20000 ? 50 : totalConDescuentoLocal >= 10000 ? 25 : 0;
-
-      const usuariosCollection = collection(db, "Usuariosid");
-      const q = query(usuariosCollection, where("email", "==", usuario.email));
-      const querySnapshot = await getDocs(q);
-
-      if (!querySnapshot.empty) {
-        const usuarioDoc = querySnapshot.docs[0];
-        const nuevosPuntos = (usuarioDoc.data().puntos ?? 0) + puntosGanados;
-        await setDoc(usuarioDoc.ref, { puntos: nuevosPuntos }, { merge: true });
+  
+      if (cuponSeleccionado && !cuponSeleccionado.usado) {
+        await marcarCuponComoUsado(cuponSeleccionado.id);
       }
-
+  
       vaciarCarrito();
       setStep(1);
       setMetodoPago("");
       setCuponSeleccionado(null);
-      aplicarCupon("");
+      aplicarCupon(null);
       setIsLoading(false);
-
-      toast.success(
-        puntosGanados > 0
-          ? `⭐ ¡Gracias por tu compra! Ganaste ${puntosGanados} puntos.`
-          : `⭐ ¡Gracias por tu compra! Retiro en local confirmado.`
-      );
-    } catch (error) {
-      console.error(error);
-      toast.error("Error procesando el pedido. Intenta nuevamente.");
+  
+      toast.success("✅ ¡Pedido confirmado con éxito! Gracias por tu compra.");
+  
+    } catch (err) {
+      console.error(err);
+      toast.error("Hubo un error al procesar el pedido.");
       setIsLoading(false);
+      alert(`Error detectado: ${err.message}`);
     }
   };
+  
+
+
 
   const descuentoMonetario = discount > 0 ? (totalPrecio * discount) / 100 : 0;
   const totalConDescuento = discount > 0 ? totalPrecio - descuentoMonetario : totalPrecio;
 
+  const handleMetodoPagoChange = (e) => {
+    setMetodoPago(e.target.value);
+  };
+  
+
   return (
-    <section className="carrito-pagina py-4">
+    <section className="carrito-pagina">
       <div className="container">
-        <h1 className="text-center mb-4 fs-bold">Tu Carrito de Compras</h1>
+        <h1 className="text-center mb-5 fs-bold">Tu Carrito de Compras</h1>
 
         {cart.length === 0 ? (
-          <div className="text-center py-5">
-            <img
-              src="https://res.cloudinary.com/dcggcw8df/image/upload/v1747783241/fzkloulqcyljutykpzmv.png"
-              alt="Carrito vacío"
-              style={{ width: "200px" }}
-              className="mb-3"
-            />
-            <h4>Tu carrito está vacío</h4>
-            <p>Agrega productos para comenzar a generar tu presupuesto.</p>
-            <a href="/categorias/Ofertasid" className="btn btn-primary">Ver productos</a>
-          </div>
-        ) : (
-          <>
-            {/* Lista de productos */}
-            <div className="row">
-              {cart.map((producto, i) => (
-                <div key={i} className="col-12 mb-3 d-flex align-items-center border rounded p-2">
-                  <img src={producto.imagen} alt={producto.nombre} className="img-fluid me-3" style={{ width: "80px", height: "80px" }} />
-                  <div className="flex-grow-1">
-                    <h6>{producto.nombre}</h6>
-                    <p>${producto.precio} x {producto.cantidad} = ${(producto.precio * producto.cantidad).toFixed(2)}</p>
-                    <div className="d-flex align-items-center mb-2">
-                      <button className="btn btn-sm btn-outline-secondary me-2" onClick={() => disminuirCantidad(producto.id)} disabled={producto.cantidad <= 1}>−</button>
-                      <span>{producto.cantidad}</span>
-                      <button className="btn btn-sm btn-outline-secondary ms-2" onClick={() => agregarAlCarrito(producto)}>+</button>
-                    </div>
-                    <button className="btn btn-sm btn-danger" onClick={() => eliminarDelCarrito(producto.id)}>Eliminar</button>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Paso 1: Teléfono */}
-            {step === 1 && (
-              <div className="my-4">
-                <label>Teléfono</label>
-                <input
-                  type="tel"
-                  className="form-control mb-2"
-                  placeholder="Tu número"
-                  value={telefonoUsuario}
-                  onChange={handleTelefonoChange}
+              <div className="empty-cart-container">
+                <img
+                  src="https://res.cloudinary.com/dcggcw8df/image/upload/v1747783241/fzkloulqcyljutykpzmv.png"
+                  alt="Carrito vacío"
+                  className="empty-cart-image"
+                  style={{ width: "100px", height: "100px" }}
                 />
-                <button className="btn btn-primary w-100" onClick={handleConfirmarTelefono}>Confirmar Teléfono</button>
+                <h2 className="empty-cart-title">Tu carrito está vacío</h2>
+                <p className="empty-cart-text">Agregá productos para comenzar a generar tu presupuesto.</p>
+                <a href="/categorias/Ofertasid" className="empty-cart-button">Ver productos</a>
               </div>
-            )}
+            ) : (
+              <>
 
-            {/* Paso 2: Método de pago */}
-            {step === 2 && (
-              <div className="my-4">
-                <label>Método de Pago</label>
-                <select className="form-select mb-2" value={metodoPago} onChange={(e) => setMetodoPago(e.target.value)}>
-                  <option value="">Selecciona</option>
-                  <option value="tarjeta">Tarjeta</option>
-                  <option value="transferencia">Transferencia</option>
-                  <option value="efectivo">Efectivo</option>
-                </select>
-                <button className="btn btn-success w-100" onClick={() => setStep(3)}>Confirmar Método de Pago</button>
-              </div>
-            )}
 
-            {/* Paso 3: Resumen */}
-            {step === 3 && (
-              <div className="my-4">
-                <h5>Resumen del Pedido</h5>
-                <p>Teléfono: {usuario.telefono}</p>
-                <p>Método de pago: {metodoPago}</p>
+                {/* Paso 1: Lista de productos */}
+                {step === 1 && cart.map(producto => {
+                  const metodo = producto.metodo || "contado";
+                  const cantidad = producto.cantidad || 1;
+                  const precioTotal = producto.precio * cantidad;
 
-                <div className="mb-3">
-                  {cart.map((p, i) => (
-                    <div key={i} className="d-flex justify-content-between">
-                      <span>{p.nombre} x {p.cantidad}</span>
-                      <span>${(p.precio * p.cantidad).toFixed(2)}</span>
+                  let infoCuota = metodo === "contado"
+                    ? `en un pago: ${precioTotal.toLocaleString("es-AR", { style: "currency", currency: "ARS", minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+                    : metodo === "3cuotas"
+                      ? (() => {
+                        const precioConInteres = precioTotal * 1.15; // ✅ 15% de interés
+                        return `en 3 cuotas de ${(precioConInteres / 3).toLocaleString("es-AR", {
+                          style: "currency",
+                          currency: "ARS",
+                          minimumFractionDigits: 2,
+                          maximumFractionDigits: 2
+                        })}`;
+                      })()
+                      : (() => {
+                        const precioConInteres = precioTotal * 1.30; // ✅ 30% de interés
+                        return `en 6 cuotas de ${(precioConInteres / 6).toLocaleString("es-AR", {
+                          style: "currency",
+                          currency: "ARS",
+                          minimumFractionDigits: 2,
+                          maximumFractionDigits: 2
+                        })}`;
+                      })();
+
+
+
+
+                  return (
+                    <div key={producto.id} className=" mx-lg-5 cart-item border rounded gap-lg-4 p-lg-3 gap-0">
+                      <img
+                      className=" imagencarritodesktop mx-1"
+                        src={producto.imagenes?.[0] || producto.imagen}
+                        alt={producto.nombre}
+                      />
+<div className="container text-center">
+                        {/* Nombre del producto */}
+                        <h5 className="mb-2 mt-3 mt-lg-0"><strong>{producto.nombre}</strong></h5>
+
+
+                        {/* Selección de método de pago */}
+                        <small className="mb-0 fs-6">Método de pago:</small>
+                        <br />
+                        <small className="text-success">{infoCuota}</small>
+                        <select
+                          className="form-select mt-1"
+                          value={metodo}
+                          onChange={(e) => actualizarProducto(producto.id, { metodo: e.target.value })}
+                        >
+                          <option value="contado">Contado</option>
+                          <option value="3cuotas">3 Cuotas</option>
+                          <option value="6cuotas">6 Cuotas</option>
+                        </select>
+
+                        {/* Cantidad del producto */}
+                        <div className="cart-item-quantity2 mt-2 d-flex justify-content-center align-items-center gap-2 mx-lg-5">
+  <button
+    onClick={() => disminuirCantidad(producto.id)}
+    disabled={producto.cantidad <= 1}
+    className="btn btn-outline-secondary"
+  >
+    -
+  </button>
+  <span className="px-1">{producto.cantidad}</span>
+  <button
+    onClick={() => agregarAlCarrito(producto)}
+    className="btn btn-outline-secondary"
+  >
+    +
+  </button>
+</div>
+
+
+                        {producto.stock !== undefined && (
+  <div className="d-flex justify-content-center  mt-1">
+    <small
+      className={`${producto.stock <= 5 ? "text-danger fw-bold" : "text-muted"}`}
+      style={{ fontSize: "0.85rem" }}
+    >
+      Stock disponible: {producto.stock}
+    </small>
+  </div>
+)}
+
+
+                        {/* Botón eliminar */}
+                        <div className="d-flex justify-content-center mt-2">
+  <button
+    className="btn btn-danger"
+    onClick={() => eliminarDelCarrito(producto.id)}
+  >
+    Eliminar
+  </button>
+</div>
+                      </div>
+
                     </div>
-                  ))}
-                </div>
+                  );
+                })}
 
-                {/* Cupones */}
-                <div className="mb-3">
-                  <label>Cupones</label>
-                  <select className="form-select" value={cuponSeleccionado?.id || ""} onChange={handleSeleccionCupon}>
-                    <option value="">Elige un cupón</option>
-                    {cupones.filter(c => !c.usado).map(c => (
-                      <option key={c.id} value={c.id}>{c.nombre} ({c.descuento}%)</option>
-                    ))}
-                  </select>
-                </div>
 
-                {discount > 0 && (
-                  <div className="mb-2 d-flex justify-content-between text-success">
-                    <span>Descuento</span>
-                    <span>-${descuentoMonetario.toFixed(2)}</span>
-                  </div>
+                {step === 1 && cart.length > 0 && (
+                  <>
+                                  <div className="steps-indicator d-flex align-items-center mb-3">
+                  <div className={`step-circle ${step === 1 ? "active" : ""}`}>1</div>
+                  <div className={`step-line ${step >= 2 ? "active" : ""}`}></div>
+                  <div className={`step-circle ${step === 2 ? "active" : ""}`}>2</div>
+                  <div className={`step-line ${step >= 3 ? "active" : ""}`}></div>
+                  <div className={`step-circle ${step === 3 ? "active" : ""}`}>3</div>
+                </div>
+                    <h6 className="mb-2 text-center">Selecciona la cantidad y el método de compra para cada producto</h6>
+                    <button
+                      className="btn btn-primary mt-3 w-100"
+                      onClick={() => setStep(2)}
+                    >
+                      Continuar Compra
+                    </button>
+                  </>
                 )}
 
-                <div className="mb-3 d-flex justify-content-between fw-bold">
-                  <span>Total a pagar</span>
-                  <span>${totalConDescuento.toFixed(2)}</span>
+
+
+                {step === 2 && (
+                  <>
+                  
+                  <div className="metodo-pago-container mt-4">
+                    {renderProductos()} {/* Aquí se muestran los productos */}
+
+                    <div className="mb-3">
+                      <label htmlFor="metodoPago" className="form-label">Selecciona un Método de Pago</label>
+                      <div className="steps-indicator d-flex align-items-center mb-3">
+                  <div className={`step-circle ${step === 1 ? "active" : ""}`}>1</div>
+                  <div className={`step-line ${step >= 2 ? "active" : ""}`}></div>
+                  <div className={`step-circle ${step === 2 ? "active" : ""}`}>2</div>
+                  <div className={`step-line ${step >= 3 ? "active" : ""}`}></div>
+                  <div className={`step-circle ${step === 3 ? "active" : ""}`}>3</div>
                 </div>
+                      <select id="metodoPago" value={metodoPago} onChange={handleMetodoPagoChange} className="form-select form-select-lg">
+                        <option value="">Elige un método</option>
+                        <option value="tarjeta">Tarjeta</option>
+                        <option value="transferencia">Transferencia</option>
+                        <option value="efectivo">Efectivo</option>
+                      </select>
+                    </div>
 
-                <button className="btn btn-primary w-100 mb-2" onClick={registrarPedido} disabled={isLoading}>
-                  {isLoading ? "Procesando..." : "Realizar Pedido"}
-                </button>
+                    <div className="d-flex gap-2">
+                      <button className="btn btn-secondary flex-fill" onClick={() => setStep(1)}>Volver Atras</button>
+                      <button className="btn btn-success flex-fill" onClick={() => setStep(3)} disabled={!metodoPago}>Ir a ver el Resumen</button>
+                    </div>
+                    
+                  </div>
+                  
+                  </>
+                )}
 
-                <button className="btn btn-danger w-100" onClick={() => {
-                  if (window.confirm("¿Vaciar carrito?")) vaciarCarrito();
-                }}>Vaciar Carrito</button>
-              </div>
+
+
+
+                {step === 3 && cart.length > 0 && (
+                  <>
+                  
+                    <div className="order-summary p-3 border rounded bg-light">
+                      <h3 className="mb-3 fw-bold">Resumen</h3>
+                      <hr className="bg-dark" />
+
+                      {/* Datos del comprador */}
+                      <div className="user-info-summary mb-3 p-2 bg-light">
+                        <h6 className="fw-bold mb-2">Datos del Comprador</h6>
+                        <div className="d-flex justify-content-between mb-1">
+                          <span className="text-muted">Nombre:</span>
+                          <span className="fw-semibold">{usuario?.nombre || auth.currentUser?.displayName || "No disponible"}</span>
+                        </div>
+                        <div className="d-flex justify-content-between mb-1">
+                          <span className="text-muted">Email:</span>
+                          <span className="fw-semibold">{usuario?.email || auth.currentUser?.email || "No disponible"}</span>
+                        </div>
+
+                        <div className="d-flex justify-content-between mb-1">
+                          <span className="text-muted">Teléfono:</span>
+                          <span className="fw-semibold">{telefonoUsuario || usuario?.telefono || "No disponible"}</span>
+                        </div>
+
+                        <div className="d-flex justify-content-between mb-1">
+                          <span className="text-muted">DNI:</span>
+                          <span className="fw-semibold">{usuario?.dni || "No disponible"}</span>
+                        </div>
+
+                        <div className="d-flex justify-content-between mb-1">
+                          <span className="text-muted">Gremio:</span>
+                          <span className="fw-semibold">{usuario?.gremio}</span>
+                        </div>
+                        <div className="d-flex justify-content-between mb-1">
+                          <span className="text-muted">Organismo:</span>
+                          <span className=" mx-2 fw-semibold">{usuario?.organismo}</span>
+                        </div>
+                        <hr className="bg-dark" />
+                        <div className="d-flex justify-content-between mb-0 pt-2 align-items-center">
+                          <span className="fw-semibold text-dark" style={{ fontSize: "0.95rem" }}>
+                            Método de pago:
+                          </span>
+                          <span className="text-primary fw-bold text-capitalize" style={{ fontSize: "0.95rem" }}>
+                            {metodoPago || "No seleccionado"}
+                          </span>
+                        </div>
+
+                      </div>
+
+                      <hr className="bg-dark" />
+
+
+                      <h5 className="mb-1 mt-3 fw-bold">Productos</h5>
+                      {cart.map(producto => {
+                        const cantidad = producto.cantidad || 1;
+                        const precioBase = producto.precio * cantidad;
+                        let totalProducto = precioBase;
+                        let infoCuota = "contado";
+
+                        if (producto.metodo === "3cuotas") {
+                          totalProducto = precioBase * 1.15;
+                          const cuota = (totalProducto / 3).toFixed(2);
+                          infoCuota = `en 3 cuotas de $${cuota}`;
+                        } else if (producto.metodo === "6cuotas") {
+                          totalProducto = precioBase * 1.30;
+                          const cuota = (totalProducto / 6).toFixed(2);
+                          infoCuota = `en 6 cuotas de $${cuota}`;
+                        }
+
+                        return (
+                          <div key={producto.id} className="order-item d-flex justify-content-between align-items-center border-bottom py-2">
+                            <div>
+                              <span className="fw-small">{producto.nombre}</span> x <span>{producto.cantidad}U</span>
+                              <small className="d-block text-muted">{infoCuota}</small>
+                            </div>
+                            <div>
+                              <span
+                                className="fw-semibold text-start m-auto mx-3"
+                                style={{ display: "inline-block", width: "80px" }}
+                              >
+                                {totalProducto.toLocaleString("es-AR", {
+                                  style: "currency",
+                                  currency: "ARS",
+                                  minimumFractionDigits: 2,
+                                  maximumFractionDigits: 2
+                                })}
+                              </span>
+
+                            </div>
+                          </div>
+                        );
+                      })}
+
+                      <hr className="my-3" />
+
+                      <div className="coupon-section mb-3 mt-3">
+                        <label htmlFor="couponSelect" className="form-label">Cupón aplicado</label>
+                        <select
+                          id="couponSelect"
+                          value={cuponSeleccionado?.id || ""}
+                          onChange={handleSeleccionCupon}
+                          className="form-select"
+                        >
+                          <option value="">Elige un Cupón</option>
+                          {cupones.filter(c => !c.usado).map(c => (
+                            <option key={c.id} value={c.id}>
+                              {c.nombre} ({c.descuento}%)
+                            </option>
+                          ))}
+                        </select>
+
+                        {cupones.filter(c => !c.usado).length === 0 && (
+                          <small className="text-muted mt-1 d-block">
+                            Actualmente no cuentas con cupones disponibles.
+                          </small>
+                        )}
+                      </div>
+
+                      {/* Totales */}
+                      {(() => {
+                        const totalConInteres = cart.reduce((acc, p) => {
+                          const cantidad = p.cantidad || 1;
+                          let total = p.precio * cantidad;
+                          if (p.metodo === "3cuotas") total *= 1.15;
+                          if (p.metodo === "6cuotas") total *= 1.30;
+                          return acc + total;
+                        }, 0);
+                        const totalConDescuentoFinal = discount > 0 ? totalConInteres * (1 - discount / 100) : totalConInteres;
+                        const descuentoMonetarioFinal = totalConInteres - totalConDescuentoFinal;
+
+                        return (
+                          <>
+                            {discount > 0 && (
+                              <div className="total-summary d-flex justify-content-between align-items-center fs-6 fw-bold text-secondary mb-2">
+                                <span>Subtotal</span>
+                                <span style={{ textDecoration: "line-through", color: "gray" }}>
+                                  {totalConInteres.toLocaleString("es-AR", {
+                                    style: "currency",
+                                    currency: "ARS",
+                                    minimumFractionDigits: 2,
+                                    maximumFractionDigits: 2
+                                  })}
+                                </span>
+                              </div>
+                            )}
+                            {discount > 0 && (
+                              <div className="discount-summary d-flex justify-content-between align-items-center text-success pb-2 border-bottom">
+                                <span>Descuento aplicado</span>
+                                <span>
+                                  -
+                                  {descuentoMonetarioFinal.toLocaleString("es-AR", {
+                                    style: "currency",
+                                    currency: "ARS",
+                                    minimumFractionDigits: 2,
+                                    maximumFractionDigits: 2
+                                  })}
+                                </span>
+                              </div>
+                            )}
+                            <div className="total-summary d-flex justify-content-between align-items-center fs-5 fw-bold text-black mt-2">
+                              <span>Total a Pagar</span>
+                              <span>
+                                {totalConDescuentoFinal.toLocaleString("es-AR", {
+                                  style: "currency",
+                                  currency: "ARS",
+                                  minimumFractionDigits: 2,
+                                  maximumFractionDigits: 2
+                                })}
+                              </span>
+                            </div>
+                          </>
+                          
+
+                        );
+                        
+                      })()}
+                      
+                      
+
+                    </div>
+                    <div className="steps-indicator d-flex align-items-center mb-3">
+                  <div className={`step-circle ${step === 1 ? "active" : ""}`}>1</div>
+                  <div className={`step-line ${step >= 2 ? "active" : ""}`}></div>
+                  <div className={`step-circle ${step === 2 ? "active" : ""}`}>2</div>
+                  <div className={`step-line ${step >= 3 ? "active" : ""}`}></div>
+                  <div className={`step-circle ${step === 3 ? "active" : ""}`}>3</div>
+                </div>
+                    
+
+                    <div className="d-flex gap-2 mt-3">
+                      <button className="btn btn-secondary flex-fill" onClick={() => setStep(2)}>Volver Atras</button>
+                      <button className="btn btn-primary flex-fill" onClick={registrarPedido} disabled={isLoading || totalPrecio <= 0}>
+                        {isLoading ? "Procesando..." : "Realizar Pedido"}
+                      </button>
+                    </div>
+
+                    <button className="btn btn-danger mt-2 w-100" onClick={() => { vaciarCarrito(); setStep(1); }}>
+                      Vaciar Carrito
+                    </button>
+                    
+                  </>
+                )}
+
+                
+
+              </>
             )}
-          </>
-        )}
 
-        <HorizontalCarrito />
+<section className="productos-recomendados py-4 px-2 bg-white">
+  <h2 className="text-xl font-semibold mb-3">Productos recomendados</h2>
+  <HorizontalHerramientas />
+</section>
       </div>
     </section>
   );

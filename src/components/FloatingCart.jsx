@@ -18,6 +18,8 @@ import {
 import { obtenerCuponesUsuario } from "../hooks/useCupones";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { enviarMailPedido } from "./EmailJS";
+
 
 
 import "./FloatingCart.css";
@@ -242,7 +244,7 @@ const FloatingCart = () => {
           const precioBase = p.precio * cantidad;
           let totalConInteres = precioBase;
           let descripcionPago = "contado";
-      
+
           if (p.metodo === "3cuotas") {
             totalConInteres = +(precioBase * 1.15).toFixed(2); // redondeo a 2 decimales
             const cuota = +(totalConInteres / 3).toFixed(2);
@@ -252,7 +254,7 @@ const FloatingCart = () => {
             const cuota = +(totalConInteres / 6).toFixed(2);
             descripcionPago = `6 cuotas de $${cuota.toLocaleString("es-AR", { minimumFractionDigits: 2 })}`;
           }
-      
+
           return {
             nombre: p.nombre,
             cantidad,
@@ -271,8 +273,8 @@ const FloatingCart = () => {
           return acc + total;
         }, 0).toFixed(2),
       };
-      
-      
+
+
 
 
       await addDoc(collection(db, "pedidos"), {
@@ -300,6 +302,15 @@ const FloatingCart = () => {
       setCuponSeleccionado(null);
       aplicarCupon(null);
       setIsLoading(false);
+
+      // ✅ Aquí enviamos el correo con EmailJS
+try {
+  await enviarMailPedido(pedidoData); // <-- Llamada a tu módulo EmailJS
+  console.log("Correo enviado al administrador correctamente.");
+} catch (err) {
+  console.error("Error al enviar el correo:", err);
+}
+
 
       toast.success("✅ ¡Pedido confirmado con éxito! Gracias por tu compra.");
 
@@ -352,9 +363,9 @@ const FloatingCart = () => {
                   const precioTotal = producto.precio * cantidad;
 
                   let infoCuota = metodo === "contado"
-                  ? `en un pago: ${precioTotal.toLocaleString("es-AR", { style: "currency", currency: "ARS", minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
-                  : metodo === "3cuotas"
-                    ? (() => {
+                    ? `en un pago: ${precioTotal.toLocaleString("es-AR", { style: "currency", currency: "ARS", minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+                    : metodo === "3cuotas"
+                      ? (() => {
                         const precioConInteres = precioTotal * 1.15; // ✅ 15% de interés
                         return `en 3 cuotas de ${(precioConInteres / 3).toLocaleString("es-AR", {
                           style: "currency",
@@ -363,7 +374,7 @@ const FloatingCart = () => {
                           maximumFractionDigits: 2
                         })}`;
                       })()
-                    : (() => {
+                      : (() => {
                         const precioConInteres = precioTotal * 1.30; // ✅ 30% de interés
                         return `en 6 cuotas de ${(precioConInteres / 6).toLocaleString("es-AR", {
                           style: "currency",
@@ -372,8 +383,8 @@ const FloatingCart = () => {
                           maximumFractionDigits: 2
                         })}`;
                       })();
-                
-                
+
+
 
 
                   return (
@@ -559,17 +570,17 @@ const FloatingCart = () => {
                               <small className="d-block text-muted">{infoCuota}</small>
                             </div>
                             <div>
-                            <span
-  className="fw-semibold text-start m-auto mx-3"
-  style={{ display: "inline-block", width: "80px" }}
->
-  {totalProducto.toLocaleString("es-AR", {
-    style: "currency",
-    currency: "ARS",
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2
-  })}
-</span>
+                              <span
+                                className="fw-semibold text-start m-auto mx-3"
+                                style={{ display: "inline-block", width: "80px" }}
+                              >
+                                {totalProducto.toLocaleString("es-AR", {
+                                  style: "currency",
+                                  currency: "ARS",
+                                  minimumFractionDigits: 2,
+                                  maximumFractionDigits: 2
+                                })}
+                              </span>
 
                             </div>
                           </div>
@@ -614,46 +625,46 @@ const FloatingCart = () => {
                         const descuentoMonetarioFinal = totalConInteres - totalConDescuentoFinal;
 
                         return (
-<>
-  {discount > 0 && (
-    <div className="total-summary d-flex justify-content-between align-items-center fs-6 fw-bold text-secondary mb-2">
-      <span>Subtotal</span>
-      <span style={{ textDecoration: "line-through", color: "gray" }}>
-        {totalConInteres.toLocaleString("es-AR", {
-          style: "currency",
-          currency: "ARS",
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2
-        })}
-      </span>
-    </div>
-  )}
-  {discount > 0 && (
-    <div className="discount-summary d-flex justify-content-between align-items-center text-success pb-2 border-bottom">
-      <span>Descuento aplicado</span>
-      <span>
-        -
-        {descuentoMonetarioFinal.toLocaleString("es-AR", {
-          style: "currency",
-          currency: "ARS",
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2
-        })}
-      </span>
-    </div>
-  )}
-  <div className="total-summary d-flex justify-content-between align-items-center fs-5 fw-bold text-black mt-2">
-    <span>Total a Pagar</span>
-    <span>
-      {totalConDescuentoFinal.toLocaleString("es-AR", {
-        style: "currency",
-        currency: "ARS",
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
-      })}
-    </span>
-  </div>
-</>
+                          <>
+                            {discount > 0 && (
+                              <div className="total-summary d-flex justify-content-between align-items-center fs-6 fw-bold text-secondary mb-2">
+                                <span>Subtotal</span>
+                                <span style={{ textDecoration: "line-through", color: "gray" }}>
+                                  {totalConInteres.toLocaleString("es-AR", {
+                                    style: "currency",
+                                    currency: "ARS",
+                                    minimumFractionDigits: 2,
+                                    maximumFractionDigits: 2
+                                  })}
+                                </span>
+                              </div>
+                            )}
+                            {discount > 0 && (
+                              <div className="discount-summary d-flex justify-content-between align-items-center text-success pb-2 border-bottom">
+                                <span>Descuento aplicado</span>
+                                <span>
+                                  -
+                                  {descuentoMonetarioFinal.toLocaleString("es-AR", {
+                                    style: "currency",
+                                    currency: "ARS",
+                                    minimumFractionDigits: 2,
+                                    maximumFractionDigits: 2
+                                  })}
+                                </span>
+                              </div>
+                            )}
+                            <div className="total-summary d-flex justify-content-between align-items-center fs-5 fw-bold text-black mt-2">
+                              <span>Total a Pagar</span>
+                              <span>
+                                {totalConDescuentoFinal.toLocaleString("es-AR", {
+                                  style: "currency",
+                                  currency: "ARS",
+                                  minimumFractionDigits: 2,
+                                  maximumFractionDigits: 2
+                                })}
+                              </span>
+                            </div>
+                          </>
 
                         );
                       })()}

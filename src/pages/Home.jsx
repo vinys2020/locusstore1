@@ -252,14 +252,14 @@ const Home = () => {
               className="fw-bold mb-3 mt-lg-4"
               style={{
                 color: "#054a49",
-                fontSize: "clamp(1.8rem, 3vw, 2.2rem)",
+                fontSize: "clamp(1.6rem, 3vw, 2.2rem)",
                 display: "inline-block",
                 position: "relative",
               }}
             >
               Materiales de Construcción
               {/* Línea decorativa */}
-              <span
+              <span className="mb-lg-2"
                 style={{
                   display: "block",
                   height: "3px",
@@ -270,18 +270,7 @@ const Home = () => {
                 }}
               ></span>
             </h2>
-            {/* 📝 Texto descriptivo */}
-            <p
-              className="mx-auto mb-4"
-              style={{
-                fontSize: "1.1rem",
-                maxWidth: "600px",
-                color: "rgba(0,0,0,0.7)",
-                lineHeight: "1.6",
-              }}
-            >
-              Explora nuestras categorías y encuentra los productos que estás buscando de forma rápida y sencilla.
-            </p>
+
           </div>
 
 
@@ -390,11 +379,11 @@ const Home = () => {
                 <div className="row g-3">
 
                   <div className="col-6 col-md-6 col-lg-3">
-                    <Link to="/categorias/pinturasyrevestimientosid" className="text-decoration-none">
-                      <div className="card border-0 shadow-sm p-0">
+                    <Link to="/categorias/pinturasid" className="text-decoration-none">
+                      <div className="border-0 shadow-sm p-0">
                         <img
                           src="https://res.cloudinary.com/dqesszxgv/image/upload/v1759161046/pinturaslocus_mp3o3x.webp"
-                          className="card-img-top mb-0"
+                          className="card-img-top mb-0 rounded"
                           alt="Pinturas"
                         />
                       </div>
@@ -403,10 +392,10 @@ const Home = () => {
 
                   <div className="col-6 col-md-6 col-lg-3">
                     <Link to="/categorias/plomeríayaguaid" className="text-decoration-none">
-                      <div className="card border-0 shadow-sm p-0">
+                      <div className="border-0 shadow-sm p-0">
                         <img
                           src="https://res.cloudinary.com/dqesszxgv/image/upload/v1759161097/bombasagua_vhfetb.webp"
-                          className="card-img-top"
+                          className="card-img-top rounded"
                           alt="Bombas"
                         />
                       </div>
@@ -415,10 +404,10 @@ const Home = () => {
 
                   <div className="col-6 col-md-6 col-lg-3">
                     <Link to="/categorias/electricidadid" className="text-decoration-none">
-                      <div className="card border-0 shadow-sm p-0">
+                      <div className=" border-0 shadow-sm p-0">
                         <img
                           src="https://res.cloudinary.com/dqesszxgv/image/upload/v1759161149/electricidad_zivbuy.webp"
-                          className="card-img-top"
+                          className="card-img-top rounded"
                           alt="Electricidad"
                         />
                       </div>
@@ -426,21 +415,25 @@ const Home = () => {
                   </div>
 
                   <div className="col-6 col-md-6 col-lg-3">
-                    <div className="card border-0 shadow-sm p-0">
-                      <img
-                        src="https://http2.mlstatic.com/D_NQ_NP2X_763287-MLA71306430107_082023-B.webp"
-                        className="card-img-top"
-                        alt="Pisos y Revestimientos"
-                      />
-                    </div>
+                    <Link to="/categorias/pisosyrevestimientosid" className="text-decoration-none">
+                      <div className=" border-0 shadow-sm p-0">
+                        <img
+                          src="https://res.cloudinary.com/dqesszxgv/image/upload/v1759527940/pisosyreves_jybscf.webp"
+                          className="card-img-top rounded"
+                          alt="Electricidad"
+                        />
+                      </div>
+                    </Link>
                   </div>
+
+
 
                 </div>
               </div>
             </section>
 
             {/* 🎯 Botón de acción */}
-            <div className="mt-3 mb-3">
+            <div className="mt-4 mb-3">
               <Link
                 to="/categorias/herramientasid"
                 className="btn btn-warning px-4 py-2 fw-bold shadow-sm"
@@ -463,90 +456,6 @@ const Home = () => {
 
 
 
-        <section className="mx-lg-5 mb-5 slide-up mt-0">
-          <div className="container-fluid w-100 mt-3">
-            {/* 🏷️ Título de sección con línea decorativa */}
-            <div style={{ textAlign: "center" }}>
-              <h2
-                className="fw-bold mb-3 mt-lg-4"
-                style={{
-                  color: "#054a49",
-                  fontSize: "clamp(1.8rem, 3vw, 2.2rem)",
-                  display: "inline-block",
-                  position: "relative",
-                }}
-              >
-                Pinturas y Revestimientos
-                {/* Línea decorativa */}
-                <span
-                  style={{
-                    display: "block",
-                    height: "3px",
-                    width: "60px",
-                    backgroundColor: "#FFD700",
-                    margin: "8px auto 0",
-                    borderRadius: "2px",
-                  }}
-                ></span>
-              </h2>
-              {/* 📝 Texto descriptivo */}
-              <p
-                className="mx-auto mb-4"
-                style={{
-                  fontSize: "1.1rem",
-                  maxWidth: "600px",
-                  color: "rgba(0,0,0,0.7)",
-                  lineHeight: "1.6",
-                }}
-              >
-                Explora nuestras categorías y encuentra los productos que estás buscando de forma rápida y sencilla.
-              </p>
-            </div>
-
-
-
-
-
-
-            <div className="container px-0 bg-white shadow-sm px-2 rounded-3 p-2">
-
-
-
-              <HorizontalPinturasYRev />
-
-              {/* Botón Ver más */}
-              <div className="d-flex justify-content-end px-2 mt-0 bg-white py-2 border-top">
-                <Link
-                  className="ui-recommendations-footer__link d-flex align-items-center text-decoration-none mt-1"
-                  to="/categorias/pinturasyrevestimientosid"
-                  style={{ color: "#3483fa" }}
-                >
-                  <div className="ui-recommendations-footer__wrapper d-flex align-items-center gap-2">
-                    <div className="ui-recommendations-footer__text" style={{ fontWeight: 600 }}>
-                      Ver más
-                    </div>
-                    <div className="ui-recommendations-footer__chevron d-flex align-items-center">
-                      <svg
-                        className="ui-homes-icon ui-homes-icon--chevron"
-                        width="9"
-                        height="14"
-                        viewBox="0 0 9 14"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path d="M1 1l6 6-6 6" stroke="#3483fa" strokeWidth="2" fill="none" fillRule="evenodd" />
-                      </svg>
-                    </div>
-                  </div>
-                </Link>
-              </div>
-
-            </div>
-          </div>
-
-
-
-
-        </section>
 
 
 
@@ -575,19 +484,19 @@ const Home = () => {
               display: "inline-block",
             }}
           >
-            Encuentra las mejores ofertas
+            Todo para tu proyecto
             {/* Línea decorativa */}
-                          {/* Línea decorativa */}
-                          <span
-                style={{
-                  display: "block",
-                  height: "3px",
-                  width: "60px",
-                  backgroundColor: "#FFD700",
-                  margin: "8px auto 0",
-                  borderRadius: "2px",
-                }}
-              ></span>
+            {/* Línea decorativa */}
+            <span
+              style={{
+                display: "block",
+                height: "3px",
+                width: "60px",
+                backgroundColor: "#FFD700",
+                margin: "8px auto 0",
+                borderRadius: "2px",
+              }}
+            ></span>
 
           </h2>
 
@@ -601,42 +510,44 @@ const Home = () => {
               lineHeight: "1.6",
             }}
           >
-            Descubrí nuestras ofertas y oportunidades especiales en productos seleccionados.
-          </p>
+            Descubrí productos de calidad a precios accesibles y con opciones de pago flexibles</p>
 
           {/* 🎨 Banners */}
           <div className="row g-4 justify-content-center">
             {/* Banner 1 */}
             <div className="col-12 col-sm-6 col-md-4 slide-up">
-              <a
-                href="https://res.cloudinary.com/dqesszxgv/image/upload/v1757116396/aberturas_anq9y6.webp"
+              <Link
+                to="/categorias/aberturasid"
                 className="d-block shadow-sm rounded overflow-hidden"
-                title="Banner de EMI SRL"
-                aria-label="Banner de EMI SRL"
+                title="Ir a Aberturas"
+                aria-label="Ir a Aberturas"
               >
                 <img
                   src="https://res.cloudinary.com/dqesszxgv/image/upload/v1757116396/aberturas_anq9y6.webp"
-                  alt="Banner de EMI SRL"
+                  alt="Locus Aberturas"
                   className="img-fluid w-100"
                 />
-              </a>
+              </Link>
             </div>
 
-            {/* Banner 2 */}
+            {/* Banner 1 */}
             <div className="col-12 col-sm-6 col-md-4 slide-up">
-              <a
-                href="https://res.cloudinary.com/dqesszxgv/image/upload/v1757116376/maquinas_mjdq6h.webp"
+              <Link
+                to="/categorias/herramientaseléctricasid"
                 className="d-block shadow-sm rounded overflow-hidden"
-                title="Banner de EMI SRL"
-                aria-label="Banner de EMI SRL"
+                title="Ir a Herramientas"
+                aria-label="Ir a Herramientas"
               >
                 <img
                   src="https://res.cloudinary.com/dqesszxgv/image/upload/v1757116376/maquinas_mjdq6h.webp"
-                  alt="Banner de EMI SRL"
+                  alt="Locus Herramientas"
                   className="img-fluid w-100"
                 />
-              </a>
+              </Link>
             </div>
+
+
+
 
             {/* Banner 3 */}
             <div className="col-12 col-sm-6 col-md-4 slide-up">
@@ -660,8 +571,34 @@ const Home = () => {
       </section>
 
 
-      <section className="mx-lg-5 mb-5 slide-up mt-0">
+      <section className="mx-lg-5 mb-5 slide-up mt-5">
         <div className="container-fluid w-100 mt-3">
+
+          <div style={{ textAlign: "center" }}>
+            <h2
+              className="fw-bold mb-3 mt-lg-4"
+              style={{
+                color: "#054a49",
+                fontSize: "clamp(1.9rem, 3vw, 2.2rem)",
+                display: "inline-block",
+                position: "relative",
+              }}
+            >
+              Herramientas y Maquinarias
+              {/* Línea decorativa */}
+              <span className="mb-2"
+                style={{
+                  display: "block",
+                  height: "3px",
+                  width: "60px",
+                  backgroundColor: "#FFD700",
+                  margin: "8px auto 0",
+                  borderRadius: "2px",
+                }}
+              ></span>
+            </h2>
+
+          </div>
 
 
 
@@ -670,6 +607,10 @@ const Home = () => {
 
 
           <div className="container px-0 bg-white shadow-sm px-2 rounded-3 p-2">
+
+
+
+
 
 
 
@@ -709,11 +650,11 @@ const Home = () => {
 
       </section>
 
-      <hr  className="bg-black mx-5"/>
+      <hr className="bg-black mx-5" />
 
 
 
-      <section data-testid="site-shopping-info" className="site-shopping-info py-5 mt-5">
+      <section data-testid="site-shopping-info" className="site-shopping-info py-5 mt-lg-5">
         <div className="container">
           <div className="row g-4">
 
@@ -722,14 +663,14 @@ const Home = () => {
               <div className="mb-3">
                 <img
                   decoding="async"
-                  src="https://http2.mlstatic.com/storage/homes-korriban/assets/images/ecosystem/payment.svg"
+                  src="https://res.cloudinary.com/dqesszxgv/image/upload/v1759502485/elegicomopagar_xveedc.svg"
                   className="img-fluid"
                   alt="Elegí cómo pagar"
                 />
               </div>
               <h2>Elegí cómo pagar</h2>
               <p>
-                <span>Podés pagar con tarjeta, débito, efectivo o con Cuotas sin Tarjeta.</span>
+                <span>Podés pagar con tarjeta, débito, transferencia, efectivo o con Cuotas sin Tarjeta.</span>
               </p>
 
             </div>
@@ -739,12 +680,12 @@ const Home = () => {
               <div className="mb-3">
                 <img
                   decoding="async"
-                  src="https://http2.mlstatic.com/storage/homes-korriban/assets/images/ecosystem/shipping.svg"
+                  src="https://res.cloudinary.com/dqesszxgv/image/upload/v1759502392/pedidopuntos_fqb9ys.svg"
                   className="img-fluid"
-                  alt="Envío gratis desde $ 33.000"
+                  alt="Por cada pedido sumas puntos"
                 />
               </div>
-              <h2>Envío gratis desde $ 33.000</h2>
+              <h2>Por cada pedido sumas puntos</h2>
               <p>
                 <span>Solo por estar registrado en Locus Store tenés envíos gratis en miles de productos.</span>
               </p>
@@ -755,14 +696,14 @@ const Home = () => {
               <div className="mb-2">
                 <img
                   decoding="async"
-                  src="https://http2.mlstatic.com/storage/homes-korriban/assets/images/ecosystem/protected.svg"
+                  src="https://res.cloudinary.com/dqesszxgv/image/upload/v1759502445/seguridad_ejvflv.svg"
                   className="img-fluid"
                   alt="Seguridad, de principio a fin"
                 />
               </div>
               <h2>Seguridad, de principio a fin</h2>
               <p>
-                <span>¿No te gusta? ¡Devolvelo!, no hay nada que no puedas hacer, porque estás siempre protegido.</span>
+                <span>Tus datos están totalmente resguardados y protegidos, para que compres con total tranquilidad</span>
               </p>
 
             </div>
@@ -771,28 +712,26 @@ const Home = () => {
         </div>
       </section>
 
-      <hr  className="bg-black mx-5"/>
+      <hr className="bg-black mx-5" />
 
 
-      <section className="mx-lg-5 slide-up mt-0">
 
-        <div className="container-fluid w-100 mt-5">
+      <section className="mx-lg-5 mb-5 slide-up mt-5">
+        <div className="container-fluid w-100 mt-3">
 
-          <div className="container px-0  px-2 text-center">
-
-            {/* 🏷️ Título de sección con línea decorativa */}
+          <div style={{ textAlign: "center" }}>
             <h2
-              className="fw-bold mb-3"
+              className="fw-bold mb-3 mt-lg-4"
               style={{
                 color: "#054a49",
                 fontSize: "clamp(1.8rem, 3vw, 2.2rem)",
-                position: "relative",
                 display: "inline-block",
+                position: "relative",
               }}
             >
               Plomeria y Agua
               {/* Línea decorativa */}
-              <span
+              <span className="mb-2"
                 style={{
                   display: "block",
                   height: "3px",
@@ -804,25 +743,44 @@ const Home = () => {
               ></span>
             </h2>
 
-            {/* 📝 Texto descriptivo */}
-            <p
-              className="mx-auto mb-4"
-              style={{
-                fontSize: "1.1rem",
-                maxWidth: "600px",
-                color: "rgba(0,0,0,0.7)",
-                lineHeight: "1.6",
-              }}
-            >
-              Explora nuestras categorías y encuentra los productos que estás buscando de forma rápida y sencilla.
-            </p>
+          </div>
+
+
+          <div className="container px-0 bg-white shadow-sm px-2 rounded-3 p-2">
 
             <HorizontalPlomeYAgua />
 
-
+            {/* Botón Ver más */}
+            <div className="d-flex justify-content-end px-2 mt-0 bg-white py-2 border-top">
+              <Link
+                className="ui-recommendations-footer__link d-flex align-items-center text-decoration-none mt-1"
+                to="/categorias/herramientasid"
+                style={{ color: "#3483fa" }}
+              >
+                <div className="ui-recommendations-footer__wrapper d-flex align-items-center gap-2">
+                  <div className="ui-recommendations-footer__text" style={{ fontWeight: 600 }}>
+                    Ver más
+                  </div>
+                  <div className="ui-recommendations-footer__chevron d-flex align-items-center">
+                    <svg
+                      className="ui-homes-icon ui-homes-icon--chevron"
+                      width="9"
+                      height="14"
+                      viewBox="0 0 9 14"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path d="M1 1l6 6-6 6" stroke="#3483fa" strokeWidth="2" fill="none" fillRule="evenodd" />
+                    </svg>
+                  </div>
+                </div>
+              </Link>
+            </div>
 
           </div>
         </div>
+
+
+
 
       </section>
 
@@ -989,6 +947,80 @@ const Home = () => {
         </div>
       </section>
 
+      <section className="mx-lg-5 mb-5 slide-up mt-4">
+        <div className="container-fluid w-100 mt-3">
+          {/* 🏷️ Título de sección con línea decorativa */}
+          <div style={{ textAlign: "center" }}>
+            <h2
+              className="fw-bold mb-3 mt-lg-4"
+              style={{
+                color: "#054a49",
+                fontSize: "clamp(1.8rem, 3vw, 2.2rem)",
+                display: "inline-block",
+                position: "relative",
+              }}
+            >
+              Pinturas y Accesorios
+              {/* Línea decorativa */}
+              <span className="mb-2"
+                style={{
+                  display: "block",
+                  height: "3px",
+                  width: "60px",
+                  backgroundColor: "#FFD700",
+                  margin: "8px auto 0",
+                  borderRadius: "2px",
+                }}
+              ></span>
+            </h2>
+
+          </div>
+
+
+
+
+
+
+          <div className="container px-0 bg-white shadow-sm px-2 rounded-3 p-2">
+
+
+
+            <HorizontalPinturasYRev />
+
+            {/* Botón Ver más */}
+            <div className="d-flex justify-content-end px-2 mt-0 bg-white py-2 border-top">
+              <Link
+                className="ui-recommendations-footer__link d-flex align-items-center text-decoration-none mt-1"
+                to="/categorias/pinturasid"
+                style={{ color: "#3483fa" }}
+              >
+                <div className="ui-recommendations-footer__wrapper d-flex align-items-center gap-2">
+                  <div className="ui-recommendations-footer__text" style={{ fontWeight: 600 }}>
+                    Ver más
+                  </div>
+                  <div className="ui-recommendations-footer__chevron d-flex align-items-center">
+                    <svg
+                      className="ui-homes-icon ui-homes-icon--chevron"
+                      width="9"
+                      height="14"
+                      viewBox="0 0 9 14"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path d="M1 1l6 6-6 6" stroke="#3483fa" strokeWidth="2" fill="none" fillRule="evenodd" />
+                    </svg>
+                  </div>
+                </div>
+              </Link>
+            </div>
+
+          </div>
+        </div>
+
+
+
+
+      </section>
+
       <section className="mx-lg-5 slide-up mt-0">
 
         <div className="container-fluid w-100 mt-5">
@@ -1041,78 +1073,22 @@ const Home = () => {
 
       </section>
 
-      <section className="mx-lg-5 slide-up mt-0">
+      <section className="mx-lg-5 mb-5 slide-up mt-5">
+        <div className="container-fluid w-100 mt-3">
 
-        <div className="container-fluid w-100 mt-5">
-
-          <div className="container px-0  px-2 text-center">
-
-            {/* 🏷️ Título de sección con línea decorativa */}
+          <div style={{ textAlign: "center" }}>
             <h2
-              className="fw-bold mb-3"
+              className="fw-bold mb-3 mt-lg-4"
               style={{
                 color: "#054a49",
-                fontSize: "clamp(1.8rem, 3vw, 2.2rem)",
-                position: "relative",
+                fontSize: "clamp(1.9rem, 3vw, 2.2rem)",
                 display: "inline-block",
-              }}
-            >
-              Instalaciones Eléctricas
-              {/* Línea decorativa */}
-              <span
-                style={{
-                  display: "block",
-                  height: "3px",
-                  width: "60px",
-                  backgroundColor: "#FFD700",
-                  margin: "8px auto 0",
-                  borderRadius: "2px",
-                }}
-              ></span>
-            </h2>
-
-            {/* 📝 Texto descriptivo */}
-            <p
-              className="mx-auto mb-4"
-              style={{
-                fontSize: "1.1rem",
-                maxWidth: "600px",
-                color: "rgba(0,0,0,0.7)",
-                lineHeight: "1.6",
-              }}
-            >
-              Explora nuestras categorías y encuentra los productos que estás buscando de forma rápida y sencilla.
-            </p>
-
-            <HorizontalElectricidad />
-
-
-
-          </div>
-        </div>
-
-      </section>
-
-
-      <section className="mx-lg-5 slide-up mt-0 mb-5">
-
-        <div className="container-fluid w-100 mt-5">
-
-          <div className="container px-0  px-2 text-center">
-
-            {/* 🏷️ Título de sección con línea decorativa */}
-            <h2
-              className="fw-bold mb-3"
-              style={{
-                color: "#054a49",
-                fontSize: "clamp(1.8rem, 3vw, 2.2rem)",
                 position: "relative",
-                display: "inline-block",
               }}
             >
               Accesorios y Seguridad
               {/* Línea decorativa */}
-              <span
+              <span className="mb-2"
                 style={{
                   display: "block",
                   height: "3px",
@@ -1124,27 +1100,139 @@ const Home = () => {
               ></span>
             </h2>
 
-            {/* 📝 Texto descriptivo */}
-            <p
-              className="mx-auto mb-4"
-              style={{
-                fontSize: "1.1rem",
-                maxWidth: "600px",
-                color: "rgba(0,0,0,0.7)",
-                lineHeight: "1.6",
-              }}
-            >
-              Explora nuestras categorías y encuentra los productos que estás buscando de forma rápida y sencilla.
-            </p>
+          </div>
+
+
+
+
+
+
+
+          <div className="container px-0 bg-white shadow-sm px-2 rounded-3 p-2">
+
+
+
+
+
+
 
             <HorizontalAccesoriosSeguridad />
 
-
+            {/* Botón Ver más */}
+            <div className="d-flex justify-content-end px-2 mt-0 bg-white py-2 border-top">
+              <Link
+                className="ui-recommendations-footer__link d-flex align-items-center text-decoration-none mt-1"
+                to="/categorias/herramientasid"
+                style={{ color: "#3483fa" }}
+              >
+                <div className="ui-recommendations-footer__wrapper d-flex align-items-center gap-2">
+                  <div className="ui-recommendations-footer__text" style={{ fontWeight: 600 }}>
+                    Ver más
+                  </div>
+                  <div className="ui-recommendations-footer__chevron d-flex align-items-center">
+                    <svg
+                      className="ui-homes-icon ui-homes-icon--chevron"
+                      width="9"
+                      height="14"
+                      viewBox="0 0 9 14"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path d="M1 1l6 6-6 6" stroke="#3483fa" strokeWidth="2" fill="none" fillRule="evenodd" />
+                    </svg>
+                  </div>
+                </div>
+              </Link>
+            </div>
 
           </div>
         </div>
 
+
+
+
       </section>
+
+      <section className="mx-lg-5 mb-5 slide-up mt-5">
+        <div className="container-fluid w-100 mt-3">
+
+          <div style={{ textAlign: "center" }}>
+            <h2
+              className="fw-bold mb-3 mt-lg-4"
+              style={{
+                color: "#054a49",
+                fontSize: "clamp(1.9rem, 3vw, 2.2rem)",
+                display: "inline-block",
+                position: "relative",
+              }}
+            >
+              Instalación Eléctrica
+              {/* Línea decorativa */}
+              <span className="mb-2"
+                style={{
+                  display: "block",
+                  height: "3px",
+                  width: "60px",
+                  backgroundColor: "#FFD700",
+                  margin: "8px auto 0",
+                  borderRadius: "2px",
+                }}
+              ></span>
+            </h2>
+
+          </div>
+
+
+
+
+
+
+
+          <div className="container px-0 bg-white shadow-sm px-2 rounded-3 p-2">
+
+
+
+
+
+
+
+            <HorizontalElectricidad />
+
+            {/* Botón Ver más */}
+            <div className="d-flex justify-content-end px-2 mt-0 bg-white py-2 border-top">
+              <Link
+                className="ui-recommendations-footer__link d-flex align-items-center text-decoration-none mt-1"
+                to="/categorias/herramientasid"
+                style={{ color: "#3483fa" }}
+              >
+                <div className="ui-recommendations-footer__wrapper d-flex align-items-center gap-2">
+                  <div className="ui-recommendations-footer__text" style={{ fontWeight: 600 }}>
+                    Ver más
+                  </div>
+                  <div className="ui-recommendations-footer__chevron d-flex align-items-center">
+                    <svg
+                      className="ui-homes-icon ui-homes-icon--chevron"
+                      width="9"
+                      height="14"
+                      viewBox="0 0 9 14"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path d="M1 1l6 6-6 6" stroke="#3483fa" strokeWidth="2" fill="none" fillRule="evenodd" />
+                    </svg>
+                  </div>
+                </div>
+              </Link>
+            </div>
+
+          </div>
+        </div>
+
+
+
+
+      </section>
+
+
+
 
 
 

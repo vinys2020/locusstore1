@@ -312,7 +312,7 @@ export default function ProductoDetalle() {
                         </div>
 
                         {/* ATRIBUTOS DESTACADOS */}
-                        <div className="row bg-light rounded p-lg-3">
+                        <div className="row bg-light rounded p-lg-3 p-1">
                             {producto.caracteristicas && producto.caracteristicas.length > 0 ? (
                                 <div
                                     className="d-grid gap-4"
@@ -320,21 +320,22 @@ export default function ProductoDetalle() {
                                 >
                                     {producto.caracteristicas.map((carac, i) => (
                                         <div
-                                            key={i}
-                                            className="flex items-center gap-2 rounded-md  "
-                                        >
-                                            {/* Ícono gris */}
-                                            <span className="inline-flex items-center justify-center w-6 h-6 bg-gray-200 rounded-full flex-shrink-0">
-                                                <img
-                                                    src="https://http2.mlstatic.com/storage/catalog-technical-specs/images/assets/vectorial/default.svg"
-                                                    alt="✔"
-                                                    className="w-3 h-3"
-                                                />
-                                            </span>
+  key={i}
+  className="flex items-start gap-2 rounded-md"
+>
+  {/* Ícono gris */}
+  <span className="inline-flex items-center justify-center w-6 h-6 bg-gray-200 rounded-full flex-shrink-0">
+    <img
+      src="https://http2.mlstatic.com/storage/catalog-technical-specs/images/assets/vectorial/default.svg"
+      alt="✔"
+      className="w-3 h-3"
+    />
+  </span>
 
-                                            {/* Texto de la característica */}
-                                            <span className="text-sm text-gray-800">{carac}</span>
-                                        </div>
+  {/* Texto de la característica */}
+  <span className="text-sm text-gray-800">{carac}</span>
+</div>
+
                                     ))}
                                 </div>
                             ) : (
@@ -348,18 +349,16 @@ export default function ProductoDetalle() {
                         <section className="mt-4">
                             <h2 className="text-dark">Descripción</h2>
 
-                            <div className="container">
                                 <div className="row justify-content-start">
-                                    <div className="col-12 col-md-8 col-lg-6 p-2 ">
+                                    <div className="col-12 col-md-8 col-lg-6 p-2 mx-lg-2 ">
                                         <p
-                                            className="text-dark"
-                                            style={{ whiteSpace: 'pre-line', lineHeight: '1.5' }}
+                                            className="text-dark "
+                                            style={{ whiteSpace: 'pre-line', lineHeight: '1.8' }}
                                         >
                                             {producto.descripcion || "No hay descripción disponible"}
                                         </p>
                                     </div>
                                 </div>
-                            </div>
                         </section>
 
                     </div>
@@ -370,11 +369,11 @@ export default function ProductoDetalle() {
 
 
 
-                <section className="container">
-                    <article className="row justify-content-start">
+                <section className="">
+                    <article className="row justify-content-center">
                         <div className="col-12">
                         </div>
-                        <div className="col-lg-10 col-md-11 col-sm-12">
+                        <div className="col-12">
                             <ProductosRelacionados
                                 categoriaId={categoriaId} // Podés reemplazarlo dinámicamente si lo tenés
                                 productoActualId={producto.id}

@@ -6,40 +6,40 @@ import "./HorizontalScroll2.css";
 const items = [
   {
     image: "https://res.cloudinary.com/dqesszxgv/image/upload/v1757430352/er_15_vvakvr.png",
-    alt: "OFERTAS",
+    alt: "HERRAMIENTAS",
     link: "/categorias/herramientasid",
     title: "HERRAMIENTAS"
   },
   {
     image: "https://res.cloudinary.com/dqesszxgv/image/upload/v1757430745/er_18_cjxquo.png",
-    alt: "CAFÉ",
+    alt: "MATERIALES",
     link: "/categorias/materialesdeconstrucciónid",
     title: "MATERIALES"
   },
   
   {
     image: "https://res.cloudinary.com/dqesszxgv/image/upload/v1757431449/er_22_xwl1ae.png",
-    alt: "LIMPIEZA",
-    link: "/categorias/Articuloslimpiezaid",
-    title: "HIERROS y ACEROS"
+    alt: "HIERROS",
+    link: "/categorias/materialesdeconstrucciónid?search=hierro",
+    title: "HIERROS"
   },
   {
     image: "https://res.cloudinary.com/dqesszxgv/image/upload/v1757431866/er_24_nagvs1.png",
     alt: "CEMENTO",
-    link: "/categorias/Snacksygalletitasid",
-    title: "CEMENTO & CAL"
+    link: "/categorias/materialesdeconstrucciónid?search=cemento",
+    title: "CEMENTO"
   },
   {
     image: "https://res.cloudinary.com/dqesszxgv/image/upload/v1757442249/er_28_hv7xgc.png",
-    alt: "ALMACÉN",
+    alt: "SERVICIOS",
     link: "/categorias/serviciosid",
     title: "SERVICIOS"
   },
   {
     image: "https://res.cloudinary.com/dqesszxgv/image/upload/v1757432773/er_26_psnmrv.png",
     alt: "PROYECTOS",
-    link: "/categorias/Bebidasid?search=jugo",
-    title: "PROYECTOS FUTUROS"
+    link: "/ProyectosFuturos",
+    title: "PROYECTOS"
   }
 ];
 

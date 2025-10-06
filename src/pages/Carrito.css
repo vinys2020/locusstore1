@@ -6,8 +6,7 @@
     padding: 100px 20px;
     color: dark;
     background: white; /* Fondo con profundidad */
-    box-shadow: 0 0 25px rgba(0, 0, 0, 0.7);
-    margin-top: 130px;
+    margin-top: 80px;
   }
   
   .carrito-titulo {
@@ -169,6 +168,16 @@
     border-color: #0d6efd;
     background-color: #1a1a1a;
   }
+
+
+
+  .cart-item-quantity2 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 10px;
+    border-radius: 8px;
+  }
   
   .paso button {
     padding: 14px;
@@ -295,6 +304,14 @@
     background-color: #e74c3c;
   }
   
+
+  @media (min-width: 992px) {
+    .imagencarritodesktop {
+      width: 250px !important;
+      height: 250px !important;
+      object-fit: contain;
+    }
+  }
   
   @media (max-width: 768px) {
     .carrito-contenido {
