@@ -39,7 +39,7 @@ const SobreNosotros = () => {
             "url(https://res.cloudinary.com/dqesszxgv/image/upload/v1757115686/20943816_s00t6l.jpg)",
           backgroundSize: "cover",
           backgroundPosition: "center",
-          height: "400px",
+          height: "450px",
         }}
       >
         <div className="hero-overlay d-flex align-items-center justify-content-center">
@@ -72,7 +72,7 @@ const SobreNosotros = () => {
           <article className="col-12 col-md-6 mb-4 mb-md-0 slide-up">
             <img
               className="img-fluid rounded shadow"
-              src="https://res.cloudinary.com/dqesszxgv/image/upload/v1757115686/20943816_s00t6l.jpg"
+              src="https://res.cloudinary.com/dqesszxgv/image/upload/v1759872671/proposi_a2lub6.webp"
               alt="Propósito y Valores"
             />
           </article>
@@ -94,16 +94,13 @@ const SobreNosotros = () => {
           <article className="col-12 col-md-6 order-md-1 mb-4 mb-md-0 slide-up">
             <h2 className="mb-3">Un Espacio Exclusivo</h2>
             <p>
-              Más que un catálogo, Locus Store es un punto de encuentro para
-              acceder a recursos, ofertas y servicios en condiciones
-              preferenciales, pensado para la comodidad y satisfacción de nuestros
-              agremiados.
+            Locus Store es mucho más que un catálogo, es un punto de acceso único para que nuestros agremiados disfruten de recursos, ofertas y servicios exclusivos, pensados para su comodidad y beneficio
             </p>
-          </article>
+          </article>  
           <article className="col-12 col-md-6 order-md-2 slide-up">
             <img
               className="img-fluid rounded shadow"
-              src="https://res.cloudinary.com/dqesszxgv/image/upload/v1757115686/20943816_s00t6l.jpg"
+              src="https://res.cloudinary.com/dqesszxgv/image/upload/v1759873018/Captura_de_pantalla_2025-10-07_a_la_s_6.36.28_p._m._juy38f.png"
               alt="Espacio Exclusivo"
             />
           </article>
@@ -116,7 +113,7 @@ const SobreNosotros = () => {
           <article className="col-12 col-md-6 mb-4 mb-md-0 slide-up">
             <img
               className="img-fluid rounded shadow"
-              src="https://res.cloudinary.com/dqesszxgv/image/upload/v1757115686/20943816_s00t6l.jpg"
+              src="https://res.cloudinary.com/dqesszxgv/image/upload/v1759872264/blog_4_-1_oltgaq.webp"
               alt="Asesoramiento"
             />
           </article>

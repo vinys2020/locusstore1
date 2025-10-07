@@ -328,85 +328,93 @@ export default function CategoriasPage() {
         key={p.id}
         className="categoriaspage-product col-12 col-sm-6 col-md-4 col-lg-3"
       >
-        <div className="card h-100 shadow-sm hover-shadow">
-          <div
-            className="categoriaspage-img-container"
-            role="link"
-            tabIndex={0}
-            aria-label={`Ver detalles de ${p.nombre}`}
-            onClick={() => navigate(`/categorias/${categoriaId}/producto/${p.id}`)}
-            style={{ cursor: "pointer" }}
-          >
-            <img
-src={(p.imagenes && p.imagenes.length > 0 ? p.imagenes[0] : "https://via.placeholder.com/200")}
-className="categoriaspage-img card-img-top"
-              alt={p.nombre}
-              loading="lazy"
-              style={{ height: "220px", objectFit: "cover" }}
-            />
-          </div>
-          <div className="card-body d-flex flex-column">
-            <div className="categoriaspage-precio-wrapper mb-2">
-            <span
-  style={{
-    textDecoration: "line-through",
-    color: "#888",
-    fontSize: "0.85rem",
-  }}
-  className="mb-0 d-block"
->
-  {p.precio
-    ? new Intl.NumberFormat("es-AR", {
-        style: "currency",
-        currency: "ARS",
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2,
-      }).format(p.precio * 1.2)
-    : "-"}
-</span>
+<div className="card h-100 shadow-sm hover-shadow">
+  <a
+    href={`/categorias/${categoriaId}/producto/${p.id}`}
+    target="_self"
+    rel="noopener noreferrer"
+    style={{ textDecoration: "none", color: "inherit" }}
+    onClick={(e) => {
+      e.preventDefault(); // evita recarga normal
+      navigate(`/categorias/${categoriaId}/producto/${p.id}`);
+    }}
+  >
+    <div
+      className="categoriaspage-img-container"
+      role="link"
+      tabIndex={0}
+      aria-label={`Ver detalles de ${p.nombre}`}
+      style={{ cursor: "pointer" }}
+    >
+      <img
+        src={p.imagenes && p.imagenes.length > 0 ? p.imagenes[0] : "https://via.placeholder.com/200"}
+        className="categoriaspage-img card-img-top"
+        alt={p.nombre}
+        loading="lazy"
+        style={{ height: "220px", objectFit: "cover" }}
+      />
+    </div>
+    <div className="card-body d-flex flex-column">
+      <div className="categoriaspage-precio-wrapper mb-2">
+        <span
+          style={{
+            textDecoration: "line-through",
+            color: "#888",
+            fontSize: "0.85rem",
+          }}
+          className="mb-0 d-block"
+        >
+          {p.precio
+            ? new Intl.NumberFormat("es-AR", {
+                style: "currency",
+                currency: "ARS",
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              }).format(p.precio * 1.2)
+            : "-"}
+        </span>
 
-<p className="fw-bold fs-5 mb-1">
-  {p.precio
-    ? new Intl.NumberFormat("es-AR", {
-        style: "currency",
-        currency: "ARS",
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2,
-      }).format(p.precio)
-    : "-"}
-</p>
+        <p className="fw-bold fs-5 mb-1">
+          {p.precio
+            ? new Intl.NumberFormat("es-AR", {
+                style: "currency",
+                currency: "ARS",
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              }).format(p.precio)
+            : "-"}
+        </p>
 
-              {/* Cuotas */}
-              <div className="categoriaspage-cuotas text-start">
-                {p.precio3Cuotas > 0 && (
-                  <small className="text-success d-block fw-light">
-                    3 cuotas de ${ (p.precio3Cuotas / 3).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }
-                  </small>
-                )}
-                {p.precio6Cuotas > 0 && (
-                  <small className="text-success d-block fw-light mt-0">
-                    6 cuotas de ${ (p.precio6Cuotas / 6).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }
-                  </small>
-                )}
-              </div>
-
-
-            </div>
-
-            <h6 className="scroll-producto-titulo text-start mb-4"><b>{p.nombre}</b></h6>
-
-            <button
-              className="btn btn-warning-custom mt-auto"
-              disabled={p.stock === 0}
-              onClick={(e) => { 
-                e.stopPropagation(); 
-                if (p.stock > 0) agregarAlCarrito(p, categoriaId); 
-              }}
-            >
-              {p.stock === 0 ? "Agotado" : "Agregar al carrito"}
-            </button>
-          </div>
+        <div className="categoriaspage-cuotas text-start">
+          {p.precio3Cuotas > 0 && (
+            <small className="text-success d-block fw-light">
+              3 cuotas de ${(p.precio3Cuotas / 3).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+            </small>
+          )}
+          {p.precio6Cuotas > 0 && (
+            <small className="text-success d-block fw-light mt-0">
+              6 cuotas de ${(p.precio6Cuotas / 6).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+            </small>
+          )}
         </div>
+      </div>
+
+      <h6 className="scroll-producto-titulo text-start mb-4"><b>{p.nombre}</b></h6>
+    </div>
+  </a>
+
+  <button
+    className="btn btn-warning-custom mt-auto"
+    disabled={p.stock === 0}
+    onClick={(e) => {
+      e.stopPropagation(); // no dispara click del <a>
+      if (p.stock > 0) agregarAlCarrito(p, categoriaId);
+    }}
+  >
+    {p.stock === 0 ? "Agotado" : "Agregar al carrito"}
+  </button>
+</div>
+
       </div>
     ))
   )}

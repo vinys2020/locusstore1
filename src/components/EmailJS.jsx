@@ -7,6 +7,10 @@ import { toast } from "react-toastify";
  */
 export const enviarMailPedido = async (pedidoData) => {
   const cliente = pedidoData.Cliente || {};
+  const cupon = cliente.cupon || null;       // <- Agregá esto
+  const descuento = cliente.descuento || 0;  // <- Agregá esto
+
+
 
   const productos = pedidoData.productos.map((p) => {
     const cantidad = p.cantidad || 1;
@@ -47,10 +51,10 @@ export const enviarMailPedido = async (pedidoData) => {
     };
   });
 
-  const totalConDescuento = pedidoData.totalpedido * (1 - (cliente.descuento || 0) / 100);
+  const totalConDescuento = pedidoData.totalpedido;
 
   const templateParams = {
-    order_id: pedidoData.id || "N/A",
+    order_id: pedidoData.id, 
     fechapedido: pedidoData.fecha
       ? new Date(pedidoData.fecha.seconds * 1000).toLocaleString("es-AR")
       : new Date().toLocaleString("es-AR"),
@@ -62,12 +66,15 @@ export const enviarMailPedido = async (pedidoData) => {
     usuario_gremio: cliente.gremio || "No especificado",
     usuario_organismo: cliente.organismo || "No especificado",
     usuario_direccion: cliente.direccion || "No informada",
+    descuento: cupon ? `${descuento.toLocaleString("es-AR", { minimumFractionDigits: 2 })} %` : "0 %",
+    cupon: cupon || "Ninguno",
 
     productos,
     totalpedido: totalConDescuento.toLocaleString("es-AR", {
       minimumFractionDigits: 2,
       maximumFractionDigits: 2,
     }),
+
   };
 
   try {
@@ -77,9 +84,7 @@ export const enviarMailPedido = async (pedidoData) => {
       templateParams,
       "x4QSvt5uOxAoeNE6W"
     );
-    toast.success("Correo de confirmación enviado correctamente ✅");
   } catch (error) {
     console.error("❌ Error al enviar el correo del pedido:", error);
-    toast.error("Error al enviar el correo de confirmación ❌");
   }
 };

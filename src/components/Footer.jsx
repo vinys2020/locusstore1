@@ -10,7 +10,7 @@ const Footer = () => {
         {/* MEDIOS DE PAGO / ENVÍO */}
         <div className="row align-items-center mb-3">
           <div className="col-12 text-center text-md-start mb-3 mb-md-0">
-            <h6 className="text-warning">Medios de pago</h6>
+            <h6 className="">Medios de pago</h6>
             <div className="d-flex flex-wrap gap-2 justify-content-center justify-content-md-start">
             <div className="d-flex flex-wrap gap-2 justify-content-center justify-content-md-start">
   <img src="https://res.cloudinary.com/dqesszxgv/image/upload/v1757440161/visa_2x_la3lfi.png" alt="Visa" height="30"/>

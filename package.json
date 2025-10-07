@@ -13,6 +13,7 @@
     "@emailjs/browser": "^4.4.1",
     "bootstrap": "^5.3.8",
     "firebase": "^12.1.0",
+    "fslightbox-react": "^2.0.0",
     "jspdf": "^3.0.3",
     "jspdf-autotable": "^5.0.2",
     "react": "^19.1.1",

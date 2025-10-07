@@ -4,15 +4,6 @@
     transform: translateY(40px);
     transition: all 0.8s ease-out;
   }
-
-  .hero-section {
-    position: relative;
-    height: 500px;
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
-    margin-top: 70px;
-}
   
   .pf-slide-up.pf-active {
     opacity: 1;

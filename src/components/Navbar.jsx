@@ -184,18 +184,18 @@ const Navbar = ({ busqueda, setBusqueda }) => {
                   Cargando productos...
                 </div>
               ) : sugerencias.length > 0 ? (
-                <ul
-                  className="list-group position-absolute shadow px-lg-2 py-lg-2 border"
-                  style={{
-                    width: "100%",
-                    top: "100%",
-                    left: window.innerWidth < 768 ? "0px" : "20px", // <768px se considera móvil
-                    marginTop: "2px",
-                    borderRadius: "4px",
-                    zIndex: 11,
-                    backgroundColor: "#261731"
-                  }}
-                >
+<ul
+  className="list-mobile-small position-absolute shadow px-lg-2 py-lg-2 border py-0 px-0"
+  style={{
+    width: "100%",
+    top: "100%",
+    left: window.innerWidth < 768 ? "0px" : "20px",
+    marginTop: "2px",
+    borderRadius: "4px",
+    zIndex: 11,
+    backgroundColor: "#261731",
+  }}
+>
 
                   {sugerencias.slice(0, 7).map((producto) => (
                     <li
@@ -333,7 +333,12 @@ const Navbar = ({ busqueda, setBusqueda }) => {
               </Link>
             </li>
             <li className="nav-item mx-2">
-              <Link className="nav-link text-white" to="/SobreNosotros" onClick={cerrarMenu}>
+              <Link className="nav-link text-white" to="/Lotes" onClick={cerrarMenu}>
+                Lotes
+              </Link>
+            </li>
+            <li className="nav-item mx-2">
+              <Link className="nav-link text-white" to="/Esparcimiento" onClick={cerrarMenu}>
                 Esparcimiento
               </Link>
             </li>

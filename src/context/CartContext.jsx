@@ -90,7 +90,7 @@ export const CartProvider = ({ children, userId }) => {
     const cargarCupones = async () => {
       setLoadingCupones(true);
       try {
-        const cuponesCol = collection(db, `Usuariosid/${userId}/Cuponesid`);
+        const cuponesCol = collection(db, `Usuariosid/${userId}/cuponesid`);
         const cuponesSnapshot = await getDocs(cuponesCol);
         const cupones = cuponesSnapshot.docs.map(doc => {
           const data = doc.data();
@@ -118,7 +118,7 @@ export const CartProvider = ({ children, userId }) => {
     if (!userId || !codigoCupon) return;
   
     try {
-      const cuponDocRef = doc(db, `Usuariosid/${userId}/Cuponesid/${codigoCupon.toLowerCase()}`);
+      const cuponDocRef = doc(db, `Usuariosid/${userId}/cuponesid/${codigoCupon.toLowerCase()}`);
       await updateDoc(cuponDocRef, { usado: true });
   
       setCuponesUsuario((prevCupones) =>

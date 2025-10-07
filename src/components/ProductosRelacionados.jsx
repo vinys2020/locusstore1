@@ -102,36 +102,44 @@ const ProductosRelacionados = ({ categoriaId, productoActualId }) => {
       >
         {productos.map((producto) => (
           <div
-            key={producto.id}
-            className="scroll-producto-card flex-shrink-0"
-            style={{ scrollSnapAlign: "start", cursor: "pointer" }}
-            onClick={() => handleProductoClick(producto)}
+          key={producto.id}
+          className="scroll-producto-card flex-shrink-0"
+          style={{ scrollSnapAlign: "start", cursor: "pointer" }}
+          onClick={() => navigate(`/categorias/${categoriaId}/producto/${producto.id}`, { state: { producto } })}
+        >
+          <a
+            href={`/categorias/${categoriaId}/producto/${producto.id}`}
+            target="_self"
+            rel="noopener noreferrer"
+            style={{ textDecoration: "none", color: "inherit" }}
+            onClick={(e) => {
+              // Clic normal SPA
+              if (e.ctrlKey || e.metaKey || e.button === 1) {
+                // clic medio o Ctrl/Cmd abre en nueva pestaña
+                window.open(`/categorias/${categoriaId}/producto/${producto.id}`, "_blank");
+                e.preventDefault();
+              } else {
+                navigate(`/categorias/${categoriaId}/producto/${producto.id}`, { state: { producto } });
+                e.preventDefault();
+              }
+            }}
           >
-<img
-  src={producto.imagenes?.[0] || ""}
-  alt={producto.nombre}
-  className="scroll-producto-img"
-/>
+            <img
+              src={producto.imagenes?.[0] || ""}
+              alt={producto.nombre}
+              className="scroll-producto-img"
+            />
             <div className="scroll-producto-body">
               <div className="scroll-producto-precio-wrapper d-flex flex-column align-items-start">
                 <span
-                  style={{
-                    textDecoration: "line-through",
-                    color: "#888",
-                    fontSize: "0.85rem",
-                  }}
+                  style={{ textDecoration: "line-through", color: "#888", fontSize: "0.85rem" }}
                   className="mt-lg-3"
                 >
-                  $
-                  {producto.precio
-                    ? Math.round(producto.precio * 1.2).toLocaleString()
-                    : "-"}
+                  ${producto.precio ? Math.round(producto.precio * 1.2).toLocaleString() : "-"}
                 </span>
-
                 <p className="scroll-producto-precio mb-0">
                   ${producto.precio ? producto.precio.toLocaleString() : "N/A"}
                 </p>
-
                 <div className="dynamic-carousel__shipping-container mt-1 d-flex align-items-center gap-1">
                   <span>Locus Store</span>
                   <i className="bi bi-lightning-fill text-warning"></i>
@@ -139,19 +147,20 @@ const ProductosRelacionados = ({ categoriaId, productoActualId }) => {
               </div>
               <h6 className="scroll-producto-titulo mb-0">{producto.nombre}</h6>
             </div>
-            <button
-              className="scroll-producto-boton mt-md-4 mt-0"
-              disabled={producto.stock === 0}
-              onClick={(e) => {
-                e.stopPropagation();
-                if (producto.stock > 0) {
-                  agregarAlCarrito(producto, producto.categoria);
-                }
-              }}
-            >
-              {producto.stock === 0 ? "Agotado" : "Agregar al carrito"}
-            </button>
-          </div>
+          </a>
+        
+          <button
+            className="scroll-producto-boton mt-md-4 mt-0"
+            disabled={producto.stock === 0}
+            onClick={(e) => {
+              e.stopPropagation(); // evita click en el <a>
+              if (producto.stock > 0) agregarAlCarrito(producto, producto.categoria);
+            }}
+          >
+            {producto.stock === 0 ? "Agotado" : "Agregar al carrito"}
+          </button>
+        </div>
+        
         ))}
       </div>
 

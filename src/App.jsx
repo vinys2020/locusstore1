@@ -14,6 +14,9 @@ import Footer from "./components/Footer"; // ✅ Importa tu Footer existente
 import ProyectosFuturos from "./pages/ProyectosFuturos";
 import SobreNosotros from "./pages/SobreNosotros";
 import CategoriasPage from "./pages/CategoriasPage";
+import LotesPage from "./pages/Lotes";
+import EsparcimientoPage from "./pages/Esparcimiento";
+
 import ProductoDetalle from "./components/ProductoDetalle";
 import PreFooter from "./components/PreFooter"; // ✅ Importa tu PreFooter
 import "react-toastify/dist/ReactToastify.css";
@@ -117,6 +120,24 @@ function App() {
             element={
               <ProtectedRoute>
                 <CategoriasPage />
+              </ProtectedRoute>
+            }
+          />
+
+<Route
+            path="/Lotes"
+            element={
+              <ProtectedRoute>
+                <LotesPage />
+              </ProtectedRoute>
+            }
+          />
+
+<Route
+            path="/Esparcimiento"
+            element={
+              <ProtectedRoute>
+                <EsparcimientoPage />
               </ProtectedRoute>
             }
           />
