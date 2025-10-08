@@ -1,31 +1,41 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "./ProyectosFuturos.css";
+import "./Esparcimiento.css";
 
-const imagenPlaceholder =
-  "https://res.cloudinary.com/dqesszxgv/image/upload/v1757115686/20943816_s00t6l.jpg";
+const imagenes = [
+  "https://res.cloudinary.com/dqesszxgv/image/upload/v1759939226/WhatsApp_Image_2025-09-17_at_1.29.42_PM_psybhl.jpg",
+  "https://res.cloudinary.com/dqesszxgv/image/upload/v1759939226/WhatsApp_Image_2025-09-17_at_1.29.41_PM_pdkw4g.jpg",
+  "https://res.cloudinary.com/dqesszxgv/image/upload/v1759939226/WhatsApp_Image_2025-09-17_at_1.29.39_PM_pgovqd.jpg",
+  "https://res.cloudinary.com/dqesszxgv/image/upload/v1759939225/WhatsApp_Image_2025-09-17_at_1.29.35_PM_o86nhv.jpg",
+  "https://res.cloudinary.com/dqesszxgv/image/upload/v1759939225/WhatsApp_Image_2025-09-17_at_1.29.36_PM_iivx5r.jpg",
+  "https://res.cloudinary.com/dqesszxgv/image/upload/v1759939225/WhatsApp_Image_2025-09-17_at_1.29.30_PM_vyftzs.jpg",
+  "https://res.cloudinary.com/dqesszxgv/image/upload/v1759939225/WhatsApp_Image_2025-09-17_at_1.29.32_PM_coox3k.jpg",
+  "https://res.cloudinary.com/dqesszxgv/image/upload/v1759939225/WhatsApp_Image_2025-09-17_at_1.29.34_PM_lp3rle.jpg",
+  "https://res.cloudinary.com/dqesszxgv/image/upload/v1759939225/WhatsApp_Image_2025-09-17_at_1.29.40_PM_ve19av.jpg",
+];
 
-const ProyectosFuturos = () => {
+const Esparcimiento = () => {
+  const [selectedImage, setSelectedImage] = useState(null);
+
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries, observer) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            entry.target.classList.add("pf-active");
+            entry.target.classList.add("esp-active");
             observer.unobserve(entry.target);
           }
         });
       },
-      { threshold: 0.15 }
+      { threshold: 0.01, rootMargin: "100px" }
     );
 
-    const slideElements = document.querySelectorAll(".pf-slide-up");
-
+    const slideElements = document.querySelectorAll(".esp-slide-up");
     slideElements.forEach((el) => {
       observer.observe(el);
       const rect = el.getBoundingClientRect();
       if (rect.top < window.innerHeight && rect.bottom > 0) {
-        el.classList.add("pf-active");
+        el.classList.add("esp-active");
         observer.unobserve(el);
       }
     });
@@ -33,168 +43,170 @@ const ProyectosFuturos = () => {
     return () => observer.disconnect();
   }, []);
 
+  useEffect(() => {
+    const images = document.querySelectorAll(".esp-img img");
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("show");
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    images.forEach((img) => observer.observe(img));
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <main className="pf-main bg-light py-5">
-      <div className="container">
-        {/* Header */}
-        <header className="text-center mb-5 ">
-          <h1 className="fw-bold display-5 text-dark">Esparcimiento</h1>
-          <p className="text-muted lead">
-          Amplia oferta de lotes disponibles, pensados para proyectos residenciales, comerciales o mixtos.
-          </p>
-        </header>
-
-        {/* Proyecto 1 */}
-        <section className="pf-project pf-slide-up mb-5">
-          <div className="card pf-card shadow-sm border-0 rounded-4 overflow-hidden">
-            <div className="row g-0 align-items-center">
-              <div className="col-lg-6 p-4">
-                <h2 className="h4 fw-bold text-primary mb-3">
-                  Venta de Lotes en <b>El Hueco – Fray Mamerto Esquiú</b>
-                </h2>
-                <p className="text-muted mb-3">
-                  Desarrollo urbanístico y comercial dentro del Valle Central de Catamarca.
-                </p>
-                <h5 className="fw-semibold mb-2">Detalles Catastrales</h5>
-                <ul className="pf-list">
-                  <li><strong>Lote 1:</strong> Matrícula 09-22-31-5673 – 60.802,72 m² – U$S 6,3/m²</li>
-                  <li><strong>Lote 2:</strong> Matrícula 09-22-31-7348 – 36.973,58 m² – U$S 4,8/m²</li>
-                </ul>
-                <h5 className="fw-semibold mt-3 mb-2">Ubicación Estratégica</h5>
-                <ul className="pf-list">
-                  <li>10 km de la Plaza Principal de la Capital</li>
-                  <li>17 km del Dique Las Pirquitas</li>
-                  <li>350 m del futuro Parque Provincial El Palmeral</li>
-                </ul>
-                <p className="small text-muted mt-3">
-                  Propiedad registrada bajo Escritura N°53 (2019) en el Registro de la Propiedad y Mandatos.
-                </p>
-              </div>
-
-              <div className="col-lg-6">
-                <div
-                  id="carouselProyecto1"
-                  className="carousel slide pf-carousel h-100"
-                  data-bs-ride="carousel"
-                >
-                  <div className="carousel-inner h-100">
-                    <div className="carousel-item active">
-                      <img
-                        src={imagenPlaceholder}
-                        className="d-block w-100 h-100 object-fit-cover rounded"
-                        alt="Lote 1"
-                      />
-                    </div>
-                    <div className="carousel-item">
-                      <img
-                        src={imagenPlaceholder}
-                        className="d-block w-100 h-100 object-fit-cover rounded"
-                        alt="Lote 2"
-                      />
-                    </div>
-                  </div>
-                  <button
-                    className="carousel-control-prev"
-                    type="button"
-                    data-bs-target="#carouselProyecto1"
-                    data-bs-slide="prev"
-                  >
-                    <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span className="visually-hidden">Anterior</span>
-                  </button>
-                  <button
-                    className="carousel-control-next"
-                    type="button"
-                    data-bs-target="#carouselProyecto1"
-                    data-bs-slide="next"
-                  >
-                    <span className="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span className="visually-hidden">Siguiente</span>
-                  </button>
-                </div>
-              </div>
+    <>
+      {/* 🟡 MAIN 1 — Contenido e información */}
+      <main className="esp-main bg-light py-0" style={{ marginTop: "90px" }}>
+        {/* Hero Section */}
+        <section
+          className="hero-section mt-0"
+          style={{
+            backgroundImage:
+              "url(https://res.cloudinary.com/dqesszxgv/image/upload/v1759939226/WhatsApp_Image_2025-09-17_at_1.29.37_PM_wcenur.jpg)",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            height: "500px",
+          }}
+        >
+          <div className="hero-overlay d-flex align-items-center justify-content-center">
+            <div className="hero-content text-center text-white">
+              <h1 className="titulo-prata">El Chaperio de Mamerto</h1>
+              <p className="mx-2">
+                Un espacio gastronómico íntimo y exclusivo para vivir experiencias únicas.
+              </p>
             </div>
           </div>
         </section>
 
-        {/* Proyecto 2 */}
-        <section className="pf-project pf-slide-up mb-5">
-          <div className="card pf-card shadow-sm border-0 rounded-4 overflow-hidden">
-            <div className="row g-0 flex-lg-row-reverse align-items-center">
-              <div className="col-lg-6 p-4">
-                <h2 className="h4 fw-bold text-primary mb-3">
-                  Venta de Lotes en Pozo de Mistol – San Isidro, Valle Viejo
+        {/* Info Section */}
+        <div className="container py-5">
+          <header className="text-center mb-5">
+            <h2 className="text-muted lead">
+              Viví una experiencia privada de sabor y relax, Pensada para grupos de entre{" "}
+              <strong>4 y 12 personas</strong>.
+            </h2>
+          </header>
+
+          <section className="esp-slide-up text-center mb-5 px-3">
+            <div className="card border-0 shadow-lg rounded-4 overflow-hidden bg-white p-0">
+              <div className="card-body px-lg-4 py-5">
+                <h2 className="fw-bold text-dark display-6 mb-3">
+                  Experiencia Gastronómica Exclusiva
                 </h2>
-                <p className="text-muted mb-3">
-                  Proyecto ideal para viviendas unifamiliares con plano de loteo aprobado.
+
+                <p className="text-muted fs-5 ">
+                  De lunes a viernes, un solo evento por día. Reservá tu lugar y viví una propuesta
+                  gourmet única en <b>El Chaperio de Mamerto</b>, donde la excelencia y el sabor
+                  se encuentran en un entorno íntimo y relajado.
                 </p>
-                <h5 className="fw-semibold mb-2">Detalles por Lote</h5>
-                <ul className="pf-list">
-                  <li>Lotes N°21, 22, 23, 30, 32: 300 m²</li>
-                  <li>Lote N°29: 336,09 m²</li>
-                  <li>Lote N°31: 301,08 m²</li>
-                  <li>Lote N°33: 335,90 m²</li>
-                  <li><strong>Precio:</strong> U$S 48/m²</li>
-                </ul>
-                <h5 className="fw-semibold mt-3 mb-2">Ubicación</h5>
-                <ul className="pf-list">
-                  <li>650 m de Av. de Circunvalación Néstor Kirchner</li>
-                  <li>850 m de Av. Félix Avellaneda</li>
-                  <li>Calle Manuel Soria, acceso rápido a Capital y Valle Viejo</li>
-                </ul>
-                <p className="small text-muted mt-3">
-                  Lotes en condiciones de escriturar en 3 meses – Dominio a nombre de Benigno Calixto Rubio.
+
+                <div className="mx-auto text-center" style={{ maxWidth: "720px" }}>
+                  <ul className="list-group list-group-flush">
+                    <li className="text-dark py-4 border-bottom-rounded  ">
+                      <div><b>Aperitivo de bienvenida</b></div>
+                      <div>• Un cóctel de autor por persona</div>
+                    </li>
+                    <li className=" text-dark py-4 d-flex flex-column border-bottom-rounded  ">
+                      <b>Entrada</b>
+                      <span>• Empanada artesanal por persona</span>
+                    </li>
+                    <li className=" text-dark py-4 border-bottom-rounded ">
+                      <div><b>Tabla de degustación</b></div>
+                      <div>• Burrata o selección de quesos y fiambres criollos (para cada 6 personas)</div>
+
+                    </li>
+                    <li className=" text-dark py-4 border-bottom-rounded ">
+                    <div><b>Plato principal</b></div>
+                      <div>• Pescados para compartir: pacú, salmón, trucha salmonada o surubí</div>
+                      <div>o</div>
+                      <div>• Carnes individuales: costillas banderita u ojo de bife</div>
+                    </li>
+                    <li className=" text-dark py-4 border-bottom-rounded">
+                    <div><b>Postre</b></div>
+                      <div>• Dos opciones para compartir</div>
+
+        </li>
+                    <li className=" text-dark py-4 border-bottom-rounded ">
+                    <div><b>Agua</b></div>
+                      <div>• En jarra libre durante toda la cena</div>
+          </li>
+                  </ul>
+                </div>
+
+                <div className=" d-flex bg-success  text-white  justify-content-center aling-items-center fw-semibold fs-4 py-3 rounded-3 mt-4 mx-lg-5">
+                  Precio: $30.000 por persona
+                </div>
+
+                <p className="text-muted mt-4 mb-0 fs-5">
+                  <b>Una experiencia diseñada para disfrutar, compartir y redescubrir el placer de comer bien</b>
                 </p>
               </div>
+            </div>
+          </section>
 
-              <div className="col-lg-6">
-                <div
-                  id="carouselProyecto2"
-                  className="carousel slide pf-carousel h-100"
-                  data-bs-ride="carousel"
-                >
-                  <div className="carousel-inner h-100">
-                    <div className="carousel-item active">
-                      <img
-                        src={imagenPlaceholder}
-                        className="d-block w-100 h-100 object-fit-cover rounded"
-                        alt="Plano loteo"
-                      />
-                    </div>
-                    <div className="carousel-item">
-                      <img
-                        src={imagenPlaceholder}
-                        className="d-block w-100 h-100 object-fit-cover rounded"
-                        alt="Ubicación satelital"
-                      />
-                    </div>
-                  </div>
-                  <button
-                    className="carousel-control-prev"
-                    type="button"
-                    data-bs-target="#carouselProyecto2"
-                    data-bs-slide="prev"
-                  >
-                    <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span className="visually-hidden">Anterior</span>
-                  </button>
-                  <button
-                    className="carousel-control-next"
-                    type="button"
-                    data-bs-target="#carouselProyecto2"
-                    data-bs-slide="next"
-                  >
-                    <span className="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span className="visually-hidden">Siguiente</span>
-                  </button>
-                </div>
+        </div>
+      </main>
+
+      {/* 🟣 MAIN 2 — Galería de Fotografías (ocupa todo el ancho) */}
+      <main className="esp-gallery-main mb-0">
+        <section className="pt-5 bg-black esp-slide-up" id="galeria-fotos">
+          <article className="col-12 d-flex justify-content-center w-100 mb-0 mt-0">
+            <div className="text-center">
+              <h3 style={{ color: "#fff" }}>
+                Experiencia Gastronómica Exclusiva
+              </h3>
+              <p style={{ color: "#fff" }}>Descubrí nuevos sabores en un ambiente único</p>
+            </div>
+          </article>
+
+          <article className="col-12 d-flex justify-content-center w-100 mb-0">
+            <section className="esp-img mt-0">
+              {imagenes.map((img, i) => (
+                <img
+                  key={i}
+                  src={img}
+                  alt={`Imagen ${i + 1}`}
+                  width="100%"
+                  decoding="async"
+                  loading="eager"
+                  onClick={() => setSelectedImage(img)}
+                  style={{ cursor: "pointer" }}
+                />
+              ))}
+            </section>
+          </article>
+        </section>
+
+        {/* Modal Imagen */}
+        {selectedImage && (
+          <div
+            className="modal fade show d-block"
+            tabIndex="-1"
+            style={{ backgroundColor: "rgba(0,0,0,0.8)" }}
+            onClick={() => setSelectedImage(null)}
+          >
+            <div className="modal-dialog modal-dialog-centered modal-lg">
+              <div className="modal-content bg-transparent border-0">
+                <img
+                  src={selectedImage}
+                  alt="Vista ampliada"
+                  className="w-100 rounded-4 shadow-lg"
+                />
               </div>
             </div>
           </div>
-        </section>
-      </div>
-    </main>
+        )}
+      </main>
+    </>
   );
 };
 
-export default ProyectosFuturos;
+export default Esparcimiento;

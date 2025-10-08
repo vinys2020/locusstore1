@@ -1,55 +1,128 @@
 /* Animaciones */
-.pf-slide-up {
-    opacity: 0;
-    transform: translateY(40px);
-    transition: all 0.8s ease-out;
+.esp-slide-up {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.8s ease-out;
+}
+
+.esp-slide-up.esp-active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Tarjetas */
+.esp-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.esp-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Listas */
+.esp-list {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.esp-list li {
+  position: relative;
+  padding-left: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.esp-list li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: #ffc107;
+}
+
+/* Main */
+.esp-main {
+  margin-top: 120px;
+}
+
+@media (max-width: 768px) {
+  .esp-main {
+    margin-top: 80px;
   }
-  
-  .pf-slide-up.pf-active {
-    opacity: 1;
-    transform: translateY(0);
+}
+
+/* 📸 Galería estilo masonry */
+.esp-gallery-main {
+  width: 100%;
+  background-color: #000;
+}
+
+.esp-img {
+  columns: 2;
+  padding: 16px 36px;
+  column-gap: 38px;
+}
+
+/* Imágenes */
+.esp-img img {
+  border-radius: 4px;
+  width: 100%;
+  height: auto;
+  margin-bottom: 32px;
+  opacity: 0;
+  transform: translateY(50px) scale(0.9);
+  transition: all 0.8s ease-out;
+}
+
+.border-bottom-rounded {
+  border-bottom: 1px solid #000; /* grosor y color */
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+
+
+/* Efecto al hacer scroll (cuando entra en vista) */
+.esp-img img.show {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* Efecto hover */
+.esp-img img:hover {
+  transform: scale(1.05);
+}
+
+/* 📱 Responsive */
+@media (max-width: 768px) {
+  .esp-img {
+    columns: 1;
+    padding: 8px 20px;
+    column-gap: 16px;
   }
-  
-  /* Tarjetas */
-  .pf-card {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-  
-  .pf-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-  }
-  
-  /* Listas */
-  .pf-list {
-    list-style-type: none;
-    padding-left: 0;
-  }
-  
-  .pf-list li {
-    position: relative;
-    padding-left: 1.2rem;
-    margin-bottom: 0.5rem;
-  }
-  
-  .pf-list li::before {
-    content: "•";
-    position: absolute;
-    left: 0;
-    color: #ffc107; /* amarillo de marca */
-  }
-  
-  /* Carousel height fijo */
-  .pf-carousel {
-    min-height: 300px;
-  }
-  
-  .pf-main {
-    margin-top: 120px;
+}
+
+
+@media (max-width: 768px) {
+  .esp-slide-up h2 {
+    font-size: 1.4rem !important;
+    line-height: 1.2;
+    
+    
   }
 
-  @media (max-width: 768px) {   
-    .pf-main {
-      margin-top: 80px;
-    }
+  .esp-slide-up p,
+  .esp-slide-up li {
+    font-size: 1rem !important;
+    text-align: center !important;
   }
+
+  .esp-slide-up .list-group-item {
+    text-align: center !important;
+    padding: 0.75rem !important;
+  }
+
+  .esp-slide-up ul ul {
+    padding-left: 0 !important;
+    list-style: none;
+  }
+}

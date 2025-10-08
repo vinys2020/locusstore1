@@ -62,8 +62,8 @@ const PreFooter = () => {
   <li><Link to="/ProyectosFuturos" className="text-warning text-decoration-none">Proyectos Futuros</Link></li>
   <li><Link to="/categorias/aberturasid" className="text-warning text-decoration-none">Productos</Link></li>
   <li><Link to="/SobreNosotros" className="text-warning text-decoration-none">Sobre Nosotros</Link></li>
-  <li><Link to="/SobreNosotros" className="text-warning text-decoration-none">Lotes</Link></li>
-  <li><Link to="/SobreNosotros" className="text-warning text-decoration-none">Esparcimiento</Link></li>
+  <li><Link to="/Lotes" className="text-warning text-decoration-none">Lotes</Link></li>
+  <li><Link to="/Esparcimiento" className="text-warning text-decoration-none">Esparcimiento</Link></li>
   <li><Link to="/contacto" className="text-warning text-decoration-none">Contacto</Link></li>
   <li><Link to="/perfil" className="text-warning text-decoration-none">Mi Cuenta</Link></li>
 </ul>

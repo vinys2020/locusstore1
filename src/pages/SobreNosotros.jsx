@@ -30,7 +30,7 @@ const SobreNosotros = () => {
   }, []);
 
   return (
-    <main className="sobre-nosotros bg-light text-dark" >
+    <main className="sobre-nosotros bg-light text-dark m-0" >
       {/* Hero Section */}
       <section
         className="hero-section"
@@ -100,7 +100,7 @@ const SobreNosotros = () => {
           <article className="col-12 col-md-6 order-md-2 slide-up">
             <img
               className="img-fluid rounded shadow"
-              src="https://res.cloudinary.com/dqesszxgv/image/upload/v1759873018/Captura_de_pantalla_2025-10-07_a_la_s_6.36.28_p._m._juy38f.png"
+              src="https://res.cloudinary.com/dqesszxgv/image/upload/v1759966006/achievement-3385068_1280_j6mps9.jpg"
               alt="Espacio Exclusivo"
             />
           </article>
