@@ -28,7 +28,7 @@ const Navbar = ({ busqueda, setBusqueda }) => {
   const [menuAbierto, setMenuAbierto] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
 
-  
+
 
   const toggleMenu = () => setMenuAbierto(!menuAbierto);
   const cerrarMenu = () => setMenuAbierto(false);
@@ -134,14 +134,14 @@ const Navbar = ({ busqueda, setBusqueda }) => {
           {/* LOGO */}
           <div className="d-flex align-items-center">
             <Link
-              className="navbar-brand d-none d-md-block"
+              className="navbar-brand d-none d-md-block logo-hover"
               to="/home"
               onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
             >
               <img src={logo} alt="Locus Store" height="63" />
             </Link>
             <Link
-              className="navbar-brand d-md-none"
+              className="navbar-brand d-md-none logo-hover"
               to="/home"
               onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
             >
@@ -184,18 +184,18 @@ const Navbar = ({ busqueda, setBusqueda }) => {
                   Cargando productos...
                 </div>
               ) : sugerencias.length > 0 ? (
-<ul
-  className="list-mobile-small position-absolute shadow px-lg-2 py-lg-2 border py-0 px-0"
-  style={{
-    width: "100%",
-    top: "100%",
-    left: window.innerWidth < 768 ? "0px" : "20px",
-    marginTop: "2px",
-    borderRadius: "4px",
-    zIndex: 11,
-    backgroundColor: "#261731",
-  }}
->
+                <ul
+                  className="list-mobile-small position-absolute shadow px-lg-2 py-lg-2 border py-0 px-0"
+                  style={{
+                    width: "100%",
+                    top: "100%",
+                    left: window.innerWidth < 768 ? "0px" : "20px",
+                    marginTop: "2px",
+                    borderRadius: "4px",
+                    zIndex: 11,
+                    backgroundColor: "#261731",
+                  }}
+                >
 
                   {sugerencias.slice(0, 7).map((producto) => (
                     <li
@@ -206,11 +206,11 @@ const Navbar = ({ busqueda, setBusqueda }) => {
                         // Limpiar estado local de búsqueda
                         setBusqueda("");
                         setSugerencias([]);
-                        
+
                         // Actualizar el input en CategoriasPage vía query params
                         searchParams.set("search", producto.nombre);
                         setSearchParams(searchParams);
-                    
+
                         // Navegar a la categoría (opcional si ya estás en la misma página)
                         navigate(`/categorias/${producto.categoria}?search=${encodeURIComponent(producto.nombre)}`);
                       }}

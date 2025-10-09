@@ -64,23 +64,23 @@ export default function CategoriasDropdown({ onCloseNavbar }) {
       </button>
 
       <ul
-  className={`dropdown-menu ${isOpen ? "show" : ""}`}
-  style={{ minWidth: "220px" , backgroundColor: "#261731"}} // <-- 🔧 Ajusta el ancho aquí
->        {categorias.length > 0 ? (
-          categorias.map((cat) => (
-            <li key={cat.id}>
-              <Link
-                className="dropdown-item"
-                to={`/categorias/${cat.id}`}
-                onClick={handleItemClick}
-              >
-                {cat.nombre}
-              </Link>
-            </li>
-          ))
-        ) : (
-          <li className="dropdown-item">Cargando...</li>
-        )}
+        className={`dropdown-menu ${isOpen ? "show" : ""}`}
+        style={{ minWidth: "220px", backgroundColor: "#261731" }} // <-- 🔧 Ajusta el ancho aquí
+      >        {categorias.length > 0 ? (
+        categorias.map((cat) => (
+          <li key={cat.id}>
+            <Link
+              className="dropdown-item"
+              to={`/categorias/${cat.id}`}
+              onClick={handleItemClick}
+            >
+              {cat.nombre}
+            </Link>
+          </li>
+        ))
+      ) : (
+        <li className="dropdown-item">Cargando...</li>
+      )}
       </ul>
     </li>
   );

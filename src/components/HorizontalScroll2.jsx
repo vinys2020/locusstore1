@@ -16,7 +16,7 @@ const items = [
     link: "/categorias/materialesdeconstrucciónid",
     title: "MATERIALES"
   },
-  
+
   {
     image: "https://res.cloudinary.com/dqesszxgv/image/upload/v1757431449/er_22_xwl1ae.png",
     alt: "HIERROS",
@@ -53,7 +53,7 @@ const HorizontalScroll2 = () => {
           className="scroll-card-two"
         >
           <div className="image-container rounded-0">
-            <img src={item.image} alt={item.alt}  />
+            <img src={item.image} alt={item.alt} />
           </div>
           <div className="card-title">{item.title}</div>
         </Link>

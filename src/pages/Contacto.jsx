@@ -42,7 +42,7 @@ const Contactos = () => {
         autoClose: 3500,
         theme: "colored",
       });
-            setFormData({
+      setFormData({
         nombre: "",
         email: "",
         telefono: "",

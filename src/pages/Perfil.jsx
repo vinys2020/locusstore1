@@ -156,7 +156,7 @@ const Perfil = () => {
 
           {/* Texto de bienvenida */}
           <div className="text-center text-md-start">
-            
+
             <h2 className="fw-bold mb-1 mt-4 text-dark">
               {capitalizeWords(user.nombre)}
             </h2>
@@ -188,10 +188,10 @@ const Perfil = () => {
                             <strong className="text-black">Pedido ID: {pedido.id}</strong>
                             <div
                               className={`small ${pedido.estado === "pendiente"
-                                  ? "text-danger"
-                                  : pedido.estado === "completado"
-                                    ? "text-primary"
-                                    : ""
+                                ? "text-danger"
+                                : pedido.estado === "completado"
+                                  ? "text-primary"
+                                  : ""
                                 }`}
                             >
                               {pedido.estado === "pendiente"

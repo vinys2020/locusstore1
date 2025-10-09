@@ -223,16 +223,16 @@ const FloatingCart = () => {
       }
 
       // Calculamos el total incluyendo cuotas
-let totalConInteres = cart.reduce((acc, p) => {
-  const cantidad = p.cantidad || 1;
-  let total = p.precio * cantidad;
-  if (p.metodo === "3cuotas") total *= 1.15;
-  if (p.metodo === "6cuotas") total *= 1.30;
-  return acc + total;
-}, 0);
+      let totalConInteres = cart.reduce((acc, p) => {
+        const cantidad = p.cantidad || 1;
+        let total = p.precio * cantidad;
+        if (p.metodo === "3cuotas") total *= 1.15;
+        if (p.metodo === "6cuotas") total *= 1.30;
+        return acc + total;
+      }, 0);
 
-// Aplicamos descuento si hay cupón
-const totalFinalConDescuento = discount > 0 ? +(totalConInteres * (1 - discount / 100)).toFixed(2) : +totalConInteres.toFixed(2);
+      // Aplicamos descuento si hay cupón
+      const totalFinalConDescuento = discount > 0 ? +(totalConInteres * (1 - discount / 100)).toFixed(2) : +totalConInteres.toFixed(2);
 
 
 
@@ -285,14 +285,14 @@ const totalFinalConDescuento = discount > 0 ? +(totalConInteres * (1 - discount 
 
 
 
-// Crear el pedido y guardar la referencia
-const docRef = await addDoc(collection(db, "pedidos"), {
-  ...pedidoData,
-  userId: auth.currentUser.uid
-});
+      // Crear el pedido y guardar la referencia
+      const docRef = await addDoc(collection(db, "pedidos"), {
+        ...pedidoData,
+        userId: auth.currentUser.uid
+      });
 
-// Ahora sí podemos asignar el id
-pedidoData.id = docRef.id;
+      // Ahora sí podemos asignar el id
+      pedidoData.id = docRef.id;
 
       const batch = writeBatch(db);
       productosAFinalizar.forEach(({ ref, stockActual, cantidad }) => {
@@ -318,12 +318,12 @@ pedidoData.id = docRef.id;
 
 
       // ✅ Aquí enviamos el correo con EmailJS
-try {
-  await enviarMailPedido(pedidoData); // <-- Llamada a tu módulo EmailJS
-  console.log("Correo enviado al administrador correctamente.");
-} catch (err) {
-  console.error("Error al enviar el correo:", err);
-}
+      try {
+        await enviarMailPedido(pedidoData); // <-- Llamada a tu módulo EmailJS
+        console.log("Correo enviado al administrador correctamente.");
+      } catch (err) {
+        console.error("Error al enviar el correo:", err);
+      }
 
 
       toast.success("✅ ¡Pedido confirmado con éxito! Gracias por tu compra.");

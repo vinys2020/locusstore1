@@ -82,7 +82,7 @@ function App() {
   }, [usuario, location.pathname]);
 
   return (
-    
+
     <div className="app-wrapper d-flex flex-column min-vh-100">
       {location.pathname !== "/" && (
         <Navbar busqueda={busqueda} setBusqueda={setBusqueda} />
@@ -107,7 +107,7 @@ function App() {
               </ProtectedRoute>
             }
           />
-                    <Route
+          <Route
             path="/Carrito"
             element={
               <ProtectedRoute>
@@ -124,7 +124,7 @@ function App() {
             }
           />
 
-<Route
+          <Route
             path="/Lotes"
             element={
               <ProtectedRoute>
@@ -133,7 +133,7 @@ function App() {
             }
           />
 
-<Route
+          <Route
             path="/Esparcimiento"
             element={
               <ProtectedRoute>
@@ -188,11 +188,11 @@ function App() {
       </main>
 
       {location.pathname !== "/" && (
-  <>
-    <PreFooter />  {/* ✅ Agregado aquí antes del Footer */}
-    <Footer />
-  </>
-)}    </div>
+        <>
+          <PreFooter />  {/* ✅ Agregado aquí antes del Footer */}
+          <Footer />
+        </>
+      )}    </div>
   );
 
 }

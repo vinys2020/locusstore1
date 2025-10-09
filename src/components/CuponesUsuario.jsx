@@ -51,11 +51,10 @@ const CuponesUsuario = () => {
       {cupones.map((cupon) => (
         <Card
           key={cupon.id}
-          className={`border ${
-            cupon.usado
+          className={`border ${cupon.usado
               ? "bg-gray-200 border-gray-400"
               : "bg-yellow-100 border-yellow-400"
-          } shadow-sm`}
+            } shadow-sm`}
         >
           <CardContent className="p-4 flex flex-col gap-2">
             <div className="flex items-center gap-2">
@@ -63,9 +62,8 @@ const CuponesUsuario = () => {
                 className={cupon.usado ? "text-gray-600" : "text-yellow-800"}
               />
               <h3
-                className={`text-lg font-bold ${
-                  cupon.usado ? "text-gray-600" : "text-yellow-900"
-                }`}
+                className={`text-lg font-bold ${cupon.usado ? "text-gray-600" : "text-yellow-900"
+                  }`}
               >
                 {cupon.nombre || "Cupón de descuento"}
               </h3>

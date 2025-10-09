@@ -1,91 +1,91 @@
 .custom-toast {
-    background: linear-gradient(135deg, #121212cc, #3a3a3acc);
-    border-left: 6px solid #f0c419;
-    color: #fff !important;
-    font-weight: 600;
-    font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
-    box-shadow: 0 4px 15px rgba(240, 196, 25, 0.5);
-    border-radius: 10px;
+  background: linear-gradient(135deg, #121212cc, #3a3a3acc);
+  border-left: 6px solid #f0c419;
+  color: #fff !important;
+  font-weight: 600;
+  font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  box-shadow: 0 4px 15px rgba(240, 196, 25, 0.5);
+  border-radius: 10px;
   text-align: center;
-    display: flex;
-    flex-direction: column; 
-    align-items: center;
-    justify-content: center;
-    gap: 0.6rem;
-    padding: 1rem 1.1rem;
-    min-width: 320px;
-    max-width: 420px;
-    position: relative;
-  }
-  
-  .custom-toast-body {
-    color: #fff !important;
-    font-size: 1rem;
-    text-align: center;
-    margin: 0;
-    padding: 0;
-    width: 100%;
-  }
-  
-  /* Botón personalizado de cierre */
-  .toast-close-btn {
-    background-color: #f0c419;
-    color: #000;
-    border: none;
-    padding: 6px 14px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: 600;
-    font-size: 0.95rem;
-    transition: all 0.25s ease;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
-  
-    /* 🔧 Prevención de salto de línea y centrado */
-    white-space: nowrap;
-    width: auto;
-    min-width: 100px;
-    text-align: center;
-  }
-  
-  .toast-close-btn:hover {
-    background-color: #ffe066;
-    transform: scale(1.05);
-  }
-  
-  /* Estilo para toasts informativos */
-  .custom-toast-info {
-    background: #f5f5f5;
-    border-left: 6px solid #0d6efd;
-    color: #333 !important;
-    font-weight: 500;
-    box-shadow: 0 4px 12px rgba(13, 110, 253, 0.2);
-    border-radius: 10px;
-  
-    display: flex;
-    flex-direction: column; /* también en columnas */
-    align-items: center;
-    justify-content: center;
-    gap: 0.75rem;
-    padding: 1rem 1.25rem;
-    min-width: 280px;
-    max-width: 420px;
-  }
-  
-  .custom-toast-info .custom-toast-body {
-    color: #333 !important;
-    font-size: 0.95rem;
-    text-align: center;
-    width: 100%;
-  }
-  
-  /* Botón para toast informativo */
-  .custom-toast-info .toast-close-btn {
-    background-color: #0d6efd;
-    color: #fff;
-  }
-  
-  .custom-toast-info .toast-close-btn:hover {
-    background-color: #0056b3;
-    transform: scale(1.05);
-  }
-  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 1rem 1.1rem;
+  min-width: 320px;
+  max-width: 420px;
+  position: relative;
+}
+
+.custom-toast-body {
+  color: #fff !important;
+  font-size: 1rem;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+/* Botón personalizado de cierre */
+.toast-close-btn {
+  background-color: #f0c419;
+  color: #000;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: all 0.25s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+
+  /* 🔧 Prevención de salto de línea y centrado */
+  white-space: nowrap;
+  width: auto;
+  min-width: 100px;
+  text-align: center;
+}
+
+.toast-close-btn:hover {
+  background-color: #ffe066;
+  transform: scale(1.05);
+}
+
+/* Estilo para toasts informativos */
+.custom-toast-info {
+  background: #f5f5f5;
+  border-left: 6px solid #0d6efd;
+  color: #333 !important;
+  font-weight: 500;
+  box-shadow: 0 4px 12px rgba(13, 110, 253, 0.2);
+  border-radius: 10px;
+
+  display: flex;
+  flex-direction: column;
+  /* también en columnas */
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 1rem 1.25rem;
+  min-width: 280px;
+  max-width: 420px;
+}
+
+.custom-toast-info .custom-toast-body {
+  color: #333 !important;
+  font-size: 0.95rem;
+  text-align: center;
+  width: 100%;
+}
+
+/* Botón para toast informativo */
+.custom-toast-info .toast-close-btn {
+  background-color: #0d6efd;
+  color: #fff;
+}
+
+.custom-toast-info .toast-close-btn:hover {
+  background-color: #0056b3;
+  transform: scale(1.05);
+}

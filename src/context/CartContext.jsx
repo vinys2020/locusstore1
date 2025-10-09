@@ -1,11 +1,11 @@
 import React, { createContext, useState, useEffect } from "react";
-import { 
-  getFirestore, 
-  collection, 
-  getDocs, 
-  doc, 
-  getDoc, 
-  runTransaction, 
+import {
+  getFirestore,
+  collection,
+  getDocs,
+  doc,
+  getDoc,
+  runTransaction,
   updateDoc,
   addDoc,             // ✅ falta
   serverTimestamp     // ✅ falta
@@ -73,20 +73,20 @@ export const CartProvider = ({ children, userId }) => {
 
 
 
-    useEffect(() => {
-      const storedCart = localStorage.getItem("cart");
-      if (storedCart) {
-        setCart(JSON.parse(storedCart));
-      }
-    }, []);
-  
-    useEffect(() => {
-      localStorage.setItem("cart", JSON.stringify(cart));
-    }, [cart]);
+  useEffect(() => {
+    const storedCart = localStorage.getItem("cart");
+    if (storedCart) {
+      setCart(JSON.parse(storedCart));
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("cart", JSON.stringify(cart));
+  }, [cart]);
 
   useEffect(() => {
     if (!userId) return;
-  
+
     const cargarCupones = async () => {
       setLoadingCupones(true);
       try {
@@ -108,7 +108,7 @@ export const CartProvider = ({ children, userId }) => {
         setLoadingCupones(false);
       }
     };
-  
+
     cargarCupones();
   }, [userId, db]);
 
@@ -116,17 +116,17 @@ export const CartProvider = ({ children, userId }) => {
 
   const marcarCuponComoUsado = async (codigoCupon) => {
     if (!userId || !codigoCupon) return;
-  
+
     try {
       const cuponDocRef = doc(db, `Usuariosid/${userId}/cuponesid/${codigoCupon.toLowerCase()}`);
       await updateDoc(cuponDocRef, { usado: true });
-  
+
       setCuponesUsuario((prevCupones) =>
         prevCupones.map((c) =>
           c.codigo === codigoCupon.toUpperCase() ? { ...c, usado: true } : c
         )
       );
-  
+
       if (coupon && coupon.codigo === codigoCupon.toUpperCase()) {
         setCoupon({ ...coupon, usado: true });
         setDiscount(0);
@@ -135,7 +135,7 @@ export const CartProvider = ({ children, userId }) => {
       console.error("Error al marcar cupón como usado:", error);
     }
   };
-  
+
 
   const obtenerCategoriaId = (producto) => {
     const categoria =
@@ -146,19 +146,19 @@ export const CartProvider = ({ children, userId }) => {
       producto.categoryId ||
       producto.CategoryId ||
       null;
-  
+
     if (!categoria) {
       console.error(`⚠️ Producto sin categoría: ${producto.descripcion || producto.nombre || producto.id}`);
       return null;
     }
-  
+
     return categoria;
   };
-  
+
 
   const agregarAlCarrito = (producto, categoriaId) => {
     const productoConCategoria = { ...producto, categoriaId };
-  
+
     setCart((prevCart) => {
       const productoExistente = prevCart.find((p) => p.id === producto.id);
       if (productoExistente) {
@@ -170,8 +170,8 @@ export const CartProvider = ({ children, userId }) => {
       }
     });
   };
-  
-  
+
+
 
   const eliminarDelCarrito = (productoId) => {
     setCart((prevCart) => prevCart.filter((p) => p.id !== productoId));
@@ -197,31 +197,31 @@ export const CartProvider = ({ children, userId }) => {
       setCoupon(null);
       return;
     }
-    setDiscount(cupon.descuento); 
+    setDiscount(cupon.descuento);
     setCoupon(cupon);
   };
 
-const calcularSubtotal = () => {
-  const subtotal = cart.reduce((acc, p) => acc + p.cantidad * Number(p.precio || 0), 0);
-  return parseFloat(subtotal.toFixed(2));
-};
+  const calcularSubtotal = () => {
+    const subtotal = cart.reduce((acc, p) => acc + p.cantidad * Number(p.precio || 0), 0);
+    return parseFloat(subtotal.toFixed(2));
+  };
 
-const calcularTotal = () => {
-  const subtotal = calcularSubtotal();
-  if (discount > 0) {
-    const totalConDescuento = subtotal * (1 - discount / 100);
-    return parseFloat(totalConDescuento.toFixed(2));
-  }
-  return subtotal;
-};
+  const calcularTotal = () => {
+    const subtotal = calcularSubtotal();
+    if (discount > 0) {
+      const totalConDescuento = subtotal * (1 - discount / 100);
+      return parseFloat(totalConDescuento.toFixed(2));
+    }
+    return subtotal;
+  };
 
 
-const calcularDescuentoMonetario = () => {
-  const subtotal = calcularSubtotal();
-  const total = calcularTotal();
-  const descuento = subtotal - total;
-  return parseFloat(descuento.toFixed(2));
-};
+  const calcularDescuentoMonetario = () => {
+    const subtotal = calcularSubtotal();
+    const total = calcularTotal();
+    const descuento = subtotal - total;
+    return parseFloat(descuento.toFixed(2));
+  };
 
 
 
@@ -251,32 +251,32 @@ const calcularDescuentoMonetario = () => {
   };
 
   // Dentro de CartProvider
-const actualizarProducto = (id, cambios) => {
-  setCart((prevCart) =>
-    prevCart.map((p) => (p.id === id ? { ...p, ...cambios } : p))
-  );
-};
-  
-  
+  const actualizarProducto = (id, cambios) => {
+    setCart((prevCart) =>
+      prevCart.map((p) => (p.id === id ? { ...p, ...cambios } : p))
+    );
+  };
+
+
   const descontarStock = async () => {
     try {
       await runTransaction(db, async (transaction) => {
         for (const item of cart) {
           if (!item.categoriaId) continue;
-  
+
           const productoDocRef = doc(db, `categorias/${item.categoriaId}/Productosid/${item.id}`);
           const productoDoc = await transaction.get(productoDocRef);
-  
+
           if (!productoDoc.exists()) {
             throw new Error(`Producto no existe: ${item.id}`);
           }
-  
+
           const stockActual = productoDoc.data().stock || 0;
-  
+
           if (stockActual < item.cantidad) {
             throw new Error(`No hay suficiente stock para ${item.descripcion || item.id}`);
           }
-  
+
           transaction.update(productoDocRef, { stock: stockActual - item.cantidad });
         }
       });
@@ -286,7 +286,7 @@ const actualizarProducto = (id, cambios) => {
       throw error;
     }
   };
-  
+
 
   return (
     <CartContext.Provider

@@ -1,87 +1,87 @@
 .adminpedidos-card {
-    background-color: #fff;
-  }
-  
-  .adminpedidos-title {
-    font-weight: bold;
-  }
-  
-  .adminpedidos-list-group {
-    padding: 0;
-    margin: 0;
-    list-style: none;
-  }
-  
-  .adminpedidos-item {
-    background-color: #fff;
-    border: 1px solid #dee2e6;
-    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-  
-  }
-  
-  .adminpedidos-item:hover {
-    background-color: #e0f0ff;
-    transform: scale(1.02);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  }
-  
-  .adminpedidos-id {
-    font-size: 1rem;
-  }
-  
-  .adminpedidos-status,
-  .adminpedidos-payment-method {
-    font-size: 0.85rem;
-  }
-  
-  .adminpedidos-total {
-    font-size: 1.1rem;
-  }
-  
-  .adminpedidos-btn-preparacion,
-  .adminpedidos-btn-listo,
-  .adminpedidos-btn-detalles {
-    font-weight: 500;
-  }
-  
-  .adminpedidos-details {
-    background-color: #fafafa;
-    padding: 1rem;
-    border-radius: 0.5rem;
-    border: 1px solid #e0e0e0;
-  }
-  
-  .adminpedidos-productos {
-    padding-left: 0;
-  }
-  
-  .adminpedidos-producto {
-    background-color: #fff;
-    border: 1px solid #ddd;
-    margin-bottom: 0.5rem;
-    border-radius: 0.25rem;
-  }
-  
-  
-  .list-group-item:hover {
-    background-color: #f0f0f0 !important;
-    color: inherit !important;
-    box-shadow: none !important;
-    transform: none !important;
-    cursor: default !important;
-  }
-  
-  .estado-pendiente {
-    background-color: #fcebea;
-    border-left: 5px solid #e3342f;
-  }
-  
-  .estado-preparacion {
-    background-color: #fff9db;
-    border-left: 5px solid #f59e0b;
-  }
-  
-  .estado-listo {
-    background-color: #c2f8ed;
-    border-left: 5px solid #10b981;
-  }
+  background-color: #fff;
+}
+
+.adminpedidos-title {
+  font-weight: bold;
+}
+
+.adminpedidos-list-group {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.adminpedidos-item {
+  background-color: #fff;
+  border: 1px solid #dee2e6;
+  transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+
+}
+
+.adminpedidos-item:hover {
+  background-color: #e0f0ff;
+  transform: scale(1.02);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.adminpedidos-id {
+  font-size: 1rem;
+}
+
+.adminpedidos-status,
+.adminpedidos-payment-method {
+  font-size: 0.85rem;
+}
+
+.adminpedidos-total {
+  font-size: 1.1rem;
+}
+
+.adminpedidos-btn-preparacion,
+.adminpedidos-btn-listo,
+.adminpedidos-btn-detalles {
+  font-weight: 500;
+}
+
+.adminpedidos-details {
+  background-color: #fafafa;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid #e0e0e0;
+}
+
+.adminpedidos-productos {
+  padding-left: 0;
+}
+
+.adminpedidos-producto {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  margin-bottom: 0.5rem;
+  border-radius: 0.25rem;
+}
+
+
+.list-group-item:hover {
+  background-color: #f0f0f0 !important;
+  color: inherit !important;
+  box-shadow: none !important;
+  transform: none !important;
+  cursor: default !important;
+}
+
+.estado-pendiente {
+  background-color: #fcebea;
+  border-left: 5px solid #e3342f;
+}
+
+.estado-preparacion {
+  background-color: #fff9db;
+  border-left: 5px solid #f59e0b;
+}
+
+.estado-listo {
+  background-color: #c2f8ed;
+  border-left: 5px solid #10b981;
+}

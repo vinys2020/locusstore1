@@ -124,20 +124,20 @@ const Esparcimiento = () => {
 
                     </li>
                     <li className=" text-dark py-4 border-bottom-rounded ">
-                    <div><b>Plato principal</b></div>
+                      <div><b>Plato principal</b></div>
                       <div>• Pescados para compartir: pacú, salmón, trucha salmonada o surubí</div>
                       <div>o</div>
                       <div>• Carnes individuales: costillas banderita u ojo de bife</div>
                     </li>
                     <li className=" text-dark py-4 border-bottom-rounded">
-                    <div><b>Postre</b></div>
+                      <div><b>Postre</b></div>
                       <div>• Dos opciones para compartir</div>
 
-        </li>
+                    </li>
                     <li className=" text-dark py-4 border-bottom-rounded ">
-                    <div><b>Agua</b></div>
+                      <div><b>Agua</b></div>
                       <div>• En jarra libre durante toda la cena</div>
-          </li>
+                    </li>
                   </ul>
                 </div>
 

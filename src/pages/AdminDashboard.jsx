@@ -31,12 +31,12 @@ const AdminDashboard = () => {
     marca: "",
     stock: "",
     contenido: "",
-    descripcion: "",           // ✅ NUEVO
-    caracteristicas: [],       // ✅ NUEVO
-    precio3Cuotas: "",         // ✅ NUEVO
-    precio6Cuotas: "",         // ✅ NUEVO
-    activo3: true,  // ✅ agregado
-    activo6: true,  // ✅ agregado
+    descripcion: "",
+    caracteristicas: [],
+    precio3Cuotas: "",
+    precio6Cuotas: "",
+    activo3: true,
+    activo6: true,
   });
 
 
@@ -317,9 +317,9 @@ const AdminDashboard = () => {
                       });
                     }}
                   />
-                    <small className="form-text text-muted">
-    Ingresá el número sin separar miles. Ejemplo: <b>10000.50</b>  
-  </small>
+                  <small className="form-text text-muted">
+                    Ingresá el número sin separar miles. Ejemplo: <b>10000.50</b>
+                  </small>
                 </div>
 
                 {/* Marca */}
@@ -824,7 +824,7 @@ const AdminDashboard = () => {
 
         <section className="row mb-4">
           <article className="col-12">
-          <AjustarInflacion />
+            <AjustarInflacion />
           </article>
         </section>
 

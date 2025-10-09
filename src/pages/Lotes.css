@@ -1,102 +1,101 @@
 /* ✨ Animaciones suaves */
 .lotes-slide-up {
-    opacity: 0;
-    transform: translateY(50px);
-    transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.19, 1, 0.22, 1);
-  }
-  
-  .lotes-slide-up.lotes-active {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  
-  .lotes-project .lotes-card {
-    background-color: #fff;
-    border: 1px solid rgba(0, 0, 0, 0.05);
-    border-radius: 1.5rem;
-    transition: transform 0.4s ease, box-shadow 0.4s ease;
-    overflow: hidden;
-    max-width: 1000px;
-    /* centrado */
-    margin: 0 auto;
-  }
-  
-  
-  .lotes-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
-  }
-  
-  /* 📋 Listas */
-  .lotes-list {
-    list-style: none;
-    padding-left: 0;
-    margin-bottom: 1rem;
-  }
-  
-  .lotes-list li {
-    position: relative;
-    padding-left: 1.4rem;
-    margin-bottom: 0.6rem;
-    color: #444;
-    line-height: 1.5;
-  }
-  
+  opacity: 0;
+  transform: translateY(50px);
+  transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+}
 
-  
-  /* 🎠 Carrusel */
+.lotes-slide-up.lotes-active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.lotes-project .lotes-card {
+  background-color: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  border-radius: 1.5rem;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  overflow: hidden;
+  max-width: 1000px;
+  /* centrado */
+  margin: 0 auto;
+}
+
+
+.lotes-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
+}
+
+/* 📋 Listas */
+.lotes-list {
+  list-style: none;
+  padding-left: 0;
+  margin-bottom: 1rem;
+}
+
+.lotes-list li {
+  position: relative;
+  padding-left: 1.4rem;
+  margin-bottom: 0.6rem;
+  color: #444;
+  line-height: 1.5;
+}
+
+
+
+/* 🎠 Carrusel */
+.lotes-carousel {
+  min-height: 320px;
+  background-color: #f9f9f9;
+}
+
+.lotes-carousel img {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  border-radius: 0;
+}
+
+/* 🧭 Sección principal */
+.lotes-main {
+  margin-top: 120px;
+  padding-bottom: 60px;
+}
+
+/* 📱 Responsive */
+@media (max-width: 992px) {
+  .lotes-card {
+    border-radius: 1rem;
+  }
+
+  .lotes-main {
+    margin-top: 90px;
+  }
+
+  .lotes-carousel {
+    min-height: 250px;
+  }
+
+  .lotes-list li {
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 576px) {
+
+
   .lotes-carousel {
     min-height: 320px;
-    background-color: #f9f9f9;
   }
-  
+
+  .lotes-card {
+    box-shadow: none;
+    padding: 0rem;
+  }
+
   .lotes-carousel img {
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
     border-radius: 0;
+    height: 350px;
   }
-  
-  /* 🧭 Sección principal */
-  .lotes-main {
-    margin-top: 120px;
-    padding-bottom: 60px;
-  }
-  
-  /* 📱 Responsive */
-  @media (max-width: 992px) {
-    .lotes-card {
-      border-radius: 1rem;
-    }
-  
-    .lotes-main {
-      margin-top: 90px;
-    }
-  
-    .lotes-carousel {
-      min-height: 250px;
-    }
-  
-    .lotes-list li {
-      font-size: 0.95rem;
-    }
-  }
-  
-  @media (max-width: 576px) {
-
-  
-    .lotes-carousel {
-      min-height: 320px;
-    }
-  
-    .lotes-card {
-      box-shadow: none;
-      padding: 0rem;
-    }
-
-    .lotes-carousel img {
-        border-radius: 0;
-        height: 350px;
-    }
-  }
-  
+}

@@ -545,8 +545,8 @@ const Home = () => {
               </Link>
             </div>
 
-                        {/* Banner 2 */}
-                        <div className="col-12 col-sm-6 col-md-4 slide-up">
+            {/* Banner 2 */}
+            <div className="col-12 col-sm-6 col-md-4 slide-up">
               <Link
                 to="/categorias/plomeríayaguaid"
                 className="d-block shadow-sm rounded overflow-hidden"
@@ -693,8 +693,8 @@ const Home = () => {
 
             </div>
 
-                        {/* Slide 2 */}
-                        <div className="col-12 col-md-4 text-center info-slide mt-5 mt-lg-0">
+            {/* Slide 2 */}
+            <div className="col-12 col-md-4 text-center info-slide mt-5 mt-lg-0">
               <div className="mb-3">
                 <img
                   decoding="async"
@@ -787,7 +787,7 @@ const Home = () => {
 
       <section className="py-4 bg-light mb-5 slide-up mt-3">
         <div className="container">
-        <div style={{ textAlign: "center" }}>
+          <div style={{ textAlign: "center" }}>
             <h2
               className="fw-bold mb-3 mt-lg-4"
               style={{
@@ -1051,8 +1051,8 @@ const Home = () => {
                 }}
               ></span>
             </h2>
-                        {/* 📝 Texto descriptivo */}
-                        <p
+            {/* 📝 Texto descriptivo */}
+            <p
               className="mx-auto mb-4"
               style={{
                 fontSize: "1.1rem",
@@ -1069,7 +1069,7 @@ const Home = () => {
 
           <div className="container px-0 bg-white shadow-sm px-2 rounded-3 p-2">
 
-          <HorizontalServicios />
+            <HorizontalServicios />
 
             {/* Botón Ver más */}
             <div className="d-flex justify-content-end px-2 mt-0 bg-white py-2 border-top">

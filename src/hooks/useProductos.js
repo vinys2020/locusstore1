@@ -19,7 +19,7 @@ const useProductos = () => {
 
         const productosData = snapshot.docs.map(doc => {
           // Obtener la categoría a partir de la ruta: /Categoriasid/{categoriaId}/Productosid/{productoId}
-          const categoria = doc.ref.path.split("/")[1]; 
+          const categoria = doc.ref.path.split("/")[1];
           return {
             id: doc.id,
             categoria,

@@ -80,6 +80,14 @@
   color: #f8c300;
 }
 
+.logo-hover img {
+  transition: transform 0.3s ease;
+}
+
+.logo-hover:hover img {
+  transform: scale(1.08);
+}
+
 /* =========================
    BUSCADOR
 ========================= */
@@ -178,7 +186,6 @@
 
 
 .list-mobile-small {
-  font-size: 18px; /* tamaño por defecto */
+  font-size: 18px;
+  /* tamaño por defecto */
 }
-
-

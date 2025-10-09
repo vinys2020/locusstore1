@@ -78,96 +78,96 @@ const HorizontalElectricidad = () => {
           paddingBottom: "8px",
         }}
       >
-{productos.map((producto, index) => (
-  <div
-    key={index}
-    className="scroll-producto-card flex-shrink-0"
-    style={{ scrollSnapAlign: "start", cursor: "pointer" }}
-  >
-    <a
-      href={`/categorias/${producto.categoria}/producto/${producto.id}`}
-      target="_self"
-      rel="noopener noreferrer"
-      style={{ textDecoration: "none", color: "inherit" }}
-      onClick={(e) => {
-        e.preventDefault();
-        navigate(`/categorias/${producto.categoria}/producto/${producto.id}`, {
-          state: { producto },
-        });
-      }}
-    >
-      <img
-        src={producto.imagenes?.[0] || ""}
-        alt={producto.nombre}
-        className="scroll-producto-img"
-      />
-      <div className="scroll-producto-body">
-        <div className="scroll-producto-precio-wrapper d-flex flex-column align-items-start">
-          <span
-            style={{
-              textDecoration: "line-through",
-              color: "#888",
-              fontSize: "0.85rem",
-            }}
-            className="mt-lg-3"
+        {productos.map((producto, index) => (
+          <div
+            key={index}
+            className="scroll-producto-card flex-shrink-0"
+            style={{ scrollSnapAlign: "start", cursor: "pointer" }}
           >
-            {producto.precio
-              ? `$${Math.round(producto.precio * 1.2).toLocaleString("es-AR", {
-                  minimumFractionDigits: 2,
-                  maximumFractionDigits: 2,
-                })}`
-              : "-"}
-          </span>
+            <a
+              href={`/categorias/${producto.categoria}/producto/${producto.id}`}
+              target="_self"
+              rel="noopener noreferrer"
+              style={{ textDecoration: "none", color: "inherit" }}
+              onClick={(e) => {
+                e.preventDefault();
+                navigate(`/categorias/${producto.categoria}/producto/${producto.id}`, {
+                  state: { producto },
+                });
+              }}
+            >
+              <img
+                src={producto.imagenes?.[0] || ""}
+                alt={producto.nombre}
+                className="scroll-producto-img"
+              />
+              <div className="scroll-producto-body">
+                <div className="scroll-producto-precio-wrapper d-flex flex-column align-items-start">
+                  <span
+                    style={{
+                      textDecoration: "line-through",
+                      color: "#888",
+                      fontSize: "0.85rem",
+                    }}
+                    className="mt-lg-3"
+                  >
+                    {producto.precio
+                      ? `$${Math.round(producto.precio * 1.2).toLocaleString("es-AR", {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2,
+                      })}`
+                      : "-"}
+                  </span>
 
-          <p className="scroll-producto-precio mb-1">
-            ${producto.precio
-              ? producto.precio.toLocaleString("es-AR", {
-                  minimumFractionDigits: 2,
-                  maximumFractionDigits: 2,
-                })
-              : "N/A"}
-          </p>
+                  <p className="scroll-producto-precio mb-1">
+                    ${producto.precio
+                      ? producto.precio.toLocaleString("es-AR", {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2,
+                      })
+                      : "N/A"}
+                  </p>
 
-          {producto.precio3Cuotas > 0 && (
-            <small className="text-success d-block fw-light">
-              3 cuotas de{" "}
-              {(producto.precio3Cuotas / 3).toLocaleString(undefined, {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2,
-              })}
-            </small>
-          )}
-          {producto.precio6Cuotas > 0 && (
-            <small className="text-success text-start d-block fw-light mt-1">
-              6 cuotas de{" "}
-              {(producto.precio6Cuotas / 6).toLocaleString(undefined, {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2,
-              })}
-            </small>
-          )}
-        </div>
+                  {producto.precio3Cuotas > 0 && (
+                    <small className="text-success d-block fw-light">
+                      3 cuotas de{" "}
+                      {(producto.precio3Cuotas / 3).toLocaleString(undefined, {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2,
+                      })}
+                    </small>
+                  )}
+                  {producto.precio6Cuotas > 0 && (
+                    <small className="text-success text-start d-block fw-light mt-1">
+                      6 cuotas de{" "}
+                      {(producto.precio6Cuotas / 6).toLocaleString(undefined, {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2,
+                      })}
+                    </small>
+                  )}
+                </div>
 
-        <h6 className="scroll-producto-titulo text-start fs-6">
-          <b>{producto.nombre}</b>
-        </h6>
-      </div>
-    </a>
+                <h6 className="scroll-producto-titulo text-start fs-6">
+                  <b>{producto.nombre}</b>
+                </h6>
+              </div>
+            </a>
 
-    <button
-      className="scroll-producto-boton text-dark mt-lg-4 mt-0"
-      disabled={producto.stock === 0}
-      onClick={(e) => {
-        e.stopPropagation();
-        if (producto.stock > 0) {
-          agregarAlCarrito(producto, producto.categoria);
-        }
-      }}
-    >
-      {producto.stock === 0 ? "Agotado" : "Agregar al carrito"}
-    </button>
-  </div>
-))}
+            <button
+              className="scroll-producto-boton text-dark mt-lg-4 mt-0"
+              disabled={producto.stock === 0}
+              onClick={(e) => {
+                e.stopPropagation();
+                if (producto.stock > 0) {
+                  agregarAlCarrito(producto, producto.categoria);
+                }
+              }}
+            >
+              {producto.stock === 0 ? "Agotado" : "Agregar al carrito"}
+            </button>
+          </div>
+        ))}
       </div>
 
       {isHovered && (

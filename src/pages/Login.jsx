@@ -53,16 +53,16 @@ const Login = () => {
 
             const data = docSnap.data();
             setUserData({
-              nombreCompleto: data.nombreCompleto || "",
-              dni: data.dni || "",
-              telefono: data.telefono || "",
-              domposgeo: data.domposgeo || "",
-              posgeo: data.posgeo || "",
-              fechaNacimiento: data.fechaNacimiento || "",
-              organismo: data.organismo || "",
-              gremio: data.gremio || "",
-              puntos: data.puntos || 0,
-              rol: data.rol || "usuario",
+                nombreCompleto: data.nombreCompleto || "",
+                dni: data.dni || "",
+                telefono: data.telefono || "",
+                domposgeo: data.domposgeo || "",
+                posgeo: data.posgeo || "",
+                fechaNacimiento: data.fechaNacimiento || "",
+                organismo: data.organismo || "",
+                gremio: data.gremio || "",
+                puntos: data.puntos || 0,
+                rol: data.rol || "usuario",
             });
 
             if (!isUserDataComplete(data)) {
@@ -131,82 +131,82 @@ const Login = () => {
         }
     };
 
-// Guardar datos de usuario nuevo
-// Guardar datos de usuario nuevo
-const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const user = auth.currentUser;
-      if (!user) throw new Error("Usuario no encontrado");
-  
-      await setDoc(doc(db, "usuarios", user.uid), {
-        uid: user.uid || "",
-        email: user.email || "",
-        nombreCompleto: userData.nombreCompleto || "",
-        dni: userData.dni || "",
-        telefono: userData.telefono || "",
-        domposgeo: userData.domposgeo || "",
-        posgeo: userData.posgeo || "",
-        fechaNacimiento: userData.fechaNacimiento || "",
-        organismo: userData.organismo || "",
-        gremio: userData.gremio || "",
-        aprobado: false, // 🔴 siempre arranca en false
-        fechaAfiliacion: new Date(),
-        puntos: userData.puntos || 0,
-        rol: userData.rol || "usuario",
-      });
-  
-      const cuponesRef = collection(db, "usuarios", user.uid, "cuponesid");
+    // Guardar datos de usuario nuevo
+    // Guardar datos de usuario nuevo
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const user = auth.currentUser;
+            if (!user) throw new Error("Usuario no encontrado");
 
-      // Creamos un documento vacío solo para inicializar la subcolección
-      await setDoc(doc(cuponesRef, "init"), { createdAt: new Date() });
-  
-      setShowForm(false);
-  
-      // 👇 IMPORTANTE: no lo mandamos al /home
-      // El useEffect y el ProtectedRoute ya se encargan
-      // de mostrar el "pendiente de aprobación"
-      setPendingApproval(true);
-    } catch (err) {
-      console.error(err);
-      setError("Error al guardar los datos");
-    }
-  };
-      
+            await setDoc(doc(db, "usuarios", user.uid), {
+                uid: user.uid || "",
+                email: user.email || "",
+                nombreCompleto: userData.nombreCompleto || "",
+                dni: userData.dni || "",
+                telefono: userData.telefono || "",
+                domposgeo: userData.domposgeo || "",
+                posgeo: userData.posgeo || "",
+                fechaNacimiento: userData.fechaNacimiento || "",
+                organismo: userData.organismo || "",
+                gremio: userData.gremio || "",
+                aprobado: false, // 🔴 siempre arranca en false
+                fechaAfiliacion: new Date(),
+                puntos: userData.puntos || 0,
+                rol: userData.rol || "usuario",
+            });
+
+            const cuponesRef = collection(db, "usuarios", user.uid, "cuponesid");
+
+            // Creamos un documento vacío solo para inicializar la subcolección
+            await setDoc(doc(cuponesRef, "init"), { createdAt: new Date() });
+
+            setShowForm(false);
+
+            // 👇 IMPORTANTE: no lo mandamos al /home
+            // El useEffect y el ProtectedRoute ya se encargan
+            // de mostrar el "pendiente de aprobación"
+            setPendingApproval(true);
+        } catch (err) {
+            console.error(err);
+            setError("Error al guardar los datos");
+        }
+    };
+
 
 
     if (loading)
         return (
-<div 
-  className="d-flex flex-column justify-content-center align-items-center vh-100"
-  style={{ 
-    background: "linear-gradient(135deg, #3d835e 30%, #4B2E65 70%)",
-    minHeight: "100vh" 
-  }}
->
-  <img 
-    src={logis} 
-    alt="Logo" 
-    style={{ width: "100px", marginBottom: "20px" }} 
-  />
-  <div 
-    className="spinner-border text-primary" 
-    role="status" 
-    style={{ width: "4rem", height: "4rem" }}
-  >
-    <span className="visually-hidden text-white">Cargando...</span>
-  </div>
-  <p className="mt-3 text-white">Cargando, por favor espere...</p>
-</div>
+            <div
+                className="d-flex flex-column justify-content-center align-items-center vh-100"
+                style={{
+                    background: "linear-gradient(135deg, #3d835e 30%, #4B2E65 70%)",
+                    minHeight: "100vh"
+                }}
+            >
+                <img
+                    src={logis}
+                    alt="Logo"
+                    style={{ width: "100px", marginBottom: "20px" }}
+                />
+                <div
+                    className="spinner-border text-primary"
+                    role="status"
+                    style={{ width: "4rem", height: "4rem" }}
+                >
+                    <span className="visually-hidden text-white">Cargando...</span>
+                </div>
+                <p className="mt-3 text-white">Cargando, por favor espere...</p>
+            </div>
 
         );
 
     if (!loading && pendingApproval)
         return (
-            <div className="d-flex flex-column justify-content-center align-items-center vh-100 text-center bg-light p-3"   style={{ 
+            <div className="d-flex flex-column justify-content-center align-items-center vh-100 text-center bg-light p-3" style={{
                 background: "linear-gradient(135deg, #3d835e 30%, #4B2E65 70%)",
-                                minHeight: "100vh" 
-              }}>
+                minHeight: "100vh"
+            }}>
                 <div className="card shadow-sm p-4 text-center w-100" style={{ maxWidth: "400px", borderRadius: "20px" }}>
                     {usuario?.photoURL && (
                         <div className="d-flex justify-content-center mb-3">

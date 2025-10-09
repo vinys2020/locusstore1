@@ -54,7 +54,7 @@ export const enviarMailPedido = async (pedidoData) => {
   const totalConDescuento = pedidoData.totalpedido;
 
   const templateParams = {
-    order_id: pedidoData.id, 
+    order_id: pedidoData.id,
     fechapedido: pedidoData.fecha
       ? new Date(pedidoData.fecha.seconds * 1000).toLocaleString("es-AR")
       : new Date().toLocaleString("es-AR"),

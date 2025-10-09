@@ -14,9 +14,9 @@ const bannerUrlsDesktop = [
 ];
 
 const bannerUrlsMobile = [
-    "https://res.cloudinary.com/dqesszxgv/image/upload/v1757118799/swiperchiquito_ahlia4.webp",
-    "https://res.cloudinary.com/dqesszxgv/image/upload/v1757118799/swiperchiquito_ahlia4.webp",
-    "https://res.cloudinary.com/dqesszxgv/image/upload/v1757118799/swiperchiquito_ahlia4.webp",
+  "https://res.cloudinary.com/dqesszxgv/image/upload/v1757118799/swiperchiquito_ahlia4.webp",
+  "https://res.cloudinary.com/dqesszxgv/image/upload/v1757118799/swiperchiquito_ahlia4.webp",
+  "https://res.cloudinary.com/dqesszxgv/image/upload/v1757118799/swiperchiquito_ahlia4.webp",
 ];
 
 const SwiperMini = () => {

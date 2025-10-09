@@ -1,66 +1,65 @@
 /* Animaciones */
 .pf-slide-up {
-    opacity: 0;
-    transform: translateY(40px);
-    transition: all 0.8s ease-out;
-  }
-
-  .hero-section {
-    position: relative;
-    height: 500px;
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
-    margin-top: 70px;
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.8s ease-out;
 }
-  
-  .pf-slide-up.pf-active {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  
-  /* Tarjetas */
-  .pf-card {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-  
-  .pf-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-  }
-  
-  /* Listas */
-  .pf-list {
-    list-style-type: none;
-    padding-left: 0;
-  }
-  
-  .pf-list li {
-    position: relative;
-    padding-left: 1.2rem;
-    margin-bottom: 0.5rem;
-  }
-  
-  .pf-list li::before {
-    content: "•";
-    position: absolute;
-    left: 0;
-    color: #ffc107; /* amarillo de marca */
-  }
-  
-  /* Carousel height fijo */
-  .pf-carousel {
-    min-height: 300px;
-  }
-  
+
+.hero-section {
+  position: relative;
+  height: 500px;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  margin-top: 70px;
+}
+
+.pf-slide-up.pf-active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Tarjetas */
+.pf-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.pf-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Listas */
+.pf-list {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.pf-list li {
+  position: relative;
+  padding-left: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.pf-list li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: #ffc107;
+  /* amarillo de marca */
+}
+
+/* Carousel height fijo */
+.pf-carousel {
+  min-height: 300px;
+}
+
+.pf-main {
+  margin-top: 120px;
+}
+
+@media (max-width: 768px) {
   .pf-main {
-    margin-top: 120px;
+    margin-top: 80px;
   }
-
-  @media (max-width: 768px) {   
-    .pf-main {
-      margin-top: 80px;
-    }
-  }
-
-  
+}
