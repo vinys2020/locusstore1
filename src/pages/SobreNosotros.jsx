@@ -93,7 +93,7 @@ const SobreNosotros = () => {
           <article className="col-12 col-md-6 slide-up mt-4 mt-md-0">
             <h2 className="mb-lg-3">Un Espacio Exclusivo</h2>
             <p>
-              Locus Store es mucho más que un catálogo, es un punto de acceso único para que nuestros agremiados disfruten de recursos, ofertas y servicios exclusivos, pensados para su comodidad y beneficio.
+              Locus Store es mucho más que un catálogo, es un punto de acceso único para que agremiados disfruten de recursos, ofertas y servicios exclusivos, pensados para su comodidad y beneficio.
             </p>
           </article>
           <article className="col-12 col-md-6 slide-up">

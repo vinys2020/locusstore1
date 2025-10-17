@@ -249,19 +249,19 @@ const AdminDashboard = () => {
     <section className="admin-dashboard py-5">
       <div className="container-fluid px-lg-4 p-0">
         <header className="text-center mb-5">
-          <h1 className="fw-bold display-5 text-black mt-3">Panel de Administración</h1>
-          <p className="text-black fs-5 ">Gestiona categorías y productos fácilmente.</p>
+          <h1 className="fw-bold display-5 text-white mt-3">Panel de Administración</h1>
+          <p className="text-white fs-5 ">Gestiona categorías y productos fácilmente.</p>
         </header>
 
         {/* CRUD Categorías */}
-        <section className="row mb-5 ">
+        <section className="row mb-5 mx-lg-5 ">
           <article className="col-12">
             <CrearCategoriaProducto />
           </article>
         </section>
 
         {/* CRUD Productos */}
-        <section className="row">
+        <section className="row mx-lg-5">
           <article className="col-12">
             <div className="cards shadow-sm rounded-4 p-3 mt-5 bg-white">
               <h2 className="text-center mb-4 text-black">Gestión de Productos</h2>
@@ -810,19 +810,19 @@ const AdminDashboard = () => {
           </article>
         </section>
 
-        <section className="row mb-5 mt-5">
+        <section className="row mb-5 mt-5 mx-auto">
           <article className="col-12">
             <AdminPresupuesto />
           </article>
         </section>
 
-        <section className="row">
+        <section className="row mx-lg-5">
           <article className="col-12 mt-5">
             <AdminUsers />
           </article>
         </section>
 
-        <section className="row mb-4">
+        <section className="row mb-4 mx-lg-4">
           <article className="col-12">
             <AjustarInflacion />
           </article>

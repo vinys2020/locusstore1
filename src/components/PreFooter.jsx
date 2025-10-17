@@ -33,7 +33,7 @@ const PreFooter = () => {
 
           {/* CONTACTO */}
           <article className="col-12 col-sm-6 col-lg-3 text-center text-sm-start">
-            <h3 className="h5 mb-2 border-bottom pb-2">Contacto</h3>
+            <h3 className="h5 mb-2 border-bottom pb-2">Contacto </h3>
             <ul className="list-unstyled fs-6 mb-0 lh-lg">
               <li className="d-flex align-items-start mb-2 text-warning ">
                 <i className="bi bi-geo-alt-fill me-2 fs-5 "></i>
@@ -44,66 +44,33 @@ const PreFooter = () => {
                 <a href="mailto:locusstore75@gmail.com" className="text-warning text-decoration-none">
                   locusstore75@gmail.com
                 </a>
+
               </li>
-              <li className="d-flex align-items-start">
-                <i className="bi bi-telephone-fill me-2 fs-5 text-warning"></i>
-                <a href="tel:+5491234567890" className="text-warning text-decoration-none">
-                  +54 9 123 4567890
-                </a>
-              </li>
+
+
+
+
+
             </ul>
           </article>
 
           {/* ENLACES RÁPIDOS */}
-          <article className="col-12 col-sm-6 col-lg-3 text-center text-sm-start">
-            <h3 className="h5 mb-2 border-bottom pb-2">Enlaces</h3>
-            <ul className="list-unstyled fs-6 lh-lg">
-              <li><Link to="/home" className="text-warning text-decoration-none">Inicio</Link></li>
-              <li><Link to="/ProyectosFuturos" className="text-warning text-decoration-none">Proyectos Futuros</Link></li>
-              <li><Link to="/categorias/aberturasid" className="text-warning text-decoration-none">Productos</Link></li>
-              <li><Link to="/SobreNosotros" className="text-warning text-decoration-none">Sobre Nosotros</Link></li>
-              <li><Link to="/Lotes" className="text-warning text-decoration-none">Lotes</Link></li>
-              <li><Link to="/Esparcimiento" className="text-warning text-decoration-none">Esparcimiento</Link></li>
-              <li><Link to="/contacto" className="text-warning text-decoration-none">Contacto</Link></li>
-              <li><Link to="/perfil" className="text-warning text-decoration-none">Mi Cuenta</Link></li>
+          <article className="col-12 col-sm-6 col-lg-6 text-center text-sm-start">
+            <h3 className="h5 mb-2 border-bottom pb-2">Navegación</h3>
+            <ul className="list-inline fs-6 lh-lg text-center text-sm-start">
+              <li className="list-inline-item mx-2"><Link to="/home" className="text-warning text-decoration-none">Inicio</Link></li>
+              <li className="list-inline-item mx-2"><Link to="/SobreNosotros" className="text-warning text-decoration-none">Sobre Nosotros</Link></li>
+              <li className="list-inline-item mx-2"><Link to="/categorias/aberturasid" className="text-warning text-decoration-none">Categorias</Link></li>
+              <li className="list-inline-item mx-2"><Link to="/Lotes" className="text-warning text-decoration-none">Lotes</Link></li>
+              <li className="list-inline-item mx-2"><Link to="/Esparcimiento" className="text-warning text-decoration-none">Esparcimiento</Link></li>
+              <li className="list-inline-item mx-2"><Link to="/ProyectosFuturos" className="text-warning text-decoration-none">Proyectos Futuros</Link></li>
+              <li className="list-inline-item mx-2"><Link to="/contacto" className="text-warning text-decoration-none">Contacto</Link></li>
+              <li className="list-inline-item mx-2"><Link to="/perfil" className="text-warning text-decoration-none">Mi Cuenta</Link></li>
             </ul>
+
           </article>
 
-          {/* REDES SOCIALES */}
-          <article className="col-12 col-sm-6 col-lg-3 text-center text-sm-start">
-            <h3 className="h5 mb-3 border-bottom pb-2">Seguinos</h3>
-            <div className="d-flex justify-content-center justify-content-sm-start gap-3">
-              <a
-                href="#"
-                className="text-warning d-inline-flex align-items-center justify-content-center rounded-circle border border-warning"
-                target="_blank"
-                rel="noreferrer"
-                style={{ width: "40px", height: "40px" }}
-              >
-                <FaFacebookF size={18} />
-              </a>
 
-              <a
-                href="#"
-                className="text-warning d-inline-flex align-items-center justify-content-center rounded-circle border border-warning"
-                target="_blank"
-                rel="noreferrer"
-                style={{ width: "40px", height: "40px" }}
-              >
-                <FaInstagram size={18} />
-              </a>
-
-              <a
-                href="https://wa.me/5493834406106"
-                className="text-warning d-inline-flex align-items-center justify-content-center rounded-circle border border-warning"
-                target="_blank"
-                rel="noreferrer"
-                style={{ width: "40px", height: "40px" }}
-              >
-                <FaWhatsapp size={18} />
-              </a>
-            </div>
-          </article>
 
         </div>
       </div>

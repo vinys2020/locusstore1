@@ -17,6 +17,7 @@ import CategoriasPage from "./pages/CategoriasPage";
 import LotesPage from "./pages/Lotes";
 import EsparcimientoPage from "./pages/Esparcimiento";
 
+
 import ProductoDetalle from "./components/ProductoDetalle";
 import PreFooter from "./components/PreFooter"; // ✅ Importa tu PreFooter
 import "react-toastify/dist/ReactToastify.css";
@@ -141,6 +142,8 @@ function App() {
               </ProtectedRoute>
             }
           />
+
+
 
           <Route
             path="/categorias/:categoriaId/producto/:productoId"

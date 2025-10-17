@@ -658,7 +658,7 @@ const Home = () => {
           <div className="row g-4">
 
             {/* Slide 1 */}
-            <div className="col-12 col-md-4 text-center info-slide">
+            <div className="col-12 col-md-4 text-center info-slide mt-0">
               <div className="mb-3">
                 <img
                   decoding="async"

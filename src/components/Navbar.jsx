@@ -317,29 +317,32 @@ const Navbar = ({ busqueda, setBusqueda }) => {
               </Link>
             </li>
             <li className="nav-item mx-2">
-              <Link className="nav-link text-white" to="/ProyectosFuturos" onClick={cerrarMenu}>
-                Proyectos Futuros
+              <Link className="nav-link text-white" to="/SobreNosotros" onClick={cerrarMenu}>
+                Sobre Nosotros
               </Link>
             </li>
             <ul className="navbar-nav mx-2 mx-lg-0">
               <CategoriasDropdown onCloseNavbar={cerrarMenu} />
               {/* otros <li> aquí */}
             </ul>
-
-
-            <li className="nav-item mx-2">
-              <Link className="nav-link text-white" to="/SobreNosotros" onClick={cerrarMenu}>
-                Sobre Nosotros
-              </Link>
-            </li>
             <li className="nav-item mx-2">
               <Link className="nav-link text-white" to="/Lotes" onClick={cerrarMenu}>
                 Lotes
               </Link>
             </li>
+
+
+
+
+
             <li className="nav-item mx-2">
               <Link className="nav-link text-white" to="/Esparcimiento" onClick={cerrarMenu}>
                 Esparcimiento
+              </Link>
+            </li>
+            <li className="nav-item mx-2">
+              <Link className="nav-link text-white" to="/ProyectosFuturos" onClick={cerrarMenu}>
+                Proyectos Futuros
               </Link>
             </li>
             <li className="nav-item mx-2">
