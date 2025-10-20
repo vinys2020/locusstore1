@@ -142,7 +142,7 @@ const Esparcimiento = () => {
                 </div>
 
                 <div className=" d-flex bg-success  text-white  justify-content-center aling-items-center fw-semibold fs-4 py-3 rounded-3 mt-4 mx-lg-5">
-                  Precio: $30.000 por persona
+                  Precio: $34.500 por persona
                 </div>
 
                 <p className="text-muted mt-4 mb-0 fs-5">

@@ -494,9 +494,8 @@ const FloatingCart = () => {
                       <label htmlFor="metodoPago" className="form-label">Selecciona un Método de Pago</label>
                       <select id="metodoPago" value={metodoPago} onChange={handleMetodoPagoChange} className="form-select form-select-lg">
                         <option value="">Elige un método</option>
-                        <option value="tarjeta">Tarjeta</option>
-                        <option value="transferencia">Transferencia</option>
-                        <option value="efectivo">Efectivo</option>
+                        <option value="Descuento Por Planilla">Descuento por Planilla</option>
+                        <option value="Otros">Otros</option>
                       </select>
                     </div>
                     <div className="d-flex gap-2">

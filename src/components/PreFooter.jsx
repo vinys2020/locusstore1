@@ -21,7 +21,7 @@ const PreFooter = () => {
               />
             </div>
 
-            <h3 className="h5 mb-2 border-bottom pb-2 text-warning">Locus Store</h3>
+            <h3 className="h5 mb-2 border-bottom pb-2 text-white">Locus Store</h3>
 
             <p className="text-light opacity-75 mb-3" style={{ lineHeight: "1.6" }}>
               Tu plataforma confiable para comprar de una forma personalizada.

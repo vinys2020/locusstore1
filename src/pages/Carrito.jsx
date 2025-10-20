@@ -493,11 +493,10 @@ const Carrito = () => {
                       <div className={`step-circle ${step === 3 ? "active" : ""}`}>3</div>
                     </div>
                     <select id="metodoPago" value={metodoPago} onChange={handleMetodoPagoChange} className="form-select form-select-lg">
-                      <option value="">Elige un método</option>
-                      <option value="tarjeta">Tarjeta</option>
-                      <option value="transferencia">Transferencia</option>
-                      <option value="efectivo">Efectivo</option>
-                    </select>
+                        <option value="">Elige un método</option>
+                        <option value="Descuento Por Planilla">Descuento por Planilla</option>
+                        <option value="Otros">Otros</option>
+                      </select>
                   </div>
 
                   <div className="d-flex gap-2">

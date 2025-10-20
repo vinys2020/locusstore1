@@ -44,14 +44,15 @@ Plano de unificación y loteo a cargo del Ing. Agrimensor Carlos Bustamante, apr
     ],
     titulo: "El Hueco, Fray Mamerto Esquiú – Catamarca",
     cliente: "Unión del Personal Civil de la Nación – UPCN",
-    descripcion: "Se trata de 2 lotes ubicados en una región de gran potencial urbanístico y comercial dentro del Valle Central de Catamarca.",
+    descripcion: "Se trata de 4 lotes, cada uno con frente de 16 m y 512 m² de superficie, ubicados sobre la calle Modesto Palacios, una muy buena alternativa para quienes quieran construir su casa en una zona rodeada de naturaleza y con buenas vías de comunicación.",
     detalles: [
-      { nombre: "Lote 1", superficie: "Matrícula Catastral 09-22-31-5673 – Superficie 60.802,72 m² – U$S 6,3/m²" },
-      { nombre: "Lote 2", superficie: "Matrícula Catastral 09-22-31-7348 – Superficie 36.973,58 m² – U$S 4,8/m²" },
+      { nombre: "Lote N°1", frente: "16 m", superficie: "512 m²" },
+      { nombre: "Lote N°2", frente: "16 m", superficie: "512 m²" },
+      { nombre: "Lote N°3", frente: "16 m", superficie: "512 m²" },
+      { nombre: "Lote N°4", frente: "16 m", superficie: "512 m²" }
     ],
-    precio: null,
-    titularidad: `Propiedad registrada a nombre de Rodolfo Gustavo Moyano y Alejandra Irupé Ocampo, según Escritura N°53 del 10 de mayo de 2019.
-Inscripción en el Registro de la Propiedad y Mandatos bajo Folio Real N°3.062 y 3.066 – Departamento Fray Mamerto Esquiú.`,
+    precio: "U$S 30/m²",
+    titularidad: `Lotes con escritura, aptos para crédito hipotecario y/o financiación propia.`,
     ubicacion: [
       "Sobre Ruta Provincial N°1, con excelentes vías de acceso.",
       "A 10 km (15 minutos en vehículo) de la Plaza Principal 25 de Mayo de la Capital.",
@@ -101,10 +102,12 @@ const LoteCard = ({ lote }) => (
         <div className="mb-3 text-wrap bg-white rounded px-lg-2">
           <b>Detalles:</b>
           <ul className="small">
-            {lote.detalles.map((d, i) => (
-              <li key={i}><b>{d.nombre}:</b> {d.superficie}</li>
-            ))}
-          </ul>
+  {lote.detalles.map((d, i) => (
+    <li key={i}>
+      <b>{d.nombre}:</b> {d.frente && `${d.frente} de frente, `}{d.superficie} de superficie
+    </li>
+  ))}
+</ul>
           {lote.precio && <p className="text-end"><b>Precio:</b> {lote.precio}</p>}
         </div>
 

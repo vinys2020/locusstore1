@@ -176,7 +176,7 @@ const AdminPresupuesto = () => {
                 ],
                 [
                     `DNI: ${cliente.dni || "-"}`,
-                    "" // columna vacía para balancear
+                    `Método de pago: ${pedido.metodopago || "-"}`
                 ],
                 [
                     `Dirección: ${cliente.direccion || "-"}`,
@@ -294,6 +294,7 @@ const AdminPresupuesto = () => {
             20,
             finalY + 10
         );
+
 
         // --- Cláusulas / Garantías / Condiciones ---
         let clausulasY = finalY + 30; // espacio debajo del total

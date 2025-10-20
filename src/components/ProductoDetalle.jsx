@@ -239,45 +239,22 @@ export default function ProductoDetalle() {
             <p className="mb-2 text-black">
               <strong>Marca:</strong> {producto.marca}
             </p>
-            <p className="mb-3 text-black">
+            <p className="mb-2 text-black">
               <strong>Stock disponible:</strong>{" "}
               {producto.stock > 0 ? producto.stock : "Agotado"}
             </p>
 
-            {/* 🏦 Medios de pago */}
-            <div className="col-12 text-start text-lg-start mb-3 mb-md-0 mt-3">
-              <h6 className="text-primary mb-2">Medios de pago</h6>
-              <div className="d-flex flex-wrap gap-2 justify-content-start justify-content-md-start">
-                {/* Tarjetas de crédito */}
-                <img
-                  alt="Visa"
-                  height="30"
-                  src="https://res.cloudinary.com/dqesszxgv/image/upload/v1757440161/visa_2x_la3lfi.png"
-                />
-                <img
-                  alt="Mastercard"
-                  height="30"
-                  src="https://res.cloudinary.com/dqesszxgv/image/upload/v1757442922/mastercard_2x_qlp3sk.png"
-                />
-                <img
-                  alt="Amex"
-                  height="30"
-                  src="https://res.cloudinary.com/dqesszxgv/image/upload/v1757442926/tarjeta-naranja_2x_ohravu.png"
-                />
+{/* 🏦 Medios de pago */}
+<div className="col-12 text-start text-lg-start mb-3 mb-md-0 mt-0">
+  <h6 className=" mb-0  fw-bold position-relative d-inline-block">
+    Medios de Pago: 
+  </h6>
+  <p className="mb-0 text-dark" style={{ lineHeight: 1.6 }}>
+  Los pagos pueden realizarse a través de <span style={{ textDecoration: "underline" }}>Financiación con entidades Bancarias</span>.
+</p>
 
-                {/* Efectivo */}
-                <img
-                  alt="Pago Fácil"
-                  height="30"
-                  src="https://res.cloudinary.com/dqesszxgv/image/upload/v1757443047/amex_2x_w20vu7.png"
-                />
-                <img
-                  alt="Rapipago"
-                  height="30"
-                  src="https://res.cloudinary.com/dqesszxgv/image/upload/v1757443156/tarjeta-shopping_2x_tsejmn.png"
-                />
-              </div>
-            </div>
+</div>
+
 
 
 
