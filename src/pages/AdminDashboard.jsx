@@ -13,6 +13,12 @@ import { db } from "../config/firebase";
 import AjustarInflacion from "../components/AjustarInflacion";
 import AdminPresupuesto from "../components/AdminPresupuesto"; // ajustá la ruta si es necesario
 import AdminUsers from "../components/AdminUsers";
+import EstadisticasAdm from "../components/EstadisticasAdm";
+import ResumenEstadisticas from "../components/ResumenEstadisticas";
+import PagosCuotas from "../components/PagosCuotas";
+
+
+
 
 
 
@@ -252,6 +258,16 @@ const AdminDashboard = () => {
           <h1 className="fw-bold display-5 text-white mt-3">Panel de Administración</h1>
           <p className="text-white fs-5 ">Gestiona categorías y productos fácilmente.</p>
         </header>
+
+        <section className="row g-4 mb-5">
+          <ResumenEstadisticas />
+
+
+
+        </section>
+
+
+
 
         {/* CRUD Categorías */}
         <section className="row mb-5 mx-lg-5 ">
@@ -810,10 +826,18 @@ const AdminDashboard = () => {
           </article>
         </section>
 
-        <section className="row mb-5 mt-5 mx-auto">
+        <section className="row mb-5 mt-5 mx-lg-5">
           <article className="col-12">
             <AdminPresupuesto />
           </article>
+        </section>
+
+
+        <section className="row mb-5 mx-lg-5">
+        <PagosCuotas />
+
+
+
         </section>
 
         <section className="row mx-lg-5">
@@ -825,6 +849,14 @@ const AdminDashboard = () => {
         <section className="row mb-4 mx-lg-4">
           <article className="col-12">
             <AjustarInflacion />
+          </article>
+        </section>
+
+        <section className="row py-5 mb-5">
+          <article className="col-12">
+            <EstadisticasAdm />
+
+
           </article>
         </section>
 

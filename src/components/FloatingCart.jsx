@@ -252,6 +252,16 @@ const FloatingCart = () => {
         estado: "pendiente",
         fecha: Timestamp.now(),
         metodopago: metodoPago,
+
+        estadoPago: "pendiente",
+        cuotasTotales: (() => {
+          if (cart.some(p => p.metodo === "6cuotas")) return 6;
+          if (cart.some(p => p.metodo === "3cuotas")) return 3;
+          return 1;
+        })(),
+        cuotasPagadas: [], // <-- cambiamos de 0 a array vacío
+        montoTotal: totalFinalConDescuento,
+        montoRestante: totalFinalConDescuento,
         productos: cart.map(p => {
           const cantidad = p.cantidad || 1;
           const precioBase = p.precio * cantidad;

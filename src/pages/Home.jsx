@@ -538,7 +538,7 @@ const Home = () => {
                 aria-label="Ir a Herramientas"
               >
                 <img
-                  src="https://res.cloudinary.com/dqesszxgv/image/upload/v1757116376/maquinas_mjdq6h.webp"
+                  src="https://res.cloudinary.com/dqesszxgv/image/upload/v1761347355/placamaquinas_hqlphi.jpg"
                   alt="Locus Herramientas"
                   className="img-fluid w-100"
                 />

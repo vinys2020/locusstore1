@@ -195,7 +195,7 @@ const Perfil = () => {
                                 }`}
                             >
                               {pedido.estado === "pendiente"
-                                ? "⏳ Estamos preparando tu pedido.."
+                                ? "⌛Tu pedido está en revisión, te confirmamos en un máximo de 72 hs."
                                 : pedido.estado === "completado"
                                   ? "✅ Completado"
                                   : ""}
