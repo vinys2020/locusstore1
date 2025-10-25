@@ -203,11 +203,11 @@ const Login = () => {
 
     if (!loading && pendingApproval)
         return (
-            <div className="d-flex flex-column justify-content-center align-items-center vh-100 text-center bg-light p-3" style={{
+            <div className="d-flex flex-column justify-content-center align-items-center vh-100 text-center bg-light" style={{
                 background: "linear-gradient(135deg, #3d835e 30%, #4B2E65 70%)",
                 minHeight: "100vh"
             }}>
-                <div className="card shadow-sm p-4 text-center w-100" style={{ maxWidth: "400px", borderRadius: "20px" }}>
+                <div className="shadow-sm p-4 text-center w-100 bg-white" style={{ maxWidth: "500px", borderRadius: "20px" }}>
                     {usuario?.photoURL && (
                         <div className="d-flex justify-content-center mb-3">
                             <img
@@ -218,8 +218,11 @@ const Login = () => {
                             />
                         </div>
                     )}
-                    <h4 className="mb-2">¡Hola {usuario?.displayName || userData.nombreCompleto || "usuario"}!</h4>
-                    <p className="text-muted mb-3">Por favor espera, el administrador debe autorizar tu ingreso.</p>
+                    <h3 className="mb-2">¡Hola {usuario?.displayName || userData.nombreCompleto || "usuario"}!</h3>
+                    <p className="text-black mb-3 fw-bold" style={{ color: "#0c5460" }}>
+                        Por favor espera, el administrador debe autorizar tu ingreso.
+                        Este proceso puede demorar <strong>hasta 72 hs hábiles</strong> como máximo.
+                    </p>
                     <div className="d-flex justify-content-center mb-3">
                         <div className="spinner-border text-primary" role="status" style={{ width: "3rem", height: "3rem" }}>
                             <span className="visually-hidden">Cargando...</span>

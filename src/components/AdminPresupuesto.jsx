@@ -7,6 +7,8 @@ import { FaRegCalendarAlt } from "react-icons/fa";
 import { jsPDF } from "jspdf";
 import autoTable from "jspdf-autotable";
 import logoLocus from "../assets/logolocus.png"; // ajusta la ruta
+import PuntosDropdown from "../components/PuntosDropdown";
+
 
 
 import "./adminpedidos.css";
@@ -324,43 +326,28 @@ const AdminPresupuesto = () => {
             return yPos;
         };
 
-        // Array con todas las líneas de texto y estilo
         const clausulasTexto = [
-            { texto: "EL PRESUPUESTO ESTA EN BASE AL TIPO DE CAMBIO VENDEDOR DEL BNA, QUE SE AJUSTA A LA REALIDAD DEL PAIS", negrita: true },
+            { texto: "IMPORTANTE: INFORMACIÓN PARA CLIENTES DE LOCUS STORE", negrita: true },
             { texto: "", negrita: false },
-            { texto: "DEFINICIONES CLAVES:", negrita: true },
-            { texto: "Cuando compras aberturas de aluminio en Alucat Catamarca, es fundamental conocer ciertos conceptos relacionados con la calidad del material y su origen:", negrita: false },
-            { texto: "1. Reciclado de aluminio", negrita: true },
-            { texto: "• El aluminio es un material 100% reciclable sin perder calidad, SIEMPRE UTILIZANDO MATERIA PRIMA DE ALUAR Y DEL MISMO TEMPLE.", sangria: 5 },
-            { texto: "• En Alucat, la utilización de aluminio reciclado contribuye a la sostenibilidad, manteniendo la misma resistencia, durabilidad y estética que el aluminio primario.", sangria: 5 },
-            { texto: "2. Materia prima Aluar", negrita: true },
-            { texto: "• Aluar es el principal productor de aluminio en Argentina y un proveedor confiable para la industria del aluminio.", sangria: 5 },
-            { texto: "• Los perfiles de aluminio fabricados con materia prima de Aluar garantizan:", sangria: 5 },
-            { texto: "  • Alta calidad y resistencia mecánica.", sangria: 10 },
-            { texto: "  • Excelente acabado superficial.", sangria: 10 },
-            { texto: "  • Sostenibilidad.", sangria: 10 },
-            { texto: "3. Ventajas del aluminio en las aberturas", negrita: true },
-            { texto: "• Durabilidad: Resistente a la corrosión y al desgaste.", sangria: 5 },
-            { texto: "• Bajo mantenimiento: Fácil de limpiar y mantener.", sangria: 5 },
-            { texto: "• Ligereza: Ofrece estructuras robustas sin añadir peso innecesario.", sangria: 5 },
-            { texto: "• Versatilidad de diseño: Compatible con distintos estilos arquitectónicos.", sangria: 5 },
-            { texto: "• Sostenibilidad: Su capacidad de reciclaje asegura un ciclo de vida prolongado y ecoamigable.", sangria: 5 },
-            { texto: "MEDICION DE OBRA:", negrita: true },
-            { texto: "• Para realizar el relevamiento de medidas, el responsable deberá dar aviso a ALUCAT ABERTURAS.", sangria: 5 },
-            { texto: "• Deben estar todos los vanos terminados y los niveles de piso definidos.", sangria: 5 },
-            { texto: "INSTALACION DE LAS ABERTURAS:", negrita: true },
-            { texto: "• Las aberturas no instaladas por ALUCAT pierden garantía desde el retiro.", sangria: 5 },
-            { texto: "• Instaladas por ALUCAT: garantía 1 año con algunas salvedades.", sangria: 5 },
-            { texto: "• Incluye repuestos y mano de obra, no viáticos ni traslados.", sangria: 5 },
-            { texto: "CONDICIONES GENERALES DE VENTA:", negrita: true },
-            { texto: "• 75% al inicio y saldo al recibir la obra, ajustado al tipo de cambio vendedor BNA y precios de ALUAR.", sangria: 5 },
-            { texto: "• 100% al inicio congelando el precio.", sangria: 5 },
-            { texto: "• Pagos en dólares según dólar blue vendedor.", sangria: 5 },
-            { texto: "• Validez de la oferta: 1 día.", sangria: 5 },
-            { texto: "PLAZOS DE ENTREGA:", negrita: true },
-            { texto: "• Aberturas pintadas blancas: 30 - 45 días", sangria: 5 },
-            { texto: "• Otros colores: 45 - 90 días", sangria: 5 },
-            { texto: "• Anodizadas: 90 - 120 días", sangria: 5 },
+            { texto: "1. Confirmación de pedido:", negrita: true },
+            { texto: "• Todos los pedidos deben ser confirmados en un máximo de 72 hs hábiles desde la cotización.", sangria: 5 },
+            { texto: "• Pasado este plazo, los precios y disponibilidad de stock pueden estar sujetos a cambios.", sangria: 5 },
+            { texto: "2. Precios y presupuesto:", negrita: true },
+            { texto: "• El precio del presupuesto puede variar debido a la situación económica actual, tipo de cambio o factores externos que escapan a nuestro control.", sangria: 5 },
+            { texto: "• Los pagos y ajustes se realizarán según lo acordado al momento de la confirmación del pedido.", sangria: 5 },
+            { texto: "3. Productos e imágenes:", negrita: true },
+            { texto: "• Las imágenes presentadas en la web o en el presupuesto son ilustrativas y pueden no coincidir exactamente con el producto final.", sangria: 5 },
+            { texto: "• Las características principales, medidas y materiales estarán detalladas en la cotización final y deben ser revisadas antes de la confirmación.", sangria: 5 },
+            { texto: "4. Condiciones de entrega y logística:", negrita: true },
+            { texto: "• Los plazos de entrega estimados dependen del tipo de producto y la disponibilidad de stock.", sangria: 5 },
+            { texto: "• Cualquier retraso por factores externos será comunicado oportunamente.", sangria: 5 },
+            { texto: "", negrita: false },
+            { texto: "Gracias por confiar en Locus Store. Estamos a tu disposición para cualquier consulta o aclaración.", negrita: true },
+            { texto: "", negrita: false },
+            { texto: "", negrita: false },
+            { texto: "", negrita: false },
+            { texto: "", negrita: false },
+
         ];
 
         // Dibujar todas las líneas
@@ -373,9 +360,9 @@ const AdminPresupuesto = () => {
         // --- Dibujar logo al final ---
         if (logoBase64) {
             const pageWidth = doc.internal.pageSize.getWidth();
-            const logoWidth = 50;   // ancho del logo
-            const logoHeight = 50;  // alto del logo
-            const x = pageWidth - logoWidth - 20; // 20 unidades del borde derecho
+            const logoWidth = 25;   // ancho del logo
+            const logoHeight = 25;  // alto del logo
+            const x = (pageWidth - logoWidth) / 2; // centrado horizontal
             const y = clausulasY - 20; // 10 unidades debajo de las cláusulas
             doc.addImage(logoBase64, "PNG", x, y, logoWidth, logoHeight);
         }
@@ -494,12 +481,8 @@ const AdminPresupuesto = () => {
                                             >
                                                 {pedidoSeleccionado === pedido.id ? "Cerrar detalles" : "Ver detalles"}
                                             </button>
-                                            <button
-                                                className="adminpedidos-btn-listo btn btn-success btn-sm w-100 w-md-auto text-white"
-                                                onClick={() => marcarCompletado(pedido.id)}
-                                            >
-                                                Completado
-                                            </button>
+                                            <PuntosDropdown pedido={pedido} />
+
                                             <button
                                                 className="btn btn-secondary btn-sm w-100 w-md-auto"
                                                 onClick={() => cambiarAPendiente(pedido.id)}

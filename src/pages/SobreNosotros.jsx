@@ -36,7 +36,7 @@ const SobreNosotros = () => {
         className="hero-section"
         style={{
           backgroundImage:
-            "url(https://res.cloudinary.com/dqesszxgv/image/upload/v1757115686/20943816_s00t6l.jpg)",
+            "url(https://res.cloudinary.com/dqesszxgv/image/upload/v1761434353/Disen%CC%83o_sin_ti%CC%81tulo_5_jyaeey.jpg)",
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
@@ -99,7 +99,7 @@ const SobreNosotros = () => {
           <article className="col-12 col-md-6 slide-up">
             <img
               className="img-fluid rounded shadow"
-              src="https://res.cloudinary.com/dqesszxgv/image/upload/v1759966006/achievement-3385068_1280_j6mps9.jpg"
+              src="https://res.cloudinary.com/dqesszxgv/image/upload/v1759939225/WhatsApp_Image_2025-09-17_at_1.29.35_PM_o86nhv.jpg"
               alt="Espacio Exclusivo"
             />
           </article>

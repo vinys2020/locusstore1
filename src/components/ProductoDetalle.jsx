@@ -82,6 +82,20 @@ export default function ProductoDetalle() {
   return (
     <main className="producto-detalle-page container-fluid py-5 p-lg-5">
       <article className="row justify-content-center g-2 mt-lg-4 ">
+{/* Banner informativo de ancho completo */}
+<div 
+  className="alert mb-3 text-center fw-bold"
+  style={{ 
+    backgroundColor: "#d1ecf9", // celeste suave
+    color: "black",           // texto azul oscuro para buen contraste
+    fontSize: "0.95rem",
+    borderRadius: "5px"
+  }}
+>
+  ⚠️ Si no encontrás la medida, color u otra característica, consultanos. ¡Seguramente hay disponibilidad!
+</div>
+
+
 
         <section className="producto-zoom-container col-lg-6 col-md-8 col-sm-10 col-12 mx-auto text-start mt-lg-5 d-flex flex-row">
           {/* Miniaturas */}
@@ -93,7 +107,7 @@ export default function ProductoDetalle() {
               <button
                 key={index}
                 className={`miniatura-btn border p-1 rounded ${index === imagenSeleccionada ? "border-primary" : "border-secondary"}`}
-                onClick={() => setImagenSeleccionada(index)}
+                onMouseEnter={() => setImagenSeleccionada(index)}
                 style={{ background: "transparent", flex: "0 0 auto" }}
               >
                 {img.endsWith(".mp4") ? (

@@ -371,13 +371,7 @@ const Perfil = () => {
                     <p className="card-text text-center">Canjea 250 puntos para obtener un 20% de descuento en tu próxima compra.</p>
                   </div>
                   <div className="card-footer d-flex justify-content-center border-0 bg-white">
-                    <button
-                      className="btn btn-success btn-sm"
-                      onClick={() => comprarCupon("20% de Descuento", 20, 250)}
-                      disabled={user.puntos < 250}
-                    >
-                      Canjear
-                    </button>
+
                   </div>
                 </div>
               </div>
@@ -390,13 +384,7 @@ const Perfil = () => {
                     <p className="card-text text-center">Canjea 350 puntos para obtener un 30% de descuento en tu próxima compra.</p>
                   </div>
                   <div className="card-footer d-flex justify-content-center border-0 bg-white">
-                    <button
-                      className="btn btn-success btn-sm"
-                      onClick={() => comprarCupon("30% de Descuento", 30, 350)}
-                      disabled={user.puntos < 350}
-                    >
-                      Canjear
-                    </button>
+
                   </div>
                 </div>
               </div>

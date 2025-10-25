@@ -53,10 +53,11 @@ const PagosCuotas = () => {
           cuotas,
           total,
           maxCuotas,
-          cuotasPagadas: pedido.cuotasPagadas || [], // nuevo campo
-          montoRestante: pedido.montoRestante != null
-          ? pedido.montoRestante
-          : cuotas.reduce((acc, c) => acc + c.total, 0),
+          cuotasPagadas: pedido.cuotasPagadas || [],
+          montoRestante:
+            pedido.montoRestante != null
+              ? pedido.montoRestante
+              : cuotas.reduce((acc, c) => acc + c.total, 0),
         };
       });
 
@@ -69,54 +70,44 @@ const PagosCuotas = () => {
   const formatearDinero = (num) =>
     num.toLocaleString("es-AR", { style: "currency", currency: "ARS" });
 
-  // ✅ Nueva función para marcar una cuota como pagada y guardarla en el array "cuotasPagadas"
-// ✅ Nueva función para marcar una cuota como pagada y guardarla en el array "cuotasPagadas"
-const pagarCuota = async (pedidoId, monto, indiceCuota) => {
+  const pagarCuota = async (pedidoId, monto, indiceCuota) => {
     const pedidoRef = doc(db, "pedidos", pedidoId);
     const pedidoActual = pedidos.find((p) => p.id === pedidoId);
     if (!pedidoActual) return;
-  
-    // Redondeamos a 2 decimales
+
     const montoRedondeado = Number(monto.toFixed(2));
-  
-    // Crear registro de cuota pagada
+
     const nuevaCuota = {
       indice: indiceCuota + 1,
       fecha: new Date(),
       monto: montoRedondeado,
     };
-  
-    // Actualizamos array de cuotas pagadas
+
     const cuotasPagadasActualizadas = [
       ...(pedidoActual.cuotasPagadas || []),
       nuevaCuota,
     ];
-  
-    // Calculamos el monto total pagado
+
     const montoTotalPagado = cuotasPagadasActualizadas.reduce(
       (acc, cp) => acc + cp.monto,
       0
     );
-  
-    // ✅ Usamos "total" (no "totalpedido") y redondeamos
+
     const montoRestanteNumero = Number(
       ((pedidoActual.total || 0) - montoTotalPagado).toFixed(2)
     );
-  
-    // ✅ Formateamos a pesos argentinos
+
     const montoRestante = montoRestanteNumero.toLocaleString("es-AR", {
       style: "currency",
       currency: "ARS",
     });
-  
-    // Actualizamos Firestore con las cuotas pagadas y monto restante
+
     await updateDoc(pedidoRef, {
       cuotasPagadas: cuotasPagadasActualizadas,
-      montoRestante: montoRestanteNumero, // guardamos el número puro
+      montoRestante: montoRestanteNumero,
       estadoPago: montoRestanteNumero <= 0 ? "completado" : "pendiente",
     });
-  
-    // Actualizamos el estado local (mostramos el formateado en ARS)
+
     setPedidos((prev) =>
       prev.map((p) =>
         p.id === pedidoId
@@ -129,13 +120,10 @@ const pagarCuota = async (pedidoId, monto, indiceCuota) => {
       )
     );
   };
-  
-  
-  
 
   return (
     <section className="col-12 mt-5">
-      <div className="card shadow-sm rounded-4 p-4 bg-light">
+      <div className="card shadow-sm rounded-4 p-3 bg-light">
         <h4 className="mb-3 text-center text-black fw-bold">Pagos en Cuotas</h4>
 
         {pedidos.length === 0 ? (
@@ -148,78 +136,88 @@ const pagarCuota = async (pedidoId, monto, indiceCuota) => {
               <thead className="table-dark">
                 <tr>
                   <th>Cliente</th>
+                  <th>Pedido</th>
                   <th>Email</th>
                   <th>Teléfono</th>
                   <th>Estado</th>
                   <th>Cuotas</th>
                   <th>Total</th>
-                  <th>Restante</th>                  
+                  <th>Restante</th>
                   <th>Método</th>
                   <th>Fecha</th>
                 </tr>
               </thead>
               <tbody>
-  {pedidos.map((p) => (
-    <tr key={p.id}>
-      <td>{p.nombre}</td>
-      <td>{p.email}</td>
-      <td>{p.telefono}</td>
-      <td>
-        <span
-          className={`badge ${
-            p.estado === "completado"
-              ? "bg-success"
-              : p.estado === "pendiente"
-              ? "bg-warning text-dark"
-              : "bg-secondary"
-          }`}
-        >
-          {p.estado}
-        </span>
-      </td>
-      <td>
-        {p.cuotas.map((c, i) => (
-          <div key={i}>
-            <span className="badge me-1 bg-warning text-dark">
-              {c.descripcion} - Total {formatearDinero(c.total)}
-            </span>
-
-            <div className="mt-1">
-              {c.distribucion.map((monto, idx) => {
-                const pagada = Array.isArray(p.cuotasPagadas)
-                  ? p.cuotasPagadas.some((cp) => cp.indice === idx + 1)
-                  : false;
-                return (
-                  <span
-                    key={idx}
-                    className={`badge me-1 ${
-                      pagada ? "bg-success" : "bg-warning text-dark"
-                    }`}
-                  >
-                    {idx + 1}: {formatearDinero(monto)}{" "}
-                    {!pagada && (
-                      <button
-                        className="btn btn-sm ms-1 btn-outline-light"
-                        onClick={() => pagarCuota(p.id, monto, idx)}
+                {pedidos.map((p) => (
+                  <tr key={p.id}>
+                    <td>{p.nombre}</td>
+                    <td className="small border">{p.id}</td>
+                    <td className="small border">{p.email}</td>
+                    <td className="small border">{p.telefono}</td>
+                    <td className="small border">
+                      <span
+                        className={`badge ${
+                          p.estado === "completado"
+                            ? "bg-success"
+                            : p.estado === "pendiente"
+                            ? "bg-warning text-dark"
+                            : "bg-secondary"
+                        }`}
                       >
-                        Pago cuota
-                      </button>
-                    )}
-                  </span>
-                );
-              })}
-            </div>
-          </div>
-        ))}
-      </td>
-      <td>{formatearDinero(p.total)}</td>
-      <td>{p.montoRestante != null ? formatearDinero(p.montoRestante) : "-"}</td>
-      <td>{p.metodoPago}</td>
-      <td>{p.fecha}</td>
-    </tr>
-  ))}
-</tbody>
-
+                        {p.estado}
+                      </span>
+                    </td>
+                    <td className="small border">
+                      {p.cuotas.map((c, i) => (
+                        <div key={i}>
+                          <span className="badge me-1 bg-warning text-dark">
+                            {c.descripcion} - Total {formatearDinero(c.total)}
+                          </span>
+                          <div className="mt-1">
+                            {c.distribucion.map((monto, idx) => {
+                              const pagada = Array.isArray(p.cuotasPagadas)
+                                ? p.cuotasPagadas.some(
+                                    (cp) => cp.indice === idx + 1
+                                  )
+                                : false;
+                              return (
+                                <span
+                                  key={idx}
+                                  className={`badge mt-1 me-1 ${
+                                    pagada
+                                      ? "bg-success"
+                                      : "bg-warning text-dark"
+                                  }`}
+                                >
+                                  {idx + 1}: {formatearDinero(monto)}
+                                  {!pagada && (
+                                    <button
+                                      className="btn btn-sm ms-1 btn-outline-success py-0"
+                                      onClick={() =>
+                                        pagarCuota(p.id, monto, idx)
+                                      }
+                                    >
+                                      Pago cuota
+                                    </button>
+                                  )}
+                                </span>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      ))}
+                    </td>
+                    <td className="small border">{formatearDinero(p.total)}</td>
+                    <td className="small border">
+                      {p.montoRestante != null
+                        ? formatearDinero(p.montoRestante)
+                        : "-"}
+                    </td>
+                    <td className="small border">{p.metodoPago}</td>
+                    <td className="small border">{p.fecha}</td>
+                  </tr>
+                ))}
+              </tbody>
             </table>
           </div>
         )}

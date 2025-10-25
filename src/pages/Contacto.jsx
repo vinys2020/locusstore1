@@ -57,15 +57,22 @@ const Contactos = () => {
 
   return (
     <main className="contactos-page container-fluid py-5 px-lg-5">
+      <section class="text-center mt-2">
+        <h1 class="text-dark">¿Querés contactarnos?</h1>
+        <p className="fs-5">Estamos listos para ayudarte en lo que necesites.</p>
+        <a
+          href="https://wa.me/"
+          target="_blank"
+          class="btn btn-success mt-2"
+        >
+          Chateá con nosotros por WhatsApp
+        </a>
+      </section>
       <section className="row align-items-center mb-5">
-        {/* Título */}
-        <article className="col-12 text-center mb-5">
-          <h1 className="text-dark">Envíanos tu mensaje</h1>
-          <p className="fs-5">Te responderemos a la brevedad</p>
-        </article>
+
 
         {/* Imagen */}
-        <article className="col-12 col-lg-6 mt-0 d-flex justify-content-center">
+        <article className="col-12 col-lg-6 mt-5 d-flex justify-content-center">
           <img
             className="img-fluid rounded bg-transparent shadow-lg"
             id="fotoComenzar"
@@ -76,6 +83,8 @@ const Contactos = () => {
 
         {/* Formulario */}
         <article className="col-12 col-lg-6">
+          <article className="col-12 text-start mb-1 mt-lg-5">
+          </article>
           <form onSubmit={handleSubmit}>
             <div className="form-floating mb-2">
               <input
@@ -160,7 +169,10 @@ const Contactos = () => {
             </div>
           </form>
         </article>
+
       </section>
+
+
       <ToastContainer />
 
     </main>

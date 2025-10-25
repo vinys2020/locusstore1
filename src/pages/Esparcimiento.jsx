@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./Esparcimiento.css";
+
 
 const imagenes = [
   "https://res.cloudinary.com/dqesszxgv/image/upload/v1759939226/WhatsApp_Image_2025-09-17_at_1.29.42_PM_psybhl.jpg",
@@ -16,6 +18,8 @@ const imagenes = [
 
 const Esparcimiento = () => {
   const [selectedImage, setSelectedImage] = useState(null);
+  const navigate = useNavigate();
+
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -141,9 +145,29 @@ const Esparcimiento = () => {
                   </ul>
                 </div>
 
-                <div className=" d-flex bg-success  text-white  justify-content-center aling-items-center fw-semibold fs-4 py-3 rounded-3 mt-4 mx-lg-5">
-                  Precio: $34.500 por persona
-                </div>
+                <div className="d-flex justify-content-center gap-3 mt-4 mx-lg-5">
+  {/* Botón de Precio */}
+  <div
+    className="bg-success text-white d-flex justify-content-center align-items-center fw-semibold fs-4 py-3 px-4 rounded-3"
+    style={{ cursor: "pointer" }}
+    onClick={() =>
+      navigate("/categorias/serviciosid/producto/PX7tNOzWacOQkRWWhXju")
+    }
+  >
+    Precio: $34.500 por persona
+  </div>
+
+  {/* Botón Comprar */}
+  <button
+    className="btn btn-warning fw-semibold fs-5 py-3 px-4 rounded-3"
+    onClick={() =>
+      navigate("/categorias/serviciosid/producto/PX7tNOzWacOQkRWWhXju")
+    }
+  >
+    Comprar
+  </button>
+</div>
+
 
                 <p className="text-muted mt-4 mb-0 fs-5">
                   <b>Una experiencia diseñada para disfrutar, compartir y redescubrir el placer de comer bien</b>

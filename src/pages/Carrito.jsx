@@ -244,7 +244,7 @@ const Carrito = () => {
         estado: "pendiente",
         fecha: Timestamp.now(),
         metodopago: metodoPago,
-        
+
         estadoPago: "pendiente",
         cuotasTotales: (() => {
           if (cart.some(p => p.metodo === "6cuotas")) return 6;
@@ -253,7 +253,17 @@ const Carrito = () => {
         })(),
         cuotasPagadas: [], // <-- cambiamos de 0 a array vacío
         montoTotal: totalFinalConDescuento,
-        montoRestante: totalFinalConDescuento,
+        montoRestante: cart
+        .filter(p => p.metodo && p.metodo !== "contado")
+        .reduce((acc, p) => {
+          const cantidad = p.cantidad || 1;
+          let totalProducto = p.precio * cantidad;
+      
+          if (p.metodo === "3cuotas") totalProducto *= 1.15;
+          if (p.metodo === "6cuotas") totalProducto *= 1.30;
+      
+          return acc + totalProducto;
+        }, 0),        
         productos: cart.map(p => {
           const cantidad = p.cantidad || 1;
           const precioBase = p.precio * cantidad;
