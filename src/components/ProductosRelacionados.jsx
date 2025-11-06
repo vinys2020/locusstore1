@@ -132,29 +132,64 @@ const ProductosRelacionados = ({ categoriaId, productoActualId }) => {
               <div className="scroll-producto-body">
                 <div className="scroll-producto-precio-wrapper d-flex flex-column align-items-start">
                   <span
-                    style={{ textDecoration: "line-through", color: "#888", fontSize: "0.85rem" }}
+                    style={{
+                      textDecoration: "line-through",
+                      color: "#888",
+                      fontSize: "0.85rem",
+                    }}
                     className="mt-lg-3"
                   >
-                    ${producto.precio ? Math.round(producto.precio * 1.2).toLocaleString() : "-"}
+                    {producto.precio
+                      ? `$${Math.round(producto.precio * 1.2).toLocaleString("es-AR", {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2,
+                      })}`
+                      : "-"}
                   </span>
-                  <p className="scroll-producto-precio mb-0">
-                    ${producto.precio ? producto.precio.toLocaleString() : "N/A"}
+
+                  <p className="scroll-producto-precio mb-1">
+                    ${producto.precio
+                      ? producto.precio.toLocaleString("es-AR", {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2,
+                      })
+                      : "N/A"}
                   </p>
-                  <div className="dynamic-carousel__shipping-container mt-1 d-flex align-items-center gap-1">
-                    <span>Locus Store</span>
-                    <i className="bi bi-lightning-fill text-warning"></i>
-                  </div>
+
+                  {producto.precio3Cuotas > 0 && (
+                    <small className="text-success d-block fw-light">
+                      3 cuotas de{" "}
+                      {(producto.precio3Cuotas / 3).toLocaleString(undefined, {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2,
+                      })}
+                    </small>
+                  )}
+                  {producto.precio6Cuotas > 0 && (
+                    <small className="text-success text-start d-block fw-light mt-1">
+                      6 cuotas de{" "}
+                      {(producto.precio6Cuotas / 6).toLocaleString(undefined, {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2,
+                      })}
+                    </small>
+                  )}
                 </div>
-                <h6 className="scroll-producto-titulo mb-0">{producto.nombre}</h6>
+
+                <h6 className="scroll-producto-titulo text-start fs-6">
+                  <b>{producto.nombre}</b>
+                </h6>
               </div>
             </a>
 
             <button
-              className="scroll-producto-boton mt-md-4 mt-0"
+              className="scroll-producto-boton text-dark mt-lg-4 mt-0"
               disabled={producto.stock === 0}
               onClick={(e) => {
-                e.stopPropagation(); // evita click en el <a>
-                if (producto.stock > 0) agregarAlCarrito(producto, producto.categoria);
+                e.stopPropagation();
+                if (producto.stock > 0) {
+                  agregarAlCarrito(producto, producto.categoria);
+                }
               }}
             >
               {producto.stock === 0 ? "Agotado" : "Agregar al carrito"}

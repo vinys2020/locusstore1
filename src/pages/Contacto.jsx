@@ -59,14 +59,8 @@ const Contactos = () => {
     <main className="contactos-page container-fluid py-5 px-lg-5">
       <section class="text-center mt-2">
         <h1 class="text-dark">¿Querés contactarnos?</h1>
-        <p className="fs-5">Estamos listos para ayudarte en lo que necesites.</p>
-        <a
-          href="https://wa.me/"
-          target="_blank"
-          class="btn btn-success mt-2"
-        >
-          Chateá con nosotros por WhatsApp
-        </a>
+        <p className="fs-5">Envianos tus consultas estamos listos para ayudarte en lo que necesites.</p>
+
       </section>
       <section className="row align-items-center mb-5">
 
@@ -169,6 +163,18 @@ const Contactos = () => {
             </div>
           </form>
         </article>
+
+      </section>
+
+      <section class="text-center mt-2">
+        <h1 class="text-dark">Contactarnos por WhatsApp</h1>
+        <a
+  href="https://wa.me/"
+  target="_blank"
+  class="btn btn-success mt-2"
+>
+  Tocá aquí y chateá con nosotros
+</a>
 
       </section>
 

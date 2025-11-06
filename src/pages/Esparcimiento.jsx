@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
+
 import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
+import HorizontalHerramientas from "../components/HorizontalHerramientas";
+import { Link } from "react-router-dom";
+// ✅ importamos tu componente
+
 import "./Esparcimiento.css";
 
 
@@ -68,7 +73,7 @@ const Esparcimiento = () => {
   return (
     <>
       {/* 🟡 MAIN 1 — Contenido e información */}
-      <main className="esp-main bg-light py-0" style={{ marginTop: "90px" }}>
+      <main id="chaperio-section" className=" esp-main bg-light py-0 " style={{ marginTop: "90px" }}>
         {/* Hero Section */}
         <section
           className="hero-section mt-0"
@@ -99,7 +104,7 @@ const Esparcimiento = () => {
             </h2>
           </header>
 
-          <section className="esp-slide-up text-center mb-5 px-3">
+          <section className="esp-slide-up text-center mb-5 px-lg-3">
             <div className="card border-0 shadow-lg rounded-4 overflow-hidden bg-white p-0">
               <div className="card-body px-lg-4 py-5">
                 <h2 className="fw-bold text-dark display-6 mb-3">
@@ -146,27 +151,27 @@ const Esparcimiento = () => {
                 </div>
 
                 <div className="d-flex justify-content-center gap-3 mt-4 mx-lg-5">
-  {/* Botón de Precio */}
-  <div
-    className="bg-success text-white d-flex justify-content-center align-items-center fw-semibold fs-4 py-3 px-4 rounded-3"
-    style={{ cursor: "pointer" }}
-    onClick={() =>
-      navigate("/categorias/serviciosid/producto/PX7tNOzWacOQkRWWhXju")
-    }
-  >
-    Precio: $34.500 por persona
-  </div>
+                  {/* Botón de Precio */}
+                  <div
+                    className="bg-success text-white d-flex justify-content-center align-items-center fw-semibold fs-4 py-3 px-4 rounded-3"
+                    style={{ cursor: "pointer" }}
+                    onClick={() =>
+                      navigate("/categorias/serviciosid/producto/PX7tNOzWacOQkRWWhXju")
+                    }
+                  >
+                    $34.500 por persona
+                  </div>
 
-  {/* Botón Comprar */}
-  <button
-    className="btn btn-warning fw-semibold fs-5 py-3 px-4 rounded-3"
-    onClick={() =>
-      navigate("/categorias/serviciosid/producto/PX7tNOzWacOQkRWWhXju")
-    }
-  >
-    Comprar
-  </button>
-</div>
+                  {/* Botón Comprar */}
+                  <button
+                    className="btn btn-warning fw-semibold fs-5 py-3 px-4 rounded-3"
+                    onClick={() =>
+                      navigate("/categorias/serviciosid/producto/PX7tNOzWacOQkRWWhXju")
+                    }
+                  >
+                    Comprar
+                  </button>
+                </div>
 
 
                 <p className="text-muted mt-4 mb-0 fs-5">
@@ -180,7 +185,7 @@ const Esparcimiento = () => {
       </main>
 
       {/* 🟣 MAIN 2 — Galería de Fotografías (ocupa todo el ancho) */}
-      <main className="esp-gallery-main mb-0">
+      <main className="esp-gallery-main">
         <section className="pt-5 bg-black esp-slide-up" id="galeria-fotos">
           <article className="col-12 d-flex justify-content-center w-100 mb-0 mt-0">
             <div className="text-center">
@@ -229,6 +234,243 @@ const Esparcimiento = () => {
           </div>
         )}
       </main>
+
+      {/* 🟡 MAIN 3 — Contenido e información */}
+      <main id="vinos-section" className="esp-main bg-light py-0" style={{ marginTop: "0px" }}>
+        {/* Hero Section */}
+        <section
+          className="hero-section mt-0"
+          style={{
+            backgroundImage:
+              "url(https://res.cloudinary.com/dqesszxgv/image/upload/v1762457801/laguarda2_mhcb3o.jpg)",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            height: "680px",
+          }}
+        >
+          <style>
+            {`
+      @media (max-width: 768px) {
+        .hero-section {
+          height: 500px !important;
+        }
+      }
+    `}
+          </style>
+        </section>
+
+        {/* Info Section */}
+        <div className="container py-5">
+        <header className="text-center mb-5">
+  <h2 className="text-muted lead">
+    Una experiencia de cata privada en <strong>La Guarda</strong>, ideal para grupos de
+    <strong> 4 a 12 personas</strong>.
+  </h2>
+</header>
+
+          {/* 🟣 SECCIÓN VINOS - LA GUARDA */}
+          <section className="py-5 bg-white">
+            <div className="container">
+              <header className="text-center mb-5">
+                <h2 className="fw-bold text-dark mb-3">Vinos La Guarda</h2>
+                <p className="text-muted">
+                  Descubrí nuestra exclusiva selección de vinos pensada para acompañar tus mejores momentos.
+                </p>
+              </header>
+
+              {/* Fila 1 */}
+              <div className="row align-items-center mb-5">
+                <div className="col-md-6 mb-4 mb-md-0 esp-slide-up">
+                  <img
+                    src="https://res.cloudinary.com/dqesszxgv/image/upload/v1762459051/WhatsApp_Image_2025-10-30_at_11.36.12_AM_12_krnvra.jpg"
+                    alt="Vino tinto La Guarda"
+                    className="img-fluid rounded-4 shadow-sm"
+                  />
+                </div>
+                <div className="col-md-6">
+  <h3 className="fw-bold mb-3 p-2 text-start">Explora Nuestros Vinos</h3>
+  <p className="text-muted fs-4 p-2">
+    En <strong>La Guarda</strong> contamos con una amplia selección de vinos cuidadosamente
+    elegidos para cada ocasión. Desde etiquetas jóvenes y frescas hasta líneas reserva
+    y gran reserva, nuestra vinoteca reúne bodegas que reflejan la identidad, el clima
+    y la pasión por el buen vino.  
+    <br /><br />
+    Proponemos un recorrido por distintos estilos y variedades, pensado tanto para
+    quienes dan sus primeros pasos en el mundo del vino como para los paladares más
+    exigentes.  
+    <br /><br />
+    <em>Vinos que inspiran momentos, celebran encuentros y acompañan la experiencia
+    de disfrutar con todos los sentidos.</em>
+  </p>
+</div>
+
+              </div>
+
+              {/* Fila 2 */}
+              <div className="row align-items-center flex-md-row-reverse mb-5">
+                <div className="col-md-6 mb-4 mb-md-0 esp-slide-up">
+                  <img
+                    src="https://res.cloudinary.com/dqesszxgv/image/upload/v1762459134/WhatsApp_Image_2025-10-30_at_11.36.12_AM_9_encr0x.jpg"
+                    alt="Vino blanco La Guarda"
+                    className="img-fluid rounded-4 shadow-sm"
+                  />
+                </div>
+                <div className="col-md-6">
+  <h3 className="fw-semibold mb-3 p-2">Experiencia de Cata Exclusiva</h3>
+  <p className="text-muted fs-4 p-2">
+    En <strong>La Guarda</strong> te invitamos a vivir una experiencia sensorial única,
+    donde cada copa cuenta una historia. Nuestros expertos te guiarán en un recorrido
+    por los secretos del vino, explorando sus aromas, texturas y matices, en un ambiente
+    íntimo y cuidadosamente diseñado.  
+    <br /><br />
+    La cata incluye una selección especial de etiquetas premium, acompañadas por
+    maridajes que realzan cada sabor y elevan el momento. Ideal para disfrutar entre
+    amigos, celebrar una ocasión especial o simplemente dejarte llevar por el placer
+    del buen vino.  
+    <br /><br />
+    Cupos limitados para grupos de entre <strong>4 y 12 personas</strong>.
+    Descubrí el arte de degustar, sentir y compartir el vino como nunca antes.
+  </p>
+</div>
+
+              </div>
+
+              {/* Fila 3 */}
+              <div className="row align-items-center mb-5">
+                <div className="col-md-6 mb-4 mb-md-0 esp-slide-up">
+                  <img
+                    src="https://res.cloudinary.com/dqesszxgv/image/upload/v1762459241/WhatsApp_Image_2025-10-30_at_11.36.12_AM_11_xodv1w.jpg"
+                    alt="Espumantes La Guarda"
+                    className="img-fluid rounded-4 shadow-sm"
+                  />
+                </div>
+                <div className="col-md-6">
+  <h4 className="fw-semibold mb-3">Vinos de Bodegas Selectas</h4>
+  <p className="text-muted fs-5">
+    En <strong>La Guarda</strong> trabajamos con reconocidas bodegas como <strong>El Martín Fierro</strong> y 
+    <strong> La Quebrada</strong>, referentes en la producción de vinos auténticos y de carácter distintivo.  
+    <br /><br />
+    Cada etiqueta refleja la dedicación, el clima y la nobleza de su origen, ofreciendo una experiencia sensorial
+    única en cada copa. Nuestra selección reúne vinos equilibrados, intensos y elegantes, ideales para quienes
+    buscan calidad y expresión en cada degustación.
+  </p>
+</div>
+
+              </div>
+
+
+              {/* Fila 4 */}
+              <div className="row align-items-center flex-md-row-reverse mb-5">
+                <div className="col-md-6 mb-4 mb-md-0 esp-slide-up">
+                  <img
+                    src="https://res.cloudinary.com/dqesszxgv/image/upload/v1762460320/Disen%CC%83o_sin_ti%CC%81tulo_6_eaip5n.jpg"
+                    alt="Vino blanco La Guarda"
+                    className="img-fluid rounded-4 shadow-sm"
+                  />
+                </div>
+                <div className="col-md-6">
+  <h4 className="fw-semibold mb-3">Colección Las Perdices & Partridge</h4>
+  <p className="text-muted fs-5">
+    En <strong>La Guarda</strong> contamos con una distinguida selección de vinos de 
+    <strong> Las Perdices</strong> y <strong> Partridge</strong>, reconocidas bodegas que combinan 
+    tradición, innovación y carácter en cada etiqueta.  
+    <br /><br />
+    Vinos que destacan por su equilibrio, elegancia y autenticidad, ideales para disfrutar en toda ocasión.
+  </p>
+</div>
+
+
+              </div>
+            </div>
+
+            <section className="mx-lg-5 mb-5 esp-slide-up mt-5">
+              <div className="container-fluid w-100 mt-3">
+
+                <div style={{ textAlign: "center" }}>
+                  <h2
+                    className="fw-bold mb-3 mt-lg-4"
+                    style={{
+                      color: "#054a49",
+                      fontSize: "clamp(1.9rem, 3vw, 2.2rem)",
+                      display: "inline-block",
+                      position: "relative",
+                    }}
+                  >
+                    Compra tus Vinos La Guarda aquí
+                    {/* Línea decorativa */}
+                    <span className="mb-2"
+                      style={{
+                        display: "block",
+                        height: "3px",
+                        width: "120px",
+                        backgroundColor: "#FFD700",
+                        margin: "8px auto 0",
+                        borderRadius: "2px",
+                      }}
+                    ></span>
+                  </h2>
+
+                </div>
+
+
+
+
+
+
+
+                <div className="container px-0 bg-white shadow-sm px-2 rounded-3 p-2">
+
+
+
+
+
+
+
+                  <HorizontalHerramientas />
+
+                  {/* Botón Ver más */}
+                  <div className="d-flex justify-content-end px-2 mt-0 bg-white py-2 border-top">
+                    <Link
+                      className="ui-recommendations-footer__link d-flex align-items-center text-decoration-none mt-1"
+                      to="/categorias/herramientasid"
+                      style={{ color: "#3483fa" }}
+                    >
+                      <div className="ui-recommendations-footer__wrapper d-flex align-items-center gap-2">
+                        <div className="ui-recommendations-footer__text" style={{ fontWeight: 600 }}>
+                          Ver más
+                        </div>
+                        <div className="ui-recommendations-footer__chevron d-flex align-items-center">
+                          <svg
+                            className="ui-homes-icon ui-homes-icon--chevron"
+                            width="9"
+                            height="14"
+                            viewBox="0 0 9 14"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path d="M1 1l6 6-6 6" stroke="#3483fa" strokeWidth="2" fill="none" fillRule="evenodd" />
+                          </svg>
+                        </div>
+                      </div>
+                    </Link>
+                  </div>
+
+                </div>
+              </div>
+
+
+
+
+            </section>
+          </section>
+
+
+
+
+
+
+        </div>
+      </main>
+
     </>
   );
 };

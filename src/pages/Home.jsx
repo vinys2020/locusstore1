@@ -548,10 +548,10 @@ const Home = () => {
             {/* Banner 2 */}
             <div className="col-12 col-sm-6 col-md-4 slide-up">
               <Link
-                to="/categorias/plomeríayaguaid"
+                to="/categorias/bachasid"
                 className="d-block shadow-sm rounded overflow-hidden"
-                title="Ir a Herramientas"
-                aria-label="Ir a Herramientas"
+                title="Ir a Bachas"
+                aria-label="Ir a Bachas"
               >
                 <img
                   src="https://res.cloudinary.com/dqesszxgv/image/upload/v1757116261/bachas_fqvnvb.webp"
