@@ -10,6 +10,28 @@
   transform: translateY(0);
 }
 
+.hero-section-esparcimiento {
+  background-image: url("https://res.cloudinary.com/dqesszxgv/image/upload/v1762457801/laguarda2_mhcb3o.jpg");
+  background-size: cover;
+  background-position: center;
+  height: 680px;
+  margin-top: 0;
+}
+
+/* 📱 Responsive */
+@media (max-width: 768px) {
+  .hero-section-esparcimiento {
+    height: 500px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-section-esparcimiento {
+    height: 420px;
+  }
+}
+
+
 /* Tarjetas */
 .esp-card {
   transition: transform 0.3s ease, box-shadow 0.3s ease;

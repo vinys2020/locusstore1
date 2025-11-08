@@ -135,12 +135,13 @@ export default function ProductoDetalle() {
           <div
             className="producto-imagen-container position-relative d-flex align-items-center justify-content-center"
             style={{
-              height: "400px",
+              height: "800px",
+              width: "100%",
               backgroundImage: zoomVisible
                 ? `url(${producto.imagenes[imagenSeleccionada]})`
                 : "none",
               backgroundRepeat: "no-repeat",
-              backgroundSize: "200%", // 🔥 zoom al 200%
+              backgroundSize: "150%", // 🔥 zoom al 200%
               backgroundPosition: backgroundPosition, // 🔥 sigue el mouse
             }}
             onMouseEnter={() => setZoomVisible(true)}
@@ -306,7 +307,7 @@ export default function ProductoDetalle() {
             <div className="row bg-light rounded p-lg-3 p-1">
               {producto.caracteristicas && producto.caracteristicas.length > 0 ? (
                 <div
-                  className="d-grid gap-4"
+                  className="d-grid gap-lg-4 gap-2"
                   style={{ gridTemplateColumns: 'repeat(2, 1fr)' }}
                 >
                   {producto.caracteristicas.map((carac, i) => (
@@ -343,8 +344,8 @@ export default function ProductoDetalle() {
               <div className="row justify-content-start">
                 <div className="col-12 col-md-8 col-lg-6 p-2 mx-lg-2 ">
                   <p
-                    className="text-dark "
-                    style={{ whiteSpace: 'pre-line', lineHeight: '1.8' }}
+                    className="text-dark"
+                    style={{ whiteSpace: 'pre-line', lineHeight: '1.8' , fontSize: '1.2rem'}}
                   >
                     {producto.descripcion || "No hay descripción disponible"}
                   </p>
