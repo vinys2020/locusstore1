@@ -424,7 +424,7 @@ const Esparcimiento = () => {
                   <div className="d-flex justify-content-end px-2 mt-0 bg-white py-2 border-top">
                     <Link
                       className="ui-recommendations-footer__link d-flex align-items-center text-decoration-none mt-1"
-                      to="/categorias/herramientasid"
+                      to="/categorias/vinosid"
                       style={{ color: "#3483fa" }}
                     >
                       <div className="ui-recommendations-footer__wrapper d-flex align-items-center gap-2">
@@ -561,7 +561,7 @@ const Esparcimiento = () => {
                   <div className="d-flex justify-content-end px-2 mt-0 bg-white py-2 border-top">
                     <Link
                       className="ui-recommendations-footer__link d-flex align-items-center text-decoration-none mt-1"
-                      to="/categorias/herramientasid"
+                      to="/categorias/vinosid"
                       style={{ color: "#3483fa" }}
                     >
                       <div className="ui-recommendations-footer__wrapper d-flex align-items-center gap-2">
