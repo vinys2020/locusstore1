@@ -43,7 +43,7 @@ const PuntosDropdown = ({ pedido }) => {
         Completado
       </button>
       <ul className="dropdown-menu" aria-labelledby={`dropdownPuntos-${pedido.id}`}>
-        {[5, 10, 20].map((p) => (
+        {[1,2,3,4,5,6,7,8,9,10].map((p) => (
           <li key={p}>
             <button className="dropdown-item" onClick={() => asignarPuntos(p)}>
               {p} puntos

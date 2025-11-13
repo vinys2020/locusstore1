@@ -14,6 +14,10 @@ import HorizontalPlomeYAgua from "../components/HorizontalPlomeYAgua";
 import HorizontalServicios from "../components/HorizontalServicios";
 import HorizontalElectricidad from "../components/HorizontalElectricidad";
 import HorizontalAccesoriosSeguridad from "../components/HorizontalAccesoriosSeguridad";
+import HorizontalAberturas from "../components/HorizontalAberturas";
+import HorizontalPisosYRevestimientos from "../components/HorizontalPisosYRevestimientos";
+
+
 
 
 
@@ -28,6 +32,7 @@ import "./Home.css";
 const Home = () => {
   const { usuario } = useAuth();
   const navigate = useNavigate();
+  
 
   const handleLogout = async () => {
     await auth.signOut();
@@ -318,6 +323,24 @@ const Home = () => {
 
       </section>
 
+      <section className="puntos-banner-section my-5">
+  <Link to="/Perfil" style={{ textDecoration: 'none' }}>
+    <div className="justify-content-center p-0 slide-up">
+      <div className="col-12 container">
+        <div className="info-card text-white bg-primary p-4 rounded-4 shadow-sm text-center hover-lift-lira">
+          <i className="bi bi-trophy" style={{ fontSize: "3rem", color: "gold" }}></i>
+          <h4 className="text-center mt-2">¡Ganá puntos por cada compra!</h4>
+          <p className="fs-6 text-center">
+            Sumá puntos con cada pedido que realices y canjealos en tu perfil por cupones con increíbles regalos y excelentes descuentos.
+          </p>
+        </div>
+      </div>
+    </div>
+  </Link>
+</section>
+
+
+
 
 
 
@@ -378,7 +401,7 @@ const Home = () => {
               <div className="container">
                 <div className="row g-3">
 
-                  <div className="col-6 col-md-6 col-lg-3">
+                  <div className="col-6 col-md-6 col-lg-3 hover-lift-lira">
                     <Link to="/categorias/pinturasid" className="text-decoration-none">
                       <div className="border-0 shadow-sm p-0">
                         <img
@@ -390,7 +413,7 @@ const Home = () => {
                     </Link>
                   </div>
 
-                  <div className="col-6 col-md-6 col-lg-3">
+                  <div className="col-6 col-md-6 col-lg-3 hover-lift-lira">
                     <Link to="/categorias/plomeríayaguaid" className="text-decoration-none">
                       <div className="border-0 shadow-sm p-0">
                         <img
@@ -402,7 +425,7 @@ const Home = () => {
                     </Link>
                   </div>
 
-                  <div className="col-6 col-md-6 col-lg-3">
+                  <div className="col-6 col-md-6 col-lg-3 hover-lift-lira">
                     <Link to="/categorias/electricidadid" className="text-decoration-none">
                       <div className=" border-0 shadow-sm p-0">
                         <img
@@ -414,7 +437,7 @@ const Home = () => {
                     </Link>
                   </div>
 
-                  <div className="col-6 col-md-6 col-lg-3">
+                  <div className="col-6 col-md-6 col-lg-3 hover-lift-lira">
                     <Link to="/categorias/pisosyrevestimientosid" className="text-decoration-none">
                       <div className=" border-0 shadow-sm p-0">
                         <img
@@ -433,7 +456,7 @@ const Home = () => {
             </section>
 
             {/* 🎯 Botón de acción */}
-            <div className="mt-4 mb-3">
+            <div className="mt-4 mb-3 hover-lift-lira">
               <Link
                 to="/categorias/aberturasid"
                 className="btn btn-warning px-4 py-2 fw-bold shadow-sm"
@@ -444,14 +467,47 @@ const Home = () => {
                   fontSize: "1.1rem",
                   transition: "all 0.3s ease-in-out",
                 }}
-                onMouseEnter={(e) => (e.target.style.backgroundColor = "#ffc107")}
-                onMouseLeave={(e) => (e.target.style.backgroundColor = "#FFD700")}
+
               >
                 Ver catálogo
               </Link>
             </div>
           </div>
         </div>
+
+
+
+        {/* 🎁 SECCIÓN DE CANJE DE PUNTOS */}
+<section className="puntos-banner-section my-5 hover-lift-lira">
+  <Link to="/perfil" style={{ textDecoration: "none" }}>
+    <div
+      className="justify-content-center p-0 mb-5 mt-5 slide-up"
+      style={{ cursor: "pointer" }}
+    >
+      <div className="col-12 container">
+        <div className="info-card text-white bg-primary p-4 rounded-4 shadow-sm text-center">
+          <i
+            className="bi bi-gift"
+            style={{ fontSize: "3rem", color: "lightgreen" }}
+          ></i>
+          <h4 className="text-center mt-2">
+            ¡Canjea tus puntos por increíbles regalos y descuentos!
+          </h4>
+          <p className="fs-6 text-center">
+  Por cada <strong>$10.000</strong> en compras, sumás <strong>1 punto</strong> en la mayoría de nuestras categorías, como <b>Materiales de Construcción, Aberturas, Herramientas y más.</b><br />
+  En cambio, si comprás en nuestras categorías especiales <strong>La Guarda</strong> y <strong>Chaperío</strong>, obtenés el doble: <strong>2 puntos por cada $10.000</strong> en compras.<br />
+  Acumulá tus puntos y canjealos por <span style={{ color: 'yellow' }}>descuentos exclusivos</span> para agremiados.
+</p>
+
+        </div>
+      </div>
+    </div>
+  </Link>
+</section>
+
+
+
+        
 
 
 
@@ -515,25 +571,26 @@ const Home = () => {
           <div className="row g-4 justify-content-center">
             {/* Banner 1 */}
             <div className="col-12 col-sm-6 col-md-4 slide-up">
-              <Link
-                to="/categorias/aberturasid"
-                className="d-block shadow-sm rounded overflow-hidden"
-                title="Ir a Aberturas"
-                aria-label="Ir a Aberturas"
-              >
-                <img
-                  src="https://res.cloudinary.com/dqesszxgv/image/upload/v1757116396/aberturas_anq9y6.webp"
-                  alt="Locus Aberturas"
-                  className="img-fluid w-100"
-                />
-              </Link>
-            </div>
+  <Link
+    to="/categorias/aberturasid"
+    className="d-block rounded overflow-hidden hover-sombra-lira"
+    title="Ir a Aberturas"
+    aria-label="Ir a Aberturas"
+  >
+    <img
+      src="https://res.cloudinary.com/dqesszxgv/image/upload/v1757116396/aberturas_anq9y6.webp"
+      alt="Locus Aberturas"
+      className="img-fluid w-100"
+    />
+  </Link>
+</div>
+
 
             {/* Banner 2 */}
             <div className="col-12 col-sm-6 col-md-4 slide-up">
               <Link
                 to="/categorias/herramientaseléctricasid"
-                className="d-block shadow-sm rounded overflow-hidden"
+                className="d-block rounded overflow-hidden hover-sombra-lira"
                 title="Ir a Herramientas"
                 aria-label="Ir a Herramientas"
               >
@@ -549,7 +606,7 @@ const Home = () => {
             <div className="col-12 col-sm-6 col-md-4 slide-up">
               <Link
                 to="/categorias/bachasid"
-                className="d-block shadow-sm rounded overflow-hidden"
+                className="d-block rounded overflow-hidden hover-sombra-lira"
                 title="Ir a Bachas"
                 aria-label="Ir a Bachas"
               >
@@ -1118,6 +1175,85 @@ const Home = () => {
                 position: "relative",
               }}
             >
+              Aberturas
+              {/* Línea decorativa */}
+              <span className="mb-2"
+                style={{
+                  display: "block",
+                  height: "3px",
+                  width: "120px",
+                  backgroundColor: "#FFD700",
+                  margin: "8px auto 0",
+                  borderRadius: "2px",
+                }}
+              ></span>
+            </h2>
+
+          </div>
+
+
+
+
+
+
+
+          <div className="container px-0 bg-white shadow-sm px-2 rounded-3 p-2">
+
+
+
+
+
+
+
+            <HorizontalAberturas />
+
+            {/* Botón Ver más */}
+            <div className="d-flex justify-content-end px-2 mt-0 bg-white py-2 border-top">
+              <Link
+                className="ui-recommendations-footer__link d-flex align-items-center text-decoration-none mt-1"
+                to="/categorias/aberturasid"
+                style={{ color: "#3483fa" }}
+              >
+                <div className="ui-recommendations-footer__wrapper d-flex align-items-center gap-2">
+                  <div className="ui-recommendations-footer__text" style={{ fontWeight: 600 }}>
+                    Ver más
+                  </div>
+                  <div className="ui-recommendations-footer__chevron d-flex align-items-center">
+                    <svg
+                      className="ui-homes-icon ui-homes-icon--chevron"
+                      width="9"
+                      height="14"
+                      viewBox="0 0 9 14"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path d="M1 1l6 6-6 6" stroke="#3483fa" strokeWidth="2" fill="none" fillRule="evenodd" />
+                    </svg>
+                  </div>
+                </div>
+              </Link>
+            </div>
+
+          </div>
+        </div>
+
+
+
+
+      </section>
+
+      <section className="mx-lg-5 mb-5 slide-up mt-5">
+        <div className="container-fluid w-100 mt-3">
+
+          <div style={{ textAlign: "center" }}>
+            <h2
+              className="fw-bold mb-3 mt-lg-4"
+              style={{
+                color: "#054a49",
+                fontSize: "clamp(1.9rem, 3vw, 2.2rem)",
+                display: "inline-block",
+                position: "relative",
+              }}
+            >
               Accesorios y Seguridad
               {/* Línea decorativa */}
               <span className="mb-2"
@@ -1155,6 +1291,87 @@ const Home = () => {
               <Link
                 className="ui-recommendations-footer__link d-flex align-items-center text-decoration-none mt-1"
                 to="/categorias/herramientasid"
+                style={{ color: "#3483fa" }}
+              >
+                <div className="ui-recommendations-footer__wrapper d-flex align-items-center gap-2">
+                  <div className="ui-recommendations-footer__text" style={{ fontWeight: 600 }}>
+                    Ver más
+                  </div>
+                  <div className="ui-recommendations-footer__chevron d-flex align-items-center">
+                    <svg
+                      className="ui-homes-icon ui-homes-icon--chevron"
+                      width="9"
+                      height="14"
+                      viewBox="0 0 9 14"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path d="M1 1l6 6-6 6" stroke="#3483fa" strokeWidth="2" fill="none" fillRule="evenodd" />
+                    </svg>
+                  </div>
+                </div>
+              </Link>
+            </div>
+
+          </div>
+        </div>
+
+
+
+
+      </section>
+
+
+
+      <section className="mx-lg-5 mb-5 slide-up mt-5">
+        <div className="container-fluid w-100 mt-3">
+
+          <div style={{ textAlign: "center" }}>
+            <h2
+              className="fw-bold mb-3 mt-lg-4"
+              style={{
+                color: "#054a49",
+                fontSize: "clamp(1.9rem, 3vw, 2.2rem)",
+                display: "inline-block",
+                position: "relative",
+              }}
+            >
+              Pisos y Revestimientos
+              {/* Línea decorativa */}
+              <span className="mb-2"
+                style={{
+                  display: "block",
+                  height: "3px",
+                  width: "120px",
+                  backgroundColor: "#FFD700",
+                  margin: "8px auto 0",
+                  borderRadius: "2px",
+                }}
+              ></span>
+            </h2>
+
+          </div>
+
+
+
+
+
+
+
+          <div className="container px-0 bg-white shadow-sm px-2 rounded-3 p-2">
+
+
+
+
+
+
+
+            <HorizontalPisosYRevestimientos />
+
+            {/* Botón Ver más */}
+            <div className="d-flex justify-content-end px-2 mt-0 bg-white py-2 border-top">
+              <Link
+                className="ui-recommendations-footer__link d-flex align-items-center text-decoration-none mt-1"
+                to="/categorias/pisosyrevestimientosid"
                 style={{ color: "#3483fa" }}
               >
                 <div className="ui-recommendations-footer__wrapper d-flex align-items-center gap-2">

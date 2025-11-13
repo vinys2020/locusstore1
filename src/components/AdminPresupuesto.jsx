@@ -328,27 +328,22 @@ const AdminPresupuesto = () => {
 
         const clausulasTexto = [
             { texto: "IMPORTANTE: INFORMACIÓN PARA CLIENTES DE LOCUS STORE", negrita: true },
+            
             { texto: "", negrita: false },
-            { texto: "1. Confirmación de pedido:", negrita: true },
-            { texto: "• Todos los pedidos deben ser confirmados en un máximo de 72 hs hábiles desde la cotización.", sangria: 5 },
-            { texto: "• Pasado este plazo, los precios y disponibilidad de stock pueden estar sujetos a cambios.", sangria: 5 },
-            { texto: "2. Precios y presupuesto:", negrita: true },
-            { texto: "• El precio del presupuesto puede variar debido a la situación económica actual, tipo de cambio o factores externos que escapan a nuestro control.", sangria: 5 },
-            { texto: "• Los pagos y ajustes se realizarán según lo acordado al momento de la confirmación del pedido.", sangria: 5 },
-            { texto: "3. Productos e imágenes:", negrita: true },
-            { texto: "• Las imágenes presentadas en la web o en el presupuesto son ilustrativas y pueden no coincidir exactamente con el producto final.", sangria: 5 },
-            { texto: "• Las características principales, medidas y materiales estarán detalladas en la cotización final y deben ser revisadas antes de la confirmación.", sangria: 5 },
-            { texto: "4. Condiciones de entrega y logística:", negrita: true },
-            { texto: "• Los plazos de entrega estimados dependen del tipo de producto y la disponibilidad de stock.", sangria: 5 },
-            { texto: "• Cualquier retraso por factores externos será comunicado oportunamente.", sangria: 5 },
+            { texto: "1. Precios sujetos a cambios:", negrita: true },
+            { texto: "• Los precios pueden variar sin previo aviso.", sangria: 5 },
+            { texto: "2. Plazo de entrega:", negrita: true },
+            { texto: "• La entrega se realizará dentro de las 72 hs después de efectuada la compra.", sangria: 5 },
+            { texto: "3. Responsabilidad del envío:", negrita: true },
+            { texto: "• La mercadería viaja por cuenta y riesgo del cliente.", sangria: 5 },
             { texto: "", negrita: false },
             { texto: "Gracias por confiar en Locus Store. Estamos a tu disposición para cualquier consulta o aclaración.", negrita: true },
             { texto: "", negrita: false },
             { texto: "", negrita: false },
             { texto: "", negrita: false },
             { texto: "", negrita: false },
-
         ];
+        
 
         // Dibujar todas las líneas
         clausulasTexto.forEach((linea) => {

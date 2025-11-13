@@ -178,183 +178,175 @@ const FloatingCart = () => {
 
   const handleMetodoPagoChange = (e) => setMetodoPago(e.target.value);
 
-  const registrarPedido = async () => {
-    if (totalPrecio <= 0) {
-      alert("Paso 0: Total del pedido <= 0");
-      return;
-    }
-    if (!usuario) {
-      toast.info("Por favor, inicia sesión para realizar un pedido.", {
-        onClose: () => (window.location.href = "/login"),
-      });
-      return;
-    }
+const registrarPedido = async () => {
+  if (totalPrecio <= 0) {
+    alert("Paso 0: Total del pedido <= 0");
+    return;
+  }
 
-    try {
-      setIsLoading(true);
+  const uid = auth.currentUser.uid;
 
-      const productosAFinalizar = [];
 
-      for (const producto of cart) {
-        const { id: productoId, categoriaId, cantidad, nombre } = producto;
+  // ✅ Validamos que el usuario esté logueado y tenga UID
+  if (!usuario || !usuario.uid) {
+    toast.info("Por favor, inicia sesión para realizar un pedido.", {
+      onClose: () => (window.location.href = "/login"),
+    });
+    return;
+  }
 
-        if (!categoriaId) {
-          setIsLoading(false);
-          return;
-        }
+  try {
+    setIsLoading(true);
 
-        const docRef = doc(db, `categorias/${categoriaId}/Productosid/${productoId}`);
+    const productosAFinalizar = [];
 
-        const docSnap = await getDoc(docRef);
+    for (const producto of cart) {
+      const { id: productoId, categoriaId, cantidad, nombre } = producto;
 
-        if (!docSnap.exists()) {
-          setIsLoading(false);
-          return;
-        }
-
-        const stockActual = docSnap.data().stock ?? 0;
-        if (stockActual < cantidad) {
-          alert(`Paso 6: No hay suficiente stock para: ${nombre}`);
-          setIsLoading(false);
-          return;
-        }
-
-        productosAFinalizar.push({ ref: docRef, stockActual, cantidad });
+      if (!categoriaId) {
+        setIsLoading(false);
+        return;
       }
 
-      // Calculamos el total incluyendo cuotas
-      let totalConInteres = cart.reduce((acc, p) => {
-        const cantidad = p.cantidad || 1;
-        let total = p.precio * cantidad;
-        if (p.metodo === "3cuotas") total *= 1.15;
-        if (p.metodo === "6cuotas") total *= 1.30;
-        return acc + total;
-      }, 0);
+      const docRef = doc(db, `categorias/${categoriaId}/Productosid/${productoId}`);
+      const docSnap = await getDoc(docRef);
 
-      // Aplicamos descuento si hay cupón
-      const totalFinalConDescuento = discount > 0 ? +(totalConInteres * (1 - discount / 100)).toFixed(2) : +totalConInteres.toFixed(2);
+      if (!docSnap.exists()) {
+        setIsLoading(false);
+        return;
+      }
 
+      const stockActual = docSnap.data().stock ?? 0;
+      if (stockActual < cantidad) {
+        alert(`Paso 6: No hay suficiente stock para: ${nombre}`);
+        setIsLoading(false);
+        return;
+      }
 
+      productosAFinalizar.push({ ref: docRef, stockActual, cantidad });
+    }
 
-      const pedidoData = {
-        userId: usuario.uid,
-        Cliente: {
-          nombre: usuario.nombre,
-          email: usuario.email,
-          telefono: usuario.telefono,
-          dni: usuario.dni,
-          gremio: usuario.gremio,
-          organismo: usuario.organismo,
-          direccion: "Calle Ficticia 123",
-          cupon: cuponSeleccionado ? cuponSeleccionado.nombre : null,
-          descuento: discount,
-        },
-        estado: "pendiente",
-        fecha: Timestamp.now(),
-        metodopago: metodoPago,
+    // Calculamos el total incluyendo cuotas
+    let totalConInteres = cart.reduce((acc, p) => {
+      const cantidad = p.cantidad || 1;
+      let total = p.precio * cantidad;
+      if (p.metodo === "3cuotas") total *= 1.15;
+      if (p.metodo === "6cuotas") total *= 1.30;
+      return acc + total;
+    }, 0);
 
-        estadoPago: "pendiente",
-        cuotasTotales: (() => {
-          if (cart.some(p => p.metodo === "6cuotas")) return 6;
-          if (cart.some(p => p.metodo === "3cuotas")) return 3;
-          return 1;
-        })(),
-        cuotasPagadas: [], // <-- cambiamos de 0 a array vacío
-        montoTotal: totalFinalConDescuento,
-        montoRestante: cart
+    // Aplicamos descuento si hay cupón
+    const totalFinalConDescuento =
+      discount > 0
+        ? +(totalConInteres * (1 - discount / 100)).toFixed(2)
+        : +totalConInteres.toFixed(2);
+
+    const pedidoData = {
+      userId: auth.currentUser.uid, // ✅ importante: debe coincidir con el UID autenticado
+      Cliente: {  
+        nombre: usuario.nombre,
+        email: usuario.email,
+        telefono: usuario.telefono,
+        dni: usuario.dni,
+        gremio: usuario.gremio,
+        organismo: usuario.organismo,
+        direccion: "Calle Ficticia 123",
+        cupon: cuponSeleccionado ? cuponSeleccionado.nombre : null,
+        descuento: discount,
+      },
+      estado: "pendiente",
+      fecha: Timestamp.now(),
+      metodopago: metodoPago,
+      estadoPago: "pendiente",
+      cuotasTotales: (() => {
+        if (cart.some(p => p.metodo === "6cuotas")) return 6;
+        if (cart.some(p => p.metodo === "3cuotas")) return 3;
+        return 1;
+      })(),
+      cuotasPagadas: [],
+      montoTotal: totalFinalConDescuento,
+      montoRestante: cart
         .filter(p => p.metodo && p.metodo !== "contado")
         .reduce((acc, p) => {
           const cantidad = p.cantidad || 1;
           let totalProducto = p.precio * cantidad;
-      
+
           if (p.metodo === "3cuotas") totalProducto *= 1.15;
           if (p.metodo === "6cuotas") totalProducto *= 1.30;
-      
+
           return acc + totalProducto;
-        }, 0),        
-        productos: cart.map(p => {
-          const cantidad = p.cantidad || 1;
-          const precioBase = p.precio * cantidad;
-          let totalConInteres = precioBase;
-          let descripcionPago = "contado";
+        }, 0),
+      productos: cart.map(p => {
+        const cantidad = p.cantidad || 1;
+        const precioBase = p.precio * cantidad;
+        let totalConInteres = precioBase;
+        let descripcionPago = "contado";
 
-          if (p.metodo === "3cuotas") {
-            totalConInteres = +(precioBase * 1.15).toFixed(2); // redondeo a 2 decimales
-            const cuota = +(totalConInteres / 3).toFixed(2);
-            descripcionPago = `3 cuotas de $${cuota.toLocaleString("es-AR", { minimumFractionDigits: 2 })}`;
-          } else if (p.metodo === "6cuotas") {
-            totalConInteres = +(precioBase * 1.30).toFixed(2); // redondeo a 2 decimales
-            const cuota = +(totalConInteres / 6).toFixed(2);
-            descripcionPago = `6 cuotas de $${cuota.toLocaleString("es-AR", { minimumFractionDigits: 2 })}`;
-          }
+        if (p.metodo === "3cuotas") {
+          totalConInteres = +(precioBase * 1.15).toFixed(2);
+          const cuota = +(totalConInteres / 3).toFixed(2);
+          descripcionPago = `3 cuotas de $${cuota.toLocaleString("es-AR", {
+            minimumFractionDigits: 2,
+          })}`;
+        } else if (p.metodo === "6cuotas") {
+          totalConInteres = +(precioBase * 1.30).toFixed(2);
+          const cuota = +(totalConInteres / 6).toFixed(2);
+          descripcionPago = `6 cuotas de $${cuota.toLocaleString("es-AR", {
+            minimumFractionDigits: 2,
+          })}`;
+        }
 
-          return {
-            nombre: p.nombre,
-            cantidad,
-            preciounitario: +p.precio.toFixed(2),
-            total: totalConInteres,
-            metodo: p.metodo || "contado",
-            descripcionPago,
-            imagenUrl: p.imagenes?.[0] || p.imagen,
-          };
-        }),
-        totalpedido: totalFinalConDescuento,
+        return {
+          nombre: p.nombre,
+          cantidad,
+          preciounitario: +p.precio.toFixed(2),
+          total: totalConInteres,
+          metodo: p.metodo || "contado",
+          descripcionPago,
+          imagenUrl: p.imagenes?.[0] || p.imagen,
+        };
+      }),
+      totalpedido: totalFinalConDescuento,
+    };
 
-      };
+    // ✅ Crear el pedido con el UID correcto
+    const docRef = await addDoc(collection(db, "pedidos"), pedidoData);
+    pedidoData.id = docRef.id;
 
+    const batch = writeBatch(db);
+    productosAFinalizar.forEach(({ ref, stockActual, cantidad }) => {
+      batch.update(ref, { stock: Math.max(0, stockActual - cantidad) });
+    });
+    await batch.commit();
 
-
-
-      // Crear el pedido y guardar la referencia
-      const docRef = await addDoc(collection(db, "pedidos"), {
-        ...pedidoData,
-        userId: auth.currentUser.uid
-      });
-
-      // Ahora sí podemos asignar el id
-      pedidoData.id = docRef.id;
-
-      const batch = writeBatch(db);
-      productosAFinalizar.forEach(({ ref, stockActual, cantidad }) => {
-        batch.update(ref, { stock: Math.max(0, stockActual - cantidad) });
-      });
-      await batch.commit();
-
-      if (cuponSeleccionado && !cuponSeleccionado.usado) {
-        await marcarCuponComoUsado(cuponSeleccionado.id);
-      }
-
-
-
-
-      vaciarCarrito();
-      setIsOpen(false);
-      setStep(1);
-      setMetodoPago("");
-      setCuponSeleccionado(null);
-      aplicarCupon(null);
-      setIsLoading(false);
-
-
-
-      // ✅ Aquí enviamos el correo con EmailJS
-      try {
-        await enviarMailPedido(pedidoData); // <-- Llamada a tu módulo EmailJS
-        console.log("Correo enviado al administrador correctamente.");
-      } catch (err) {
-        console.error("Error al enviar el correo:", err);
-      }
-
-
-      toast.success("✅ ¡Pedido confirmado con éxito! Gracias por tu compra.");
-
-    } catch (err) {
-      console.error(err);
-      toast.error("Hubo un error al procesar el pedido.");
-      setIsLoading(false);
-      alert(`Error detectado: ${err.message}`);
+    if (cuponSeleccionado && !cuponSeleccionado.usado) {
+      await marcarCuponComoUsado(cuponSeleccionado.id);
     }
-  };
+
+    vaciarCarrito();
+    setIsOpen(false);
+    setStep(1);
+    setMetodoPago("");
+    setCuponSeleccionado(null);
+    aplicarCupon(null);
+    setIsLoading(false);
+
+    try {
+      await enviarMailPedido(pedidoData);
+      console.log("Correo enviado al administrador correctamente.");
+    } catch (err) {
+      console.error("Error al enviar el correo:", err);
+    }
+
+    toast.success("✅ ¡Pedido confirmado con éxito! Gracias por tu compra.");
+  } catch (err) {
+    console.error(err);
+    toast.error("Hubo un error al procesar el pedido.");
+    setIsLoading(false);
+    alert(`Error detectado: ${err.message}`);
+  }
+};
+
 
 
   return (

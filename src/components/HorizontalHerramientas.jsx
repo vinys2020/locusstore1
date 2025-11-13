@@ -101,7 +101,7 @@ const HorizontalHerramientas = () => {
                 alt={producto.nombre}
                 className="scroll-producto-img"
               />
-              <div className="scroll-producto-body">
+              <div className="scroll-producto-body mt-3 mt-lg-0">
                 <div className="scroll-producto-precio-wrapper d-flex flex-column align-items-start">
                   <span
                     style={{
@@ -148,7 +148,7 @@ const HorizontalHerramientas = () => {
                   )}
                 </div>
 
-                <h6 className="scroll-producto-titulo text-start fs-6">
+                <h6 className="scroll-producto-titulo text-start">
                   <b>{producto.nombre}</b>
                 </h6>
               </div>
@@ -173,7 +173,7 @@ const HorizontalHerramientas = () => {
 
       {isHovered && (
         <button
-          className="andes-carousel-snapped__control andes-carousel-snapped__control--size-large position-absolute end-0 top-50 translate-middle-y z-3 next-button"
+          className="andes-carousel-snapped__control andes-carousel-snapped__control--size-large position-absolute end-0 top-50 translate-middle-y z-3 next-button "
           onClick={() => scroll("next")}
           style={{ background: "transparent", border: "none" }}
           aria-label="Siguiente"

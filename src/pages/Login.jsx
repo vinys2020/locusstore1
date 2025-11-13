@@ -61,7 +61,7 @@ const Login = () => {
                 fechaNacimiento: data.fechaNacimiento || "",
                 organismo: data.organismo || "",
                 gremio: data.gremio || "",
-                puntos: data.puntos || 0,
+                puntos: data.puntos || 10,
                 rol: data.rol || "usuario",
             });
 
@@ -152,14 +152,14 @@ const Login = () => {
                 gremio: userData.gremio || "",
                 aprobado: false, // 🔴 siempre arranca en false
                 fechaAfiliacion: new Date(),
-                puntos: userData.puntos || 0,
+                puntos: userData.puntos || 10,
                 rol: userData.rol || "usuario",
             });
 
             const cuponesRef = collection(db, "usuarios", user.uid, "cuponesid");
 
             // Creamos un documento vacío solo para inicializar la subcolección
-            await setDoc(doc(cuponesRef, "init"), { createdAt: new Date() });
+            await setDoc(doc(cuponesRef, "init"), {});
 
             setShowForm(false);
 

@@ -1,15 +1,15 @@
 import React, { useState, useRef, useContext } from "react";
-import useProductosMaterialesConstruccion from "../hooks/useProductosMaterialesConstruccion"; // 👈 NUEVO HOOK
+import useAberturas from "../hooks/useAberturas"; // 👈 NUEVO HOOK
 import { useNavigate } from "react-router-dom";
 import { CartContext } from "../context/CartContext";
 import "./HorizontalCarousel.css";
 
-const HorizontalCarousel = () => {
+const HorizontalAberturas = () => {
   const [isHovered, setIsHovered] = useState(false);
   const scrollRef = useRef(null);
   const navigate = useNavigate();
 
-  const { productos, loading } = useProductosMaterialesConstruccion();
+  const { productos, loading } = useAberturas(); // 👈 USO DEL HOOK
   const { agregarAlCarrito } = useContext(CartContext);
 
   const scroll = (direction) => {
@@ -28,7 +28,6 @@ const HorizontalCarousel = () => {
   };
 
   const handleProductoClick = (producto) => {
-    // Usamos la categoría dinámica para la ruta
     navigate(`/categorias/${producto.categoria}/producto/${producto.id}`, {
       state: { producto },
     });
@@ -51,8 +50,6 @@ const HorizontalCarousel = () => {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-
-
       {isHovered && (
         <button
           className="andes-carousel-snapped__control andes-carousel-snapped__control--size-large position-absolute start-0 top-50 translate-middle-y z-3 prev-button"
@@ -102,9 +99,9 @@ const HorizontalCarousel = () => {
               <img
                 src={producto.imagenes?.[0] || ""}
                 alt={producto.nombre}
-                className="scroll-producto-img "
+                className="scroll-producto-img"
               />
-              <div className="scroll-producto-body mt-4 mt-lg-0">
+              <div className="scroll-producto-body mt-3 mt-lg-0">
                 <div className="scroll-producto-precio-wrapper d-flex flex-column align-items-start">
                   <span
                     style={{
@@ -116,18 +113,18 @@ const HorizontalCarousel = () => {
                   >
                     {producto.precio
                       ? `$${Math.round(producto.precio * 1.2).toLocaleString("es-AR", {
-                        minimumFractionDigits: 2,
-                        maximumFractionDigits: 2,
-                      })}`
+                          minimumFractionDigits: 2,
+                          maximumFractionDigits: 2,
+                        })}`
                       : "-"}
                   </span>
 
-                  <p className="scroll-producto-precio mb-0">
+                  <p className="scroll-producto-precio mb-1">
                     ${producto.precio
                       ? producto.precio.toLocaleString("es-AR", {
-                        minimumFractionDigits: 2,
-                        maximumFractionDigits: 2,
-                      })
+                          minimumFractionDigits: 2,
+                          maximumFractionDigits: 2,
+                        })
                       : "N/A"}
                   </p>
 
@@ -171,7 +168,6 @@ const HorizontalCarousel = () => {
             </button>
           </div>
         ))}
-
       </div>
 
       {isHovered && (
@@ -196,4 +192,4 @@ const HorizontalCarousel = () => {
   );
 };
 
-export default HorizontalCarousel;
+export default HorizontalAberturas;

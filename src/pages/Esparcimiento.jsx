@@ -99,7 +99,7 @@ const Esparcimiento = () => {
         <div className="container py-5">
           <header className="text-center mb-5">
             <h2 className="text-muted lead">
-              Viví una experiencia privada de sabor y relax, Pensada para grupos de entre{" "}
+            Viví una experiencia privada de sabor y relax, pensada y armada para un grupo selecto de{" "}
               <strong>4 y 12 personas</strong>.
             </h2>
           </header>
@@ -112,7 +112,7 @@ const Esparcimiento = () => {
                 </h2>
 
                 <p className="text-muted fs-5 ">
-                  De lunes a viernes, un solo evento por día. Reservá tu lugar y viví una propuesta
+                  De lunes a jueves, un solo evento por día. Reservá tu lugar y viví una propuesta
                   gourmet única en <b>El Chaperio de Mamerto</b>, donde la excelencia y el sabor
                   se encuentran en un entorno íntimo y relajado.
                 </p>
@@ -144,8 +144,8 @@ const Esparcimiento = () => {
 
                     </li>
                     <li className=" text-dark py-4 border-bottom-rounded ">
-                      <div><b>Agua</b></div>
-                      <div>• En jarra libre durante toda la cena</div>
+                      <div><b>Agua Saborizada</b></div>
+                      <div>• En jarra libre durante todo el evento </div>
                     </li>
                   </ul>
                 </div>
@@ -159,7 +159,7 @@ const Esparcimiento = () => {
                       navigate("/categorias/serviciosid/producto/PX7tNOzWacOQkRWWhXju")
                     }
                   >
-                    $34.500 por persona
+                    $36.000 por persona
                   </div>
 
                   {/* Botón Comprar */}
@@ -239,13 +239,12 @@ const Esparcimiento = () => {
       <main id="vinos-section" className="esp-main bg-light py-0" style={{ marginTop: "0px" }}>
         {/* Hero Section */}
         <section
-          className="hero-section  mt-0"
+          className="hero-section hero-responsive mt-0"
           style={{
             backgroundImage:
               "url(https://res.cloudinary.com/dqesszxgv/image/upload/v1762457801/laguarda2_mhcb3o.jpg)",
             backgroundSize: "cover",
             backgroundPosition: "center",
-            height: "680px",
           }}
         >
 
@@ -256,7 +255,7 @@ const Esparcimiento = () => {
           <header className="text-center mb-5">
             <h2 className="text-muted lead">
               Una experiencia de cata privada en <strong>La Guarda</strong>, ideal para grupos de
-              <strong> 4 a 12 personas</strong>.
+              <strong> 4 a 20 personas</strong>.
             </h2>
           </header>
 
@@ -320,7 +319,7 @@ const Esparcimiento = () => {
                     amigos, celebrar una ocasión especial o simplemente dejarte llevar por el placer
                     del buen vino.
                     <br /><br />
-                    Cupos limitados para grupos de entre <strong>4 y 12 personas</strong>.
+                    Cupos limitados para grupos de entre <strong>4 y 20 personas</strong>.
                     Descubrí el arte de degustar, sentir y compartir el vino como nunca antes.
                   </p>
                 </div>
@@ -388,7 +387,7 @@ const Esparcimiento = () => {
                       position: "relative",
                     }}
                   >
-                    Compra tus Vinos La Guarda aquí
+                    Compra tus Vinos La Guarda
                     {/* Línea decorativa */}
                     <span className="mb-2"
                       style={{
@@ -520,12 +519,12 @@ const Esparcimiento = () => {
                     className="fw-bold mb-3 mt-lg-4"
                     style={{
                       color: "#054a49",
-                      fontSize: "clamp(1.9rem, 3vw, 2.2rem)",
+                      fontSize: "clamp(1.8rem, 3vw, 2.2rem)",
                       display: "inline-block",
                       position: "relative",
                     }}
                   >
-                    Compra tu Caja de Vinos La Guarda aquí
+                    Compra tu Caja de Vinos aquí
                     {/* Línea decorativa */}
                     <span className="mb-2"
                       style={{

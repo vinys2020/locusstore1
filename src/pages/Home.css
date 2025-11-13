@@ -16,6 +16,35 @@
   transform: translateY(0);
 }
 
+.hover-sombra-lira {
+  display: block;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 0.75rem;
+}
+
+.hover-sombra-lira:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 25px rgba(148, 148, 145, 0.541); /* sombra amarilla suave */
+}
+
+.hover-sombra-lira img {
+  transition: transform 0.4s ease;
+}
+
+.hover-sombra-lira:hover img {
+  transform: scale(1.03);
+}
+
+.hover-lift-lira {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-lift-lira:hover {
+  transform: translateY(-6px);
+}
+
+
+
 
 /* Presentación Oficial Home */
 .pf-home-presentation {

@@ -335,27 +335,32 @@ const Perfil = () => {
           </section>
 
           <section className="puntos-beneficios border-top pt-4 mt-5">
-            <h4 className="mb-3">Canjea tus puntos</h4>
-            <p className="text-muted">
-              Acumulá puntos cada vez que realices una compra en nuestra tienda.
+          <h4 className="mb-3">¡Canjeá tus puntos por recompensas!</h4>
+            <p className="fs-6 ">
+              Acumulá puntos cada vez que <strong>realices una compra</strong> en nuestra tienda.
               ¡Entre más compres, más beneficios obtenés! Canjeá tus puntos fácilmente desde esta sección,
               elegí el cupón que más te convenga y disfrutá de tus recompensas al instante.
               Luego, podrás utilizar el cupón al momento de realizar tu próxima compra.
             </p>
+            <p className="fs-6">
+  Por cada <strong>$10.000</strong> en compras, sumás <strong>1 punto</strong> en la mayoría de nuestras categorías, como <b>Materiales de Construcción, Aberturas, Herramientas y más.</b> <br />
+  En cambio, si comprás en nuestras categorías especiales <strong>La Guarda</strong> y <strong>Chaperío</strong>, obtenés el doble: <strong>2 puntos por cada $10.000</strong> en compras.
+  Acumulá tus puntos y canjealos por <b><span style={{ color: 'green' }}>descuentos exclusivos</span> para agremiados.</b> 
+</p>
 
             <article className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
               <div className="col">
                 <div className="card h-100 shadow-sm">
                   <div className="card-body">
-                    <h5 className="card-title text-black"><i className="bi bi-tag me-1"></i>10% de descuento</h5>
+                    <h5 className="card-title text-black fs-6"><i className="bi bi-star-fill me-1"></i>10% de descuento</h5>
                     <hr className="bg-dark" />
-                    <p className="card-text text-center">Canjea 150 puntos para obtener un 10% de descuento en tu próxima compra.</p>
+                    <p className="card-text text-center">Canjea <strong>750 puntos</strong> para obtener un 10% de descuento en tu próxima compra.</p>
                   </div>
                   <div className="card-footer d-flex justify-content-center border-0 bg-white">
                     <button
                       className="btn btn-success btn-sm"
-                      onClick={() => comprarCupon("10% de Descuento", 10, 150)}
-                      disabled={user.puntos < 150}
+                      onClick={() => comprarCupon("10% de Descuento", 10, 750)}
+                      disabled={user.puntos < 750}
                     >
                       Canjear
                     </button>
@@ -366,11 +371,19 @@ const Perfil = () => {
               <div className="col">
                 <div className="card h-100 shadow-sm">
                   <div className="card-body">
-                    <h5 className="card-title text-black"><i className="bi bi-star-fill me-1"></i>20% de descuento</h5>
+                    <h5 className="card-title text-black fs-6"><i className="bi bi-patch-check-fill me-1"></i>Experiencia Gastronomica para 2 personas</h5>
                     <hr className="bg-dark" />
-                    <p className="card-text text-center">Canjea 250 puntos para obtener un 20% de descuento en tu próxima compra.</p>
+                    <p className="card-text text-center">Canjeá <strong>550 puntos</strong> y disfrutá una <strong>experiencia gourmet única</strong> en <strong>El Chaperío de Mamerto</strong>
+</p>
                   </div>
                   <div className="card-footer d-flex justify-content-center border-0 bg-white">
+                  <button
+                      className="btn btn-success btn-sm"
+                      onClick={() => comprarCupon("Chaperio Mamerto 2p", 0, 550)}
+                      disabled={user.puntos < 550}
+                    >
+                      Canjear
+                    </button>
 
                   </div>
                 </div>
@@ -379,11 +392,19 @@ const Perfil = () => {
               <div className="col">
                 <div className="card h-100 shadow-sm">
                   <div className="card-body">
-                    <h5 className="card-title text-black"><i className="bi bi-gift me-1"></i>30% de descuento</h5>
+                    <h5 className="card-title text-black fs-6"><i className="bi bi-gift me-1"></i>Botella de Vino La Guarda</h5>
                     <hr className="bg-dark" />
-                    <p className="card-text text-center">Canjea 350 puntos para obtener un 30% de descuento en tu próxima compra.</p>
-                  </div>
+                    <p className="card-text text-center">
+  Canjeá <strong>250 puntos</strong> y disfrutá una <strong>botella de vino La Guarda</strong> como recompensa por tu fidelidad
+</p>                  </div>
                   <div className="card-footer d-flex justify-content-center border-0 bg-white">
+                  <button
+                      className="btn btn-success btn-sm"
+                      onClick={() => comprarCupon("Vino La Guarda", 0, 250)}
+                      disabled={user.puntos < 250}
+                    >
+                      Canjear
+                    </button>
 
                   </div>
                 </div>

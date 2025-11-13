@@ -19,9 +19,14 @@ export const obtenerCuponesUsuario = async (uid) => {
 
     const cuponesDisponibles = cupones.filter(
       (c) =>
+        // 🔹 Ignora solo el documento con id "init"
+        c.id !== "init" &&
+        // 🔹 Muestra los cupones válidos
         (c.usado === false || c.usado === undefined) &&
         (c.activo === true || c.activo === undefined)
     );
+    
+    
 
     return cuponesDisponibles;
   } catch (error) {

@@ -129,7 +129,7 @@ const ProductosRelacionados = ({ categoriaId, productoActualId }) => {
                 alt={producto.nombre}
                 className="scroll-producto-img"
               />
-              <div className="scroll-producto-body">
+              <div className="scroll-producto-body mt-3 mt-lg-0">
                 <div className="scroll-producto-precio-wrapper d-flex flex-column align-items-start">
                   <span
                     style={{

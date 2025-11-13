@@ -229,7 +229,7 @@ const Carrito = () => {
 
 
       const pedidoData = {
-        userId: usuario.uid,
+        userId: auth.currentUser.uid, // ✅ importante: debe coincidir con el UID autenticado
         Cliente: {
           nombre: usuario.nombre,
           email: usuario.email,

@@ -18,18 +18,46 @@
   margin-top: 0;
 }
 
-/* 📱 Responsive */
-@media (max-width: 768px) {
-  .hero-section-esparcimiento {
-    height: 500px;
+.hero-responsive {
+  width: 100%;
+  height: 680px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+/* Tablets */
+@media (max-width: 1024px) {
+  .hero-responsive {
+    height: 520px;
+    background-position: center center;
   }
 }
 
-@media (max-width: 480px) {
-  .hero-section-esparcimiento {
+/* Celulares grandes */
+@media (max-width: 768px) {
+  .hero-responsive {
     height: 420px;
+    background-position: center top;
   }
 }
+
+/* Celulares medianos */
+@media (max-width: 576px) {
+  .hero-responsive {
+    height: 350px;
+    background-position: top;
+  }
+}
+
+/* Celulares chicos */
+@media (max-width: 400px) {
+  .hero-responsive {
+    height: 280px;
+    background-position: top;
+  }
+}
+
 
 
 /* Tarjetas */

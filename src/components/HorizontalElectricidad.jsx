@@ -101,7 +101,7 @@ const HorizontalElectricidad = () => {
                 alt={producto.nombre}
                 className="scroll-producto-img"
               />
-              <div className="scroll-producto-body">
+              <div className="scroll-producto-body mt-4 mt-lg-0">
                 <div className="scroll-producto-precio-wrapper d-flex flex-column align-items-start">
                   <span
                     style={{
