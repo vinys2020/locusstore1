@@ -213,11 +213,13 @@
     flex-direction: column;
     max-width: 100%;
     padding-top: 110px;
+    
   }
 
   .categoriaspage-img {
     height: 155px;
     width: auto;
+    padding: 32px;
   }
 
   .categoriaspage-product .card {

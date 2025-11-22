@@ -326,9 +326,9 @@ export default function CategoriasPage() {
             productosFiltrados.map((p) => (
               <div
                 key={p.id}
-                className="categoriaspage-product col-12 col-sm-6 col-md-4 col-lg-3"
+                className="categoriaspage-product col-6 col-sm-6 col-md-4 col-lg-3"
               >
-                <div className="card h-100 shadow-sm hover-shadow">
+                <div className="card h-100 shadow-m hover-shadow">
                   <a
                     href={`/categorias/${categoriaId}/producto/${p.id}`}
                     target="_self"
@@ -348,21 +348,21 @@ export default function CategoriasPage() {
                     >
                       <img
                         src={p.imagenes && p.imagenes.length > 0 ? p.imagenes[0] : "https://via.placeholder.com/200"}
-                        className="categoriaspage-img card-img-top"
+                        className="categoriaspage-img card-img-top p-lg-0"
                         alt={p.nombre}
                         loading="lazy"
                         style={{ height: "220px", objectFit: "cover" }}
                       />
                     </div>
-                    <div className="card-body d-flex flex-column">
-                      <div className="categoriaspage-precio-wrapper mb-2">
+                    <div className="card-body d-flex flex-column p-1">
+                      <div className="categoriaspage-precio-wrapper mb-lg-2 mb-1">
                         <span
                           style={{
                             textDecoration: "line-through",
                             color: "#888",
-                            fontSize: "0.85rem",
+                            fontSize: "0.95rem",
                           }}
-                          className="mb-0 d-block"
+                          className="mb-0 d-block text-start"
                         >
                           {p.precio
                             ? new Intl.NumberFormat("es-AR", {
@@ -374,7 +374,7 @@ export default function CategoriasPage() {
                             : "-"}
                         </span>
 
-                        <p className="fw-bold fs-5 mb-1">
+                        <p className="fw-bold fs-5 mb-lg-1 mb-0">
                           {p.precio
                             ? new Intl.NumberFormat("es-AR", {
                               style: "currency",
@@ -399,7 +399,7 @@ export default function CategoriasPage() {
                         </div>
                       </div>
 
-                      <h6 className="scroll-producto-titulo text-start mb-4"><b>{p.nombre}</b></h6>
+                      <h6 className="scroll-producto-titulo text-start mb-0 mb-lg-4"><b>{p.nombre}</b></h6>
                     </div>
                   </a>
 
