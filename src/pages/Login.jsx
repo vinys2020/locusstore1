@@ -348,11 +348,73 @@ const Login = () => {
                                 required
                             >
                                 <option value="">Seleccionar Organismo</option>
-                                <option value="Ministerio de Agua, Energía y Medio Ambiente">Ministerio de Agua, Energía y Medio Ambiente</option>
-                                <option value="Ministerio de Desarrollo Social">Ministerio de Desarrollo Social</option>
-                                <option value="Ministerio de Educación, Ciencias y Tecnología">Ministerio de Educación, Ciencias y Tecnología</option>
-                                <option value="Ministerio de Infraestructura y Obras Civiles">Ministerio de Infraestructura y Obras Civiles</option>
-                                <option value="Ministerio de Salud">Ministerio de Salud</option>
+                                <option value="AGAP-M H Y F-">AGAP-M H Y F-</option>
+                                <option value="APANE">APANE</option>
+                                <option value="CAJA DE PRESTACIONES SOCIALES DE CATAMARCA">CAJA DE PRESTACIONES SOCIALES DE CATAMARCA</option>
+                                <option value="CAMARA DE DIPUTADOS">CAMARA DE DIPUTADOS</option>
+                                <option value="CAMARA DE SENADORES">CAMARA DE SENADORES</option>
+                                <option value="COLEGIO FASTA">COLEGIO FASTA</option>
+                                <option value="COLEGIO JUAN PABLO 2">COLEGIO JUAN PABLO 2</option>
+                                <option value="COLEGIO PRIVADO NUESTRA SEÑORA DEL VALLE">COLEGIO PRIVADO NUESTRA SEÑORA DEL VALLE</option>
+                                <option value="COLEGIO S. ROSA DE LIMA Y CRISTO REY">COLEGIO S. ROSA DE LIMA Y CRISTO REY</option>
+                                <option value="COLEGIO VIRGEN NIÑA">COLEGIO VIRGEN NIÑA</option>
+                                <option value="CONCEJO DELIBERANTE - MUNIC. RECREO.">CONCEJO DELIBERANTE - MUNIC. RECREO</option>
+                                <option value="CONCEJO DELIBERANTE CHUMBICHA">CONCEJO DELIBERANTE CHUMBICHA</option>
+                                <option value="CONSEJO DELIBERANTE DE VALLE VIEJO">CONSEJO DELIBERANTE DE VALLE VIEJO</option>
+                                <option value="DEL. MINISTERIO DE INTEGRACION REGIONAL, LOG. Y TRA.">DEL. MINISTERIO DE INTEGRACION REGIONAL, LOG. Y TRA.</option>
+                                <option value="D.P.A. DEL ENTE DE RECAUDACIÓN">D.P.A. DEL ENTE DE RECAUDACIÓN</option>
+                                <option value="DIRECCION DE ADM. DE LA POLICIA DE CATAMARCA">DIRECCION DE ADM. DE LA POLICIA DE CATAMARCA</option>
+                                <option value="DP DE MATERNIDAD 25 DE MAYO">DP DE MATERNIDAD 25 DE MAYO</option>
+                                <option value="ESC.DE GEST PRIV. SEÑORA DE GUADALUPE">ESC.DE GEST PRIV. SEÑORA DE GUADALUPE</option>
+                                <option value="HOSPITAL INTERZONAL DE NIÑOS">HOSPITAL INTERZONAL DE NIÑOS</option>
+                                <option value="INST. SUPERIOR FRAY MAMERTO ESQUIU">INST. SUPERIOR FRAY MAMERTO ESQUIU</option>
+                                <option value="MINISTERIO DE AGUA, ENERGÍA Y MEDIO AMBIENTE">MINISTERIO DE AGUA, ENERGÍA Y MEDIO AMBIENTE</option>
+                                <option value="MINISTERIO DE CIENCIA E INNOVACION TECNOLOGICA">MINISTERIO DE CIENCIA E INNOVACION TECNOLOGICA</option>
+                                <option value="MINISTERIO DE COMUNICACIÓN">MINISTERIO DE COMUNICACIÓN</option>
+                                <option value="MINISTERIO DE DESARROLLO SOCIAL">MINISTERIO DE DESARROLLO SOCIAL</option>
+                                <option value="MINISTERIO DE EDUCACION CS Y TEC">MINISTERIO DE EDUCACION CS Y TEC</option>
+                                <option value="MINISTERIO DE GOBIERNO, JUSTICIA Y DERECHOS HUMANO">MINISTERIO DE GOBIERNO, JUSTICIA Y DERECHOS HUMANO</option>
+                                <option value="MINISTERIO DE HACIENDA Y FINAN.">MINISTERIO DE HACIENDA Y FINAN.</option>
+                                <option value="MINISTERIO DE INDUSTRIA, COMERCIO Y EMPLEO">MINISTERIO DE INDUSTRIA, COMERCIO Y EMPLEO</option>
+                                <option value="MINISTERIO DE INCLUSIÓN DIG. Y SERV.PROD.">MINISTERIO DE INCLUSIÓN DIG. Y SERV.PROD.</option>
+                                <option value="MINISTERIO DE INFRAESTRUCTURA Y OBRAS CIVILES">MINISTERIO DE INFRAESTRUCTURA Y OBRAS CIVILES</option>
+                                <option value="MINISTERIO DE SALUD">MINISTERIO DE SALUD</option>
+                                <option value="MINISTERIO DE TRABAJO, PLANIF. Y RRHH">MINISTERIO DE TRABAJO, PLANIF. Y RRHH</option>
+                                <option value="MUNICIPALID DE HUALFIN">MUNICIPALID DE HUALFIN</option>
+                                <option value="MUNICIPALIDAD DE ANDALGALA">MUNICIPALIDAD DE ANDALGALA</option>
+                                <option value="MUNICIPALIDAD DE BELEN">MUNICIPALIDAD DE BELEN</option>
+                                <option value="MUNICIPALIDAD DE CHUMBICHA CAPAYAN">MUNICIPALIDAD DE CHUMBICHA CAPAYAN</option>
+                                <option value="MUNICIPALIDAD DE CORRAL QUEMADO BELEN">MUNICIPALIDAD DE CORRAL QUEMADO BELEN</option>
+                                <option value="MUNICIPALIDAD DE FIAMBALA">MUNICIPALIDAD DE FIAMBALA</option>
+                                <option value="MUNICIPALIDAD DE HUILLAPIMA CAPAYAN">MUNICIPALIDAD DE HUILLAPIMA CAPAYAN</option>
+                                <option value="MUNICIPALIDAD DE ICAÑO">MUNICIPALIDAD DE ICAÑO</option>
+                                <option value="MUNICIPALIDAD DE LA PUERTA">MUNICIPALIDAD DE LA PUERTA</option>
+                                <option value="MUNICIPALIDAD DE LA PUERTA DE SAN JOSE BELEN">MUNICIPALIDAD DE LA PUERTA DE SAN JOSE BELEN</option>
+                                <option value="MUNICIPALIDAD DE LONDRES">MUNICIPALIDAD DE LONDRES</option>
+                                <option value="MUNICIPALIDAD DE LOS ALTOS">MUNICIPALIDAD DE LOS ALTOS</option>
+                                <option value="MUNICIPALIDAD DE LOS VARELAS">MUNICIPALIDAD DE LOS VARELAS</option>
+                                <option value="MUNICIPALIDAD DE MUTQUIN">MUNICIPALIDAD DE MUTQUIN</option>
+                                <option value="MUNICIPALIDAD DE POMAN">MUNICIPALIDAD DE POMAN</option>
+                                <option value="MUNICIPALIDAD DE POZO DE PIEDRA BELEN">MUNICIPALIDAD DE POZO DE PIEDRA BELEN</option>
+                                <option value="MUNICIPALIDAD DE PUERTA DE CORRAL QUEMADO BELEN">MUNICIPALIDAD DE PUERTA DE CORRAL QUEMADO BELEN</option>
+                                <option value="MUNICIPALIDAD DE RECREO">MUNICIPALIDAD DE RECREO</option>
+                                <option value="MUNICIPALIDAD DE SAN FERNANDO BELEN">MUNICIPALIDAD DE SAN FERNANDO BELEN</option>
+                                <option value="MUNICIPALIDAD DE SAN JOSE SM">MUNICIPALIDAD DE SAN JOSE SM</option>
+                                <option value="MUNICIPALIDAD DE SANTA MARIA">MUNICIPALIDAD DE SANTA MARIA</option>
+                                <option value="MUNICIPALIDAD DE TAPSO EL ALTO">MUNICIPALIDAD DE TAPSO EL ALTO</option>
+                                <option value="MUNICIPALIDAD DE TINOGASTA">MUNICIPALIDAD DE TINOGASTA</option>
+                                <option value="MUNICIPALIDAD DE VALLE VIEJO">MUNICIPALIDAD DE VALLE VIEJO</option>
+                                <option value="NUEVO HOSPITAL SAN JUAN BAUTISTA">NUEVO HOSPITAL SAN JUAN BAUTISTA</option>
+                                <option value="OBRA SOCIAL DE LOS EMPLEADOS PUBLICOS">OBRA SOCIAL DE LOS EMPLEADOS PUBLICOS</option>
+                                <option value="SECRETARIA DE CULTURA Y TURISMO">SECRETARIA DE CULTURA Y TURISMO</option>
+                                <option value="SECRETARIA DE ESTADO DE CULTURA NO USAR">SECRETARIA DE ESTADO DE CULTURA NO USAR</option>
+                                <option value="SECRETARIA DE ESTADO DE SEGURIDAD">SECRETARIA DE ESTADO DE SEGURIDAD</option>
+                                <option value="SECRETARIA DE MINERIA">SECRETARIA DE MINERIA</option>
+                                <option value="SECRETARIA DE VIVIENDA Y DES URBANO">SECRETARIA DE VIVIENDA Y DES URBANO</option>
+                                <option value="SERVICIO PENITENCIARIO PROVINCIAL">SERVICIO PENITENCIARIO PROVINCIAL</option>
+                                <option value="VIALIDAD PROVINCIAL">VIALIDAD PROVINCIAL</option>
+
+
                             </select>
 
                             <select
