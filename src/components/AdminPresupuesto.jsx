@@ -328,7 +328,7 @@ const AdminPresupuesto = () => {
 
         const clausulasTexto = [
             { texto: "IMPORTANTE: INFORMACIÓN PARA CLIENTES DE LOCUS STORE", negrita: true },
-            
+
             { texto: "", negrita: false },
             { texto: "1. Precios sujetos a cambios:", negrita: true },
             { texto: "• Los precios pueden variar sin previo aviso.", sangria: 5 },
@@ -343,7 +343,7 @@ const AdminPresupuesto = () => {
             { texto: "", negrita: false },
             { texto: "", negrita: false },
         ];
-        
+
 
         // Dibujar todas las líneas
         clausulasTexto.forEach((linea) => {
@@ -453,7 +453,7 @@ const AdminPresupuesto = () => {
                         </div>
 
                         {pedidosPaginados.length === 0 ? (
-                            <p>No hay presupuestos para mostrar.</p>
+                            <p className="text-secondary text-center">No hay presupuestos para mostrar.</p>
                         ) : (
                             <ul className="adminpedidos-list-group">
                                 {pedidosPaginados.map((pedido) => (
