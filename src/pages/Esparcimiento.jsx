@@ -253,7 +253,7 @@ const Esparcimiento = () => {
         {/* Info Section */}
         <div className="container py-5">
           <header className="text-center mb-5">
-            <h2 className="text-muted lead">
+            <h2 className="text-muted fs-4">
               Una experiencia de cata privada en <strong>La Guarda</strong>, ideal para grupos de
               <strong> 4 a 20 personas</strong>.
             </h2>
@@ -263,10 +263,10 @@ const Esparcimiento = () => {
           <section className="py-5 bg-white">
             <div className="container">
               <header className="text-center mb-5">
-                <h2 className="fw-bold text-dark mb-3">Vinos La Guarda</h2>
-                <p className="text-muted">
-                  Descubrí nuestra exclusiva selección de vinos pensada para acompañar tus mejores momentos.
-                </p>
+                <h1><b>La Guarda</b></h1>
+                <h3 className=" row text-white justify-content-center text-center" style={{backgroundColor : "black", }}>Vinoteca & Accesorios</h3>
+
+
               </header>
 
               {/* Fila 1 */}
@@ -382,12 +382,11 @@ const Esparcimiento = () => {
                     className="fw-bold mb-3 mt-lg-4"
                     style={{
                       color: "#054a49",
-                      fontSize: "clamp(1.9rem, 3vw, 2.2rem)",
                       display: "inline-block",
                       position: "relative",
                     }}
                   >
-                    Compra tus Vinos La Guarda
+                    Conocé mas de nuestros productos
                     {/* Línea decorativa */}
                     <span className="mb-2"
                       style={{
