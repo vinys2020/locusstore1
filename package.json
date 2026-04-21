@@ -15,7 +15,7 @@
     "bootstrap-icons": "^1.13.1",
     "firebase": "^12.1.0",
     "fslightbox-react": "^2.0.0",
-    "jspdf": "^3.0.3",
+    "jspdf": "^4.2.1",
     "jspdf-autotable": "^5.0.2",
     "react": "^19.2.3",
     "react-calendar": "^6.0.0",
