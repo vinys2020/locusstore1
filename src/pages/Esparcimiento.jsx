@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import HorizontalVinos from "../components/HorizontalVinos";
 import HorizontalVinosCaja from "../components/HorizontalVinosCaja";
+import { useLocation } from "react-router-dom";
 
 import { Link } from "react-router-dom";
 
@@ -24,6 +25,29 @@ const imagenes = [
 const Esparcimiento = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const navigate = useNavigate();
+
+  const location = useLocation();
+
+useEffect(() => {
+  if (location.hash) {
+    const el = document.querySelector(location.hash);
+    if (el) {
+      setTimeout(() => {
+        el.scrollIntoView({ behavior: "smooth" });
+      }, 100);
+    }
+  }
+}, [location]);
+
+const handleScrollTop = () => {
+  setIsOpen(false);
+  if (onCloseNavbar) onCloseNavbar();
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth",
+  });
+};
 
 
   useEffect(() => {
@@ -73,7 +97,7 @@ const Esparcimiento = () => {
   return (
     <>
       {/* 🟡 MAIN 1 — Contenido e información */}
-      <main id="chaperio-section" className=" esp-main bg-light py-0 " style={{ marginTop: "90px" }}>
+      <main id="chaperio-section" className=" esp-main bg-light py-0" style={{ marginTop: "90px" }}>
         {/* Hero Section */}
         <section
           className="hero-section mt-0"
@@ -99,7 +123,7 @@ const Esparcimiento = () => {
         <div className="container py-5">
           <header className="text-center mb-5">
             <h2 className="text-muted lead">
-            Viví una experiencia privada de sabor y relax, pensada y armada para un grupo selecto de{" "}
+              Viví una experiencia privada de sabor y relax, pensada y armada para un grupo selecto de{" "}
               <strong>4 y 12 personas</strong>.
             </h2>
           </header>
@@ -185,8 +209,8 @@ const Esparcimiento = () => {
       </main>
 
       {/* 🟣 MAIN 2 — Galería de Fotografías (ocupa todo el ancho) */}
-      <main className="esp-gallery-main">
-        <section className="pt-5 bg-black esp-slide-up" id="galeria-fotos">
+      <main className="esp-gallery-main pb-5">
+        <section className="pt-5 bg-black esp-slide-up" id="galeria-fotos" >
           <article className="col-12 d-flex justify-content-center w-100 mb-0 mt-0">
             <div className="text-center">
               <h3 style={{ color: "#fff" }}>
@@ -217,7 +241,7 @@ const Esparcimiento = () => {
         {/* Modal Imagen */}
         {selectedImage && (
           <div
-            className="modal fade show d-block"
+            className="modal fade show d-block "
             tabIndex="-1"
             style={{ backgroundColor: "rgba(0,0,0,0.8)" }}
             onClick={() => setSelectedImage(null)}
@@ -236,7 +260,7 @@ const Esparcimiento = () => {
       </main>
 
       {/* 🟡 MAIN 3 — Contenido e información */}
-      <main id="vinos-section" className="esp-main bg-light py-0" style={{ marginTop: "0px" }}>
+      <main id="laguarda" className="esp-main bg-light" style={{ marginTop: "0px" }}>
         {/* Hero Section */}
         <section
           className="hero-section hero-responsive mt-0"
@@ -260,11 +284,11 @@ const Esparcimiento = () => {
           </header>
 
           {/* 🟣 SECCIÓN VINOS - LA GUARDA */}
-          <section className="py-5 bg-white">
+          <section className="py-5 bg-white" >
             <div className="container">
               <header className="text-center mb-5">
                 <h1><b>La Guarda</b></h1>
-                <h3 className=" row text-white justify-content-center text-center" style={{backgroundColor : "black", }}>Vinoteca & Accesorios</h3>
+                <h3 className=" row text-white justify-content-center text-center" style={{ backgroundColor: "black", }}>Vinoteca & Accesorios</h3>
 
 
               </header>
@@ -453,64 +477,64 @@ const Esparcimiento = () => {
             </section>
 
             <div className="row align-items-center mb-5">
-                <div className="col-md-6 mb-4 mb-md-0 esp-slide-up">
-                  <img
-                    src="https://res.cloudinary.com/dqesszxgv/image/upload/v1762610765/caja1_f65tj4.jpg"
-                    alt="Vino tinto La Guarda"
-                    className="img-fluid rounded-4 shadow-sm "
-                    style={{ maxHeight: "800px", objectFit: "cover", width: "100%" }}
-                  />
-                </div>
-                <div className="col-md-6">
-  <h3 className="fw-bold mb-3 p-2 text-start">Descubrí Nuestras Cajas de Vinos</h3>
-  <p className="text-muted fs-4 p-2">
-    En <strong>La Guarda</strong> no solo ofrecemos vinos individuales, sino también
-    <strong> exclusivas cajas de vinos</strong> ideales para regalar, compartir o disfrutar en casa.
-    Cada presentación combina etiquetas seleccionadas que reflejan lo mejor de cada bodega y la
-    esencia de nuestros terroirs.
-    <br /><br />
-    Encontrá <strong>cajas temáticas</strong>, ediciones especiales y opciones personalizadas,
-    pensadas para quienes buscan una experiencia completa alrededor del vino.
-    <br /><br />
-    <em>Cajas que cuentan historias, celebran momentos y convierten cada descorche en una experiencia única.</em>
-  </p>
-</div>
-
-
+              <div className="col-md-6 mb-4 mb-md-0 esp-slide-up">
+                <img
+                  src="https://res.cloudinary.com/dqesszxgv/image/upload/v1762610765/caja1_f65tj4.jpg"
+                  alt="Vino tinto La Guarda"
+                  className="img-fluid rounded-4 shadow-sm "
+                  style={{ maxHeight: "800px", objectFit: "cover", width: "100%" }}
+                />
+              </div>
+              <div className="col-md-6">
+                <h3 className="fw-bold mb-3 p-2 text-start">Descubrí Nuestras Cajas de Vinos</h3>
+                <p className="text-muted fs-4 p-2">
+                  En <strong>La Guarda</strong> no solo ofrecemos vinos individuales, sino también
+                  <strong> exclusivas cajas de vinos</strong> ideales para regalar, compartir o disfrutar en casa.
+                  Cada presentación combina etiquetas seleccionadas que reflejan lo mejor de cada bodega y la
+                  esencia de nuestros terroirs.
+                  <br /><br />
+                  Encontrá <strong>cajas temáticas</strong>, ediciones especiales y opciones personalizadas,
+                  pensadas para quienes buscan una experiencia completa alrededor del vino.
+                  <br /><br />
+                  <em>Cajas que cuentan historias, celebran momentos y convierten cada descorche en una experiencia única.</em>
+                </p>
               </div>
 
-              {/* Fila 2 */}
-              <div className="row align-items-center flex-md-row-reverse mb-5">
-                <div className="col-md-6 mb-4 mb-md-0 esp-slide-up">
-                  <img
-                    src="https://res.cloudinary.com/dqesszxgv/image/upload/v1762610765/caja2_dx59ch.jpg"
-                    alt="Vino blanco La Guarda"
-                    className="img-fluid rounded-4 shadow-sm"
-                    style={{ maxHeight: "800px", objectFit: "cover", width: "100%" }}
 
-                  />
-                </div>
-                <div className="col-md-6">
-  <h3 className="fw-semibold mb-3 p-2">Vinos en Formato Bag in Box</h3>
-  <p className="text-muted fs-4 p-2">
-    En <strong>La Guarda</strong> te presentamos una nueva forma de disfrutar el vino:
-    el <strong>formato Bag in Box</strong>, una opción moderna, práctica y sustentable
-    que conserva toda la calidad y frescura del vino por más tiempo.
-    <br /><br />
+            </div>
 
-    Este formato permite disfrutar de una <strong>excelente relación calidad-precio</strong>,
-    ideal para reuniones, eventos o simplemente para tener siempre a mano un vino de calidad.
-    Cada Bag in Box mantiene el vino en condiciones óptimas desde la primera hasta la última copa.
-    <br /><br />
-    <em>Una nueva forma de vivir el vino — auténtica, conveniente y con el sello de excelencia de
-    <strong> La Guarda</strong>.</em>
-  </p>
-</div>
+            {/* Fila 2 */}
+            <div className="row align-items-center flex-md-row-reverse mb-5">
+              <div className="col-md-6 mb-4 mb-md-0 esp-slide-up">
+                <img
+                  src="https://res.cloudinary.com/dqesszxgv/image/upload/v1762610765/caja2_dx59ch.jpg"
+                  alt="Vino blanco La Guarda"
+                  className="img-fluid rounded-4 shadow-sm"
+                  style={{ maxHeight: "800px", objectFit: "cover", width: "100%" }}
 
+                />
+              </div>
+              <div className="col-md-6">
+                <h3 className="fw-semibold mb-3 p-2">Vinos en Formato Bag in Box</h3>
+                <p className="text-muted fs-4 p-2">
+                  En <strong>La Guarda</strong> te presentamos una nueva forma de disfrutar el vino:
+                  el <strong>formato Bag in Box</strong>, una opción moderna, práctica y sustentable
+                  que conserva toda la calidad y frescura del vino por más tiempo.
+                  <br /><br />
 
+                  Este formato permite disfrutar de una <strong>excelente relación calidad-precio</strong>,
+                  ideal para reuniones, eventos o simplemente para tener siempre a mano un vino de calidad.
+                  Cada Bag in Box mantiene el vino en condiciones óptimas desde la primera hasta la última copa.
+                  <br /><br />
+                  <em>Una nueva forma de vivir el vino — auténtica, conveniente y con el sello de excelencia de
+                    <strong> La Guarda</strong>.</em>
+                </p>
               </div>
 
-              <section className="mx-lg-5 mb-5 esp-slide-up mt-5">
+
+            </div>
+
+            <section className="mx-lg-5 mb-5 esp-slide-up mt-5">
               <div className="container-fluid w-100 mt-3">
 
                 <div style={{ textAlign: "center" }}>
@@ -591,15 +615,15 @@ const Esparcimiento = () => {
 
 
 
-            
 
-            
+
+
 
 
 
           </section>
 
-          
+
 
 
 

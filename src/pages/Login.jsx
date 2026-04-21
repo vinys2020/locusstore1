@@ -249,7 +249,7 @@ const Login = () => {
                     <>
                         <h2 className="mb-2 mt-1 text-white">Inicia Sesión</h2>
                         <p className="mb-3 text-white" style={{ fontSize: "1rem", color: "#555", lineHeight: 1.4 }}>
-                            Registrate con Google es rápido, seguro y tus datos siempre estarán protegidos.
+                            Registrate con Google es facil, rápido y tus datos siempre estarán protegidos.
                         </p>
                         {error && <div className="alert alert-danger">{error}</div>}
                         <button
@@ -262,7 +262,6 @@ const Login = () => {
                             </div>
                             <span className="google-btn-text">{isLoggingIn ? "Ingresando..." : "Continuar con Google"}</span>
                         </button>
-                        <small className="text-white">No compartiremos tu información con terceros.</small>
                     </>
                 ) : (
                     <>

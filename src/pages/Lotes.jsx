@@ -122,6 +122,8 @@ const LoteCard = ({ lote }) => (
           </ul>
         </div>
 
+        
+
         <div className="text-center  mt-auto">
           <Link to="/contacto" className="btn btn-warning fw-semibold px-4 py-2 rounded-pill shadow-sm">
             Consultar Ahora

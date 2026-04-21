@@ -8,6 +8,7 @@ import { FaShoppingCart, FaSearch } from "react-icons/fa";
 import useProductos from "../hooks/useProductos";
 import FloatingCart from "./FloatingCart";
 import CategoriasDropdown from "./CategoriasDropdown";
+import EsparcimientoDropdown from "./EsparcimientoDropdown";
 import logo from "../assets/navbarlogo.png";
 import logito from "../assets/logoss.png";
 
@@ -325,6 +326,10 @@ const Navbar = ({ busqueda, setBusqueda }) => {
               <CategoriasDropdown onCloseNavbar={cerrarMenu} />
               {/* otros <li> aquí */}
             </ul>
+                        <ul className="navbar-nav mx-2 mx-lg-0">
+              <EsparcimientoDropdown onCloseNavbar={cerrarMenu} />
+              {/* otros <li> aquí */}
+            </ul>
             <li className="nav-item mx-2">
               <Link className="nav-link text-white" to="/Lotes" onClick={cerrarMenu}>
                 Lotes
@@ -335,11 +340,7 @@ const Navbar = ({ busqueda, setBusqueda }) => {
 
 
 
-            <li className="nav-item mx-2">
-              <Link className="nav-link text-white" to="/Esparcimiento" onClick={cerrarMenu}>
-                Esparcimiento
-              </Link>
-            </li>
+
             <li className="nav-item mx-2">
               <Link className="nav-link text-white" to="/ProyectosFuturos" onClick={cerrarMenu}>
                 Proyectos Futuros

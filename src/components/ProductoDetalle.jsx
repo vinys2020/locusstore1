@@ -44,7 +44,9 @@ export default function ProductoDetalle() {
     return () => unsubscribe();
   }, [categoriaId, productoId]);
 
-
+useEffect(() => {
+  setImagenSeleccionada(0);
+}, [productoId]);
 
   const lensSize = 120;
 
@@ -76,24 +78,26 @@ export default function ProductoDetalle() {
     );
   }
 
+  const imagenActual = producto.imagenes?.[imagenSeleccionada];
+
 
 
 
   return (
     <main className="producto-detalle-page container-fluid py-5 p-lg-5">
       <article className="row justify-content-center g-2 mt-lg-4 ">
-{/* Banner informativo de ancho completo */}
-<div 
-  className="alert mb-3 text-center fw-bold"
-  style={{ 
-    backgroundColor: "#d1ecf9", // celeste suave
-    color: "black",           // texto azul oscuro para buen contraste
-    fontSize: "0.95rem",
-    borderRadius: "5px"
-  }}
->
-  ⚠️ Si no encontrás la medida, color u otra característica, consultanos. ¡Seguramente hay disponibilidad!
-</div>
+        {/* Banner informativo de ancho completo */}
+        <div
+          className="alert mb-3 text-center fw-bold"
+          style={{
+            backgroundColor: "#d1ecf9", // celeste suave
+            color: "black",           // texto azul oscuro para buen contraste
+            fontSize: "0.95rem",
+            borderRadius: "5px"
+          }}
+        >
+          ⚠️ Si no encontrás la medida, color u otra característica, consultanos. ¡Seguramente hay disponibilidad!
+        </div>
 
 
 
@@ -137,9 +141,9 @@ export default function ProductoDetalle() {
             style={{
               height: "800px",
               width: "100%",
-              backgroundImage: zoomVisible
-                ? `url(${producto.imagenes[imagenSeleccionada]})`
-                : "none",
+backgroundImage: zoomVisible && imagenActual
+  ? `url(${imagenActual})`
+  : "none",
               backgroundRepeat: "no-repeat",
               backgroundSize: "150%", // 🔥 zoom al 200%
               backgroundPosition: backgroundPosition, // 🔥 sigue el mouse
@@ -148,57 +152,57 @@ export default function ProductoDetalle() {
             onMouseLeave={() => setZoomVisible(false)}
             onMouseMove={handleMouseMove}
           >
-            {producto.imagenes[imagenSeleccionada].endsWith(".mp4") ? (
-              <video
-                src={producto.imagenes[imagenSeleccionada]}
-                controls
-                className="producto-imagen rounded shadow-sm"
-                style={{ maxHeight: "100%", maxWidth: "100%", objectFit: "contain" }}
-                ref={imgRef}
-              />
-            ) : producto.imagenes[imagenSeleccionada].includes("youtube") ? (
-              <iframe
-                src={producto.imagenes[imagenSeleccionada]}
-                title="Video"
-                className="producto-imagen rounded shadow-sm"
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  border: "none",
-                }}
-              />
-            ) : (
-              <img
-                src={producto.imagenes[imagenSeleccionada]}
-                alt={producto.nombre}
-                className="producto-imagen rounded shadow-none"
-                style={{
-                  maxHeight: "100%",
-                  maxWidth: "100%",
-                  objectFit: "contain",
-                  opacity: zoomVisible ? 0 : 1, // 🔥 ocultar imagen real al hacer zoom
-                }}
-                ref={imgRef}
-              />
-            )}
+{imagenActual?.endsWith(".mp4") ? (
+  <video
+    src={imagenActual}
+    controls
+    className="producto-imagen rounded shadow-sm"
+    style={{ maxHeight: "100%", maxWidth: "100%", objectFit: "contain" }}
+    ref={imgRef}
+  />
+) : imagenActual?.includes("youtube") ? (
+  <iframe
+    src={imagenActual}
+    title="Video"
+    className="producto-imagen rounded shadow-sm"
+    style={{
+      width: "100%",
+      height: "100%",
+      border: "none",
+    }}
+  />
+) : (
+  <img
+    src={imagenActual}
+    alt={producto.nombre}
+    className="producto-imagen rounded shadow-none"
+    style={{
+      maxHeight: "100%",
+      maxWidth: "100%",
+      objectFit: "contain",
+      opacity: zoomVisible ? 0 : 1,
+    }}
+    ref={imgRef}
+  />
+)}
 
             {/* Zoom lens solo decorativo */}
-            {zoomVisible &&
-              !producto.imagenes[imagenSeleccionada].endsWith(".mp4") &&
-              !producto.imagenes[imagenSeleccionada].includes("youtube") && (
-                <div
-                  className="zoom-lens position-absolute"
-                  style={{
-                    left: lensPosition.x,
-                    top: lensPosition.y,
-                    width: lensSize,
-                    height: lensSize,
-                    border: "2px solid rgba(0,0,0,0.3)",
-                    backgroundColor: "rgba(255,255,255,0.2)",
-                    cursor: "crosshair",
-                  }}
-                />
-              )}
+{zoomVisible &&
+  !imagenActual?.endsWith(".mp4") &&
+  !imagenActual?.includes("youtube") && (
+    <div
+      className="zoom-lens position-absolute"
+      style={{
+        left: lensPosition.x,
+        top: lensPosition.y,
+        width: lensSize,
+        height: lensSize,
+        border: "2px solid rgba(0,0,0,0.3)",
+        backgroundColor: "rgba(255,255,255,0.2)",
+        cursor: "crosshair",
+      }}
+    />
+)}
           </div>
 
 
@@ -259,16 +263,16 @@ export default function ProductoDetalle() {
               {producto.stock > 0 ? producto.stock : "Agotado"}
             </p>
 
-{/* 🏦 Medios de pago */}
-<div className="col-12 text-start text-lg-start mb-3 mb-md-0 mt-0">
-  <h6 className=" mb-0  fw-bold position-relative d-inline-block">
-    Medios de Pago: 
-  </h6>
-  <p className="mb-0 text-dark" style={{ lineHeight: 1.6 }}>
-  Los pagos pueden realizarse a través de <span style={{ textDecoration: "underline" }}>Financiación con entidades Bancarias</span>.
-</p>
+            {/* 🏦 Medios de pago */}
+            <div className="col-12 text-start text-lg-start mb-3 mb-md-0 mt-0">
+              <h6 className=" mb-0  fw-bold position-relative d-inline-block">
+                Medios de Pago:
+              </h6>
+              <p className="mb-0 text-dark" style={{ lineHeight: 1.6 }}>
+                Los pagos pueden realizarse a través de <span style={{ textDecoration: "underline" }}>Financiación con entidades Bancarias</span>.
+              </p>
 
-</div>
+            </div>
 
 
 
@@ -345,7 +349,7 @@ export default function ProductoDetalle() {
                 <div className="col-12 col-md-8 col-lg-6 p-2 mx-lg-2 ">
                   <p
                     className="text-dark"
-                    style={{ whiteSpace: 'pre-line', lineHeight: '1.8' , fontSize: '1.2rem'}}
+                    style={{ whiteSpace: 'pre-line', lineHeight: '1.8', fontSize: '1.2rem' }}
                   >
                     {producto.descripcion || "No hay descripción disponible"}
                   </p>
